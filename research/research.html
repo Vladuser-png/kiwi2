@@ -299,6 +299,40 @@
     <h2>Конкурентна карта</h2>
     <p>Три групи конкурентів: прямі (той самий продукт), софт (той самий JTBD), аспіраційні (еталони в категорії).</p>
 
+    <!-- Competitor groups -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:28px 0;">
+      <div style="background:var(--bg2);border:1px solid rgba(248,113,113,.25);border-radius:var(--radius);padding:20px 22px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.2px;color:var(--danger);margin-bottom:14px;">ХАРД — той самий продукт</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">UI8.net</span> <span style="color:var(--muted);font-size:12px;">— кюрований маркетплейс файлів, та сама аудиторія</span></div>
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Envato Elements</span> <span style="color:var(--muted);font-size:12px;">— підписочна модель, але масовий і незакюрований</span></div>
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Creative Market</span> <span style="color:var(--muted);font-size:12px;">— авторська платформа, модель автора + покупця</span></div>
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Mobbin</span> <span style="color:var(--muted);font-size:12px;">— той самий дизайнер, підписка, але без редагованих файлів</span></div>
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Gumroad (design)</span> <span style="color:var(--muted);font-size:12px;">— куди автори йдуть замість маркетплейсу</span></div>
+        </div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid rgba(245,158,11,.25);border-radius:var(--radius);padding:20px 22px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.2px;color:var(--warn);margin-bottom:14px;">СОФТ — той самий JTBD</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Figma Community</span> <span style="color:var(--muted);font-size:12px;">— та сама аудиторія, але безкоштовно і без кюрації</span></div>
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Dribbble</span> <span style="color:var(--muted);font-size:12px;">— натхнення, але без файлів; ми — наступний крок</span></div>
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Framer Templates</span> <span style="color:var(--muted);font-size:12px;">— той самий JTBD, але прив'язаний до одного інструменту</span></div>
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Lapa.ninja / Land-book</span> <span style="color:var(--muted);font-size:12px;">— інспірація лендінгів без файлів</span></div>
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Webflow Marketplace</span> <span style="color:var(--muted);font-size:12px;">— готові сайти, але тільки для Webflow</span></div>
+        </div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid rgba(124,110,247,.25);border-radius:var(--radius);padding:20px 22px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.2px;color:var(--accent);margin-bottom:14px;">АСПІРАЦІЙНІ — еталони категорії</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Unsplash</span> <span style="color:var(--muted);font-size:12px;">— еталон UX: контент → підписка без friction</span></div>
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Shopify Themes</span> <span style="color:var(--muted);font-size:12px;">— найполірованіший маркетплейс шаблонів</span></div>
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Notion Templates</span> <span style="color:var(--muted);font-size:12px;">— мінімалістичний UX: знайшов → один клік → дублювати</span></div>
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Apple App Store</span> <span style="color:var(--muted);font-size:12px;">— еталон редакційних добірок і кюрації</span></div>
+          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Awwwards</span> <span style="color:var(--muted);font-size:12px;">— візуальна мова «преміум» у вебі</span></div>
+        </div>
+      </div>
+    </div>
+
     <!-- Comparison table -->
     <div class="table-wrap">
       <table>
@@ -707,8 +741,21 @@
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
         <div style="border-right:1px solid var(--border);padding-right:16px;">
           <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--accent2);margin-bottom:8px;">НАЙКРАЩЕ</div>
-          <div style="font-size:15px;font-weight:700;margin-bottom:8px;">Uniform Fixed Grid</div>
-          <p style="font-size:13px;margin:0;">Лендінги — ландшафтний скрін 16:9. Fixed grid використовує простір оптимально і дозволяє вирівняти ціну + інструмент + автора. 9 продуктів above the fold за 3 секунди.</p>
+          <div style="font-size:15px;font-weight:700;margin-bottom:12px;">Uniform Fixed Grid</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+              <div style="font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--accent2);margin-bottom:4px;">ПРИЧИНА 1 · Формат диктує</div>
+              <p style="font-size:12px;margin:0;">Лендінги та вебсайти — завжди ландшафтний скрін 16:9. При однаковому ratio masonry нічого не дає — fixed grid використовує простір оптимально.</p>
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+              <div style="font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--accent2);margin-bottom:4px;">ПРИЧИНА 2 · Дизайнер порівнює</div>
+              <p style="font-size:12px;margin:0;">При купівлі шаблону очі йдуть: превʼю → ціна → інструмент → автор. Рівна сітка дає точки кріплення — ці елементи вирівняні між всіма картками.</p>
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
+              <div style="font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--accent2);margin-bottom:4px;">ПРИЧИНА 3 · Швидке сканування</div>
+              <p style="font-size:12px;margin:0;">9 продуктів above the fold за 3 секунди. Це і є головна ціль Kiwi: «скоротити час пошуку». Розмір і відступи — єдине дизайн-рішення.</p>
+            </div>
+          </div>
         </div>
         <div style="border-right:1px solid var(--border);padding-right:16px;">
           <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--warn);margin-bottom:8px;">ДРУГИЙ ВИБІР: якщо є редакція</div>
@@ -777,6 +824,7 @@
           <tr><td>Featured / Trending / Recent таби</td><td>Envato</td></tr>
           <tr><td>«Trusted by» brand-логотипи</td><td>Envato</td></tr>
           <tr><td>Editor's Pick замість author PRO-badge</td><td>Awwwards (адаптовано)</td></tr>
+          <tr><td>Нескінченний скрол масонрі (ілюстрації, іконки — фаза 2)</td><td>Pinterest</td></tr>
         </tbody>
       </table>
     </div>
