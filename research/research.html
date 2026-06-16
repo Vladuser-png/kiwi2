@@ -227,11 +227,47 @@
   /* ── FOOTER ── */
   footer { padding: 24px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
 
+  /* ── JTBD MATRIX ── */
+  .jtbd-main-job { background: linear-gradient(135deg,rgba(124,110,247,.08),rgba(74,222,128,.04)); border: 1px solid rgba(124,110,247,.3); border-radius: var(--r); padding: 26px 30px; margin-bottom: 32px; }
+  .jtbd-main-job p { font-size: 16px; line-height: 1.7; color: var(--text); max-width: none; margin-bottom: 0; font-style: italic; }
+  .jtbd-main-job p strong { color: var(--accent); font-style: normal; }
+  .jtbd-main-job .j-src { font-size: 12px; color: var(--muted); margin-top: 10px; }
+  .matrix-wrap { overflow-x: auto; border-radius: var(--r); border: 1px solid var(--border); margin: 16px 0; }
+  .matrix-wrap table { min-width: 900px; }
+  .matrix-wrap thead th { font-size: 10px; padding: 10px 12px; white-space: nowrap; }
+  .matrix-wrap td { padding: 10px 12px; vertical-align: top; font-size: 12px; color: #a0a0b0; line-height: 1.5; }
+  .matrix-wrap td:first-child { color: var(--text); font-weight: 600; font-size: 12px; white-space: nowrap; min-width: 130px; }
+  .score-cell { text-align: center !important; vertical-align: top !important; }
+  .sv { display: inline-block; font-size: 16px; font-weight: 800; font-family: var(--mono); line-height: 1; }
+  .sv-3 { color: var(--accent); }
+  .sv-2 { color: var(--yellow); }
+  .sv-1 { color: var(--muted); }
+  .sv-q { color: var(--border); font-size: 13px; }
+  .ss { display: block; font-size: 10px; color: var(--muted); margin-top: 4px; line-height: 1.4; max-width: 120px; margin-left: auto; margin-right: auto; }
+  .feat-cell { color: #9898b8 !important; font-size: 12px; }
+  .comp-ok  { color: var(--muted); }
+  .comp-no  { color: var(--red); font-weight: 600; }
+  .comp-part { color: var(--yellow); }
+
+  .mvp-core { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 20px; }
+  .mvp-core-card { background: var(--bg2); border: 1px solid rgba(124,110,247,.3); border-radius: var(--r); padding: 20px; }
+  .mvp-core-num { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .mvp-core-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+  .mvp-core-why { font-size: 13px; color: #9090a0; line-height: 1.55; }
+  .mvp-core-why strong { color: var(--text); display: block; margin-bottom: 4px; }
+
+  .cut-list { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .cut-item { background: rgba(248,113,113,.04); border: 1px solid rgba(248,113,113,.15); border-radius: 8px; padding: 14px 16px; display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
+  .cut-x { font-size: 14px; font-weight: 700; color: var(--red); line-height: 1; padding-top: 1px; }
+  .cut-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .cut-why { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
   @media (max-width: 1000px) {
     .pattern-card { grid-template-columns: 1fr; }
     .takeaways { grid-template-columns: 1fr; }
     .persona-grid { grid-template-columns: 1fr; }
     .card-grid3 { grid-template-columns: 1fr; }
+    .mvp-core { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -278,6 +314,17 @@
     <a href="#persona-curator" class="nav-sub">→ Куратор <span style="color:var(--accent);font-size:10px;">PRIMARY</span></a>
     <a href="#persona-deadline" class="nav-sub">→ Мисливець на дедлайн</a>
     <a href="#persona-ad" class="nav-sub">→ Арт-директор</a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">JTBD</div>
+    <a href="#jtbd" class="nav-item"><span class="ico">🎯</span>JTBD-матриця</a>
+    <a href="#jtbd-main-job" class="nav-sub">→ Main Job</a>
+    <a href="#jtbd-matrix" class="nav-sub">→ Матриця 10×3</a>
+    <a href="#jtbd-core" class="nav-sub">→ Ядро MVP (3 jobs)</a>
+    <a href="#jtbd-cut" class="nav-sub">→ Функції на виліт</a>
   </div>
 </nav>
 
@@ -723,6 +770,192 @@
     <div class="quote-block hypo-quote" style="margin-top:16px;">
       <div class="quote-text">«Мені потрібно щось, що я можу відправити команді і сказати: ось напрямок, адаптуйте»</div>
       <div class="quote-src">⚠️ Гіпотетична цитата</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ JTBD ═══ -->
+<div class="section" id="jtbd">
+  <div class="section-label">Розділ 06</div>
+  <h2>JTBD-матриця</h2>
+  <p>Рядки — jobs, колонки — персони. Важливість 1–3, де не знаємо — [?]. Два додаткових стовпці: що закриває продукт і що роблять конкуренти.</p>
+
+  <!-- MAIN JOB -->
+  <div class="jtbd-main-job" id="jtbd-main-job">
+    <div class="section-label" style="margin-bottom:10px;">Main Job продукту</div>
+    <p><strong>Коли я знаю що треба зробити, але не хочу починати з нуля,</strong><br>
+    я хочу знайти готовий ресурс що відповідає стилю і потребам проекту,<br>
+    щоб вийти на результат швидше, не жертвуючи якістю.</p>
+    <div class="j-src">Джерело: Інтерв'ю #1 (вся поведінкова картина) + research.md (gap ринку) + CLAUDE.md (позиціонування)</div>
+  </div>
+
+  <!-- MATRIX -->
+  <div id="jtbd-matrix">
+    <h3 style="margin-bottom:6px;">Матриця: jobs × персони</h3>
+    <p style="margin-bottom:0;">Важливість: <span style="color:var(--accent);font-weight:700;">3</span> = критична · <span style="color:var(--yellow);font-weight:700;">2</span> = важлива · <span style="color:var(--muted);font-weight:700;">1</span> = nice-to-have · <span style="color:var(--border);font-weight:700;">[?]</span> = немає даних</p>
+    <div class="matrix-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Job</th>
+            <th style="text-align:center;min-width:140px;">Куратор ✅</th>
+            <th style="text-align:center;min-width:140px;">Мисливець ⚠️</th>
+            <th style="text-align:center;min-width:140px;">Арт-директор ⚠️</th>
+            <th style="min-width:160px;">Функція в продукті</th>
+            <th style="min-width:200px;">Конкуренти</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>RJ-1 · Знайти за стилем</td>
+            <td class="score-cell"><span class="sv sv-3">3</span><span class="ss">Інтерв'ю #1: «нудний стиль — за запитами не було»</span></td>
+            <td class="score-cell"><span class="sv sv-2">2</span><span class="ss">гіпотеза: теж шукає «під стиль клієнта»</span></td>
+            <td class="score-cell"><span class="sv sv-q">[?]</span><span class="ss">немає даних</span></td>
+            <td class="feat-cell">Теги по настрою і естетиці; пошук за «мінімалістичний», «editorial»</td>
+            <td><span class="comp-no">Не закрито:</span> UI8 — теги категоріальні ✅ validated; Envato — немає семантики; Dribbble — колір, не стиль</td>
+          </tr>
+          <tr>
+            <td>RJ-2 · Файл ≠ обкладинка</td>
+            <td class="score-cell"><span class="sv sv-3">3</span><span class="ss">Інтерв'ю #1: «обкладинка добра, а дизайн посередній»</span></td>
+            <td class="score-cell"><span class="sv sv-2">2</span><span class="ss">гіпотеза: кожна трата болить при разовій оплаті</span></td>
+            <td class="score-cell"><span class="sv sv-q">[?]</span><span class="ss">немає даних</span></td>
+            <td class="feat-cell">Кілька реальних екранів з файлу на сторінці продукту</td>
+            <td><span class="comp-no">Не закрито:</span> UI8 — один hero-shot ✅ validated; Envato — превʼю-мокапи; <span class="comp-part">Framer — часткове live preview (свій конструктор)</span></td>
+          </tr>
+          <tr>
+            <td>RJ-3 · Зберегти миттєво</td>
+            <td class="score-cell"><span class="sv sv-3">3</span><span class="ss">Інтерв'ю #1: «зберігаю в обране або скачую»</span></td>
+            <td class="score-cell"><span class="sv sv-1">1</span><span class="ss">гіпотеза: проектний, не колекціонує наперед</span></td>
+            <td class="score-cell"><span class="sv sv-2">2</span><span class="ss">гіпотеза: потрібно ділитись з командою</span></td>
+            <td class="feat-cell">Обране / колекції; share підбірки</td>
+            <td><span class="comp-part">Частково:</span> UI8 — favorites; Pinterest — boards; Dribbble — saves. <span class="comp-no">Спільні колекції — ніхто</span></td>
+          </tr>
+          <tr>
+            <td>RJ-4 · Скачати без зупинок</td>
+            <td class="score-cell"><span class="sv sv-3">3</span><span class="ss">Інтерв'ю #1: «якщо підписка — одразу скачую»</span></td>
+            <td class="score-cell"><span class="sv sv-2">2</span><span class="ss">гіпотеза: хоче швидко, але без підписки зважує</span></td>
+            <td class="score-cell"><span class="sv sv-q">[?]</span><span class="ss">немає даних</span></td>
+            <td class="feat-cell">Lock-icon gate замість login wall; one-click download при підписці</td>
+            <td><span class="comp-part">Частково:</span> Unsplash — еталон lock-icon ✅; Framer — 1 клік. <span class="comp-no">UI8 — підписка є але CTA захована</span></td>
+          </tr>
+          <tr>
+            <td>RJ-5 · Тримати на пульсі</td>
+            <td class="score-cell"><span class="sv sv-3">3</span><span class="ss">Інтерв'ю #1: «я щодня моніторю нові надходження»</span></td>
+            <td class="score-cell"><span class="sv sv-1">1</span><span class="ss">гіпотеза: проектний, не щоденний</span></td>
+            <td class="score-cell"><span class="sv sv-q">[?]</span><span class="ss">немає даних</span></td>
+            <td class="feat-cell">Feed «Нові надходження»; сортування «Найновіші»</td>
+            <td><span class="comp-ok">Закрито конкурентами:</span> Envato — Featured/Trending/Recent; UI8 — New; Dribbble — Popular/New. Не є диференціатором</td>
+          </tr>
+          <tr>
+            <td>EJ-1 · Відчути «ось воно»</td>
+            <td class="score-cell"><span class="sv sv-3">3</span><span class="ss">Інтерв'ю #1: «відклик візуально → переходжу»</span></td>
+            <td class="score-cell"><span class="sv sv-2">2</span><span class="ss">гіпотеза: під дедлайном потрібне швидке попадання</span></td>
+            <td class="score-cell"><span class="sv sv-q">[?]</span><span class="ss">немає даних</span></td>
+            <td class="feat-cell">Якість кюрації як основа; hover preview другого екрану</td>
+            <td><span class="comp-part">Частково:</span> Framer, Unsplash — так. Але ніхто не поєднує з RJ-1 (пошук за стилем)</td>
+          </tr>
+          <tr>
+            <td>EJ-2 · Підписка окупається</td>
+            <td class="score-cell"><span class="sv sv-3">3</span><span class="ss">Інтерв'ю #1: щоденний ритуал виправдовує плату</span></td>
+            <td class="score-cell"><span class="sv sv-q">[?]</span><span class="ss">немає даних про підписку</span></td>
+            <td class="score-cell"><span class="sv sv-2">2</span><span class="ss">гіпотеза: виправдати перед керівництвом</span></td>
+            <td class="feat-cell">Регулярне поповнення контенту; лічильники «нового цього місяця»</td>
+            <td><span class="comp-part">Частково:</span> Envato — масштаб; Mobbin — «300k screens». <span class="comp-no">Не закрито для кюрованої файлової ніші</span></td>
+          </tr>
+          <tr>
+            <td>EJ-3 · Не виглядати як «взяв шаблон»</td>
+            <td class="score-cell"><span class="sv sv-1">1</span><span class="ss">senior, пишається що знаходить якісне першим</span></td>
+            <td class="score-cell"><span class="sv sv-2">2</span><span class="ss">гіпотеза: страх generic-вигляду перед клієнтом</span></td>
+            <td class="score-cell"><span class="sv sv-2">2</span><span class="ss">гіпотеза: репутація команди перед клієнтами</span></td>
+            <td class="feat-cell">Editor's Pick / кюраційна мітка від редакції Kiwi</td>
+            <td><span class="comp-part">Частково:</span> UI8 — кюрований без явної мітки. <span class="comp-no">Envato — не закриває (масовий)</span></td>
+          </tr>
+          <tr>
+            <td>SJ-1 · Бути тим хто знає</td>
+            <td class="score-cell"><span class="sv sv-2">2</span><span class="ss">Інтерв'ю #1: «якісні дизайни» = єдина рекомендація</span></td>
+            <td class="score-cell"><span class="sv sv-1">1</span><span class="ss">гіпотеза</span></td>
+            <td class="score-cell"><span class="sv sv-2">2</span><span class="ss">гіпотеза</span></td>
+            <td class="feat-cell">Якість платформи в цілому; shareable посилання на ресурс</td>
+            <td><span class="comp-no">Не закрито прямо:</span> конкуренти не вирішують цей job — тільки побічно через контент</td>
+          </tr>
+          <tr>
+            <td>SJ-2 · Задати напрямок команді</td>
+            <td class="score-cell"><span class="sv sv-1">1</span><span class="ss">не його роль</span></td>
+            <td class="score-cell"><span class="sv sv-q">[?]</span><span class="ss">немає даних</span></td>
+            <td class="score-cell"><span class="sv sv-3">3</span><span class="ss">гіпотеза: core job для цієї персони</span></td>
+            <td class="feat-cell">Спільні колекції; share підбірки з командою</td>
+            <td><span class="comp-no">Не закрито ніким:</span> UI8, Envato — персональні підписки без командного сценарію</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MVP CORE -->
+  <div id="jtbd-core" style="margin-top:40px;">
+    <h3 style="margin-bottom:4px;">3 jobs у ядро MVP</h3>
+    <p>Критерій: важливі для Куратора (primary, ✅ validated) <strong>і</strong> не закриті ринком.</p>
+    <div class="mvp-core">
+      <div class="mvp-core-card">
+        <div class="mvp-core-num">01 · RJ-1</div>
+        <div class="mvp-core-title">Знайти за стилем і настроєм</div>
+        <div class="mvp-core-why">
+          <strong>Куратор = 3 · validated</strong>
+          Жоден конкурент не закриває семантичний пошук за естетикою — тільки категоріальні теги. Це єдиний диференціатор Kiwi, підтверджений реальними даними. Без нього — просто ще один UI8.
+        </div>
+      </div>
+      <div class="mvp-core-card">
+        <div class="mvp-core-num">02 · RJ-2</div>
+        <div class="mvp-core-title">Побачити реальний файл до рішення</div>
+        <div class="mvp-core-why">
+          <strong>Куратор = 3 · validated</strong>
+          UI8 і Envato не закривають — один hero-shot, підтверджено інтерв'ю. Конкретна відповідь на підтверджений friction. Реалізується через кілька реальних екранів на сторінці продукту.
+        </div>
+      </div>
+      <div class="mvp-core-card">
+        <div class="mvp-core-num">03 · RJ-4</div>
+        <div class="mvp-core-title">Скачати без зупинок при підписці</div>
+        <div class="mvp-core-why">
+          <strong>Куратор = 3 · validated</strong>
+          Файлові маркетплейси (UI8, Envato) не закривають повністю. Це головний аргумент для subscription моделі — підписка знімає когнітивний тягар рішення.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FUNCTIONS TO CUT -->
+  <div id="jtbd-cut" style="margin-top:40px;">
+    <h3 style="margin-bottom:4px;">Функції-кандидати на виліт</h3>
+    <p>Не закривають жоден підтверджений job — або закривають тільки гіпотетичний. Додавати після валідації відповідного job.</p>
+    <div class="cut-list">
+      <div class="cut-item">
+        <div class="cut-x">✕</div>
+        <div>
+          <div class="cut-name">PRO-badge авторів</div>
+          <div class="cut-why">Не закриває жоден job. Антипатерн із бенчмарку: увага іде на статус автора замість якості файлу. Dribbble показав — не працює для файлового маркетплейсу.</div>
+        </div>
+      </div>
+      <div class="cut-item">
+        <div class="cut-x">✕</div>
+        <div>
+          <div class="cut-name">Соціальна стрічка / слідкувати за автором</div>
+          <div class="cut-why">Закриває тільки SJ-1 і SJ-2 — обидва повністю гіпотетичні, жодного підтвердження з інтерв'ю.</div>
+        </div>
+      </div>
+      <div class="cut-item">
+        <div class="cut-x">✕</div>
+        <div>
+          <div class="cut-name">Рейтинг через голосування користувачів</div>
+          <div class="cut-why">Закриває тільки гіпотетичний EJ-3. Конкуренти вже мають лайки і рейтинги — диференціатором не стане, тільки додасть шуму.</div>
+        </div>
+      </div>
+      <div class="cut-item">
+        <div class="cut-x">✕</div>
+        <div>
+          <div class="cut-name">AI-генерація контенту</div>
+          <div class="cut-why">Не з'являється в жодному job — ні підтвердженому, ні гіпотетичному. Суперечить позиціонуванню «кюрований, а не масовий».</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
