@@ -6,466 +6,386 @@
 <title>Kiwi — Research</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg:       #0c0c0e;
-    --bg2:      #141416;
-    --bg3:      #1c1c1f;
-    --border:   #2a2a2e;
-    --text:     #e8e8ec;
-    --muted:    #6b6b7a;
-    --accent:   #7c6ef7;
-    --accent2:  #4ade80;
-    --warn:     #f59e0b;
-    --danger:   #f87171;
-    --radius:   10px;
-    --mono:     'SF Mono', 'Fira Code', monospace;
+    --bg:      #0c0c0e;
+    --bg2:     #141416;
+    --bg3:     #1c1c1f;
+    --border:  #2a2a2e;
+    --text:    #e8e8ec;
+    --muted:   #6b6b7a;
+    --accent:  #7c6ef7;
+    --green:   #4ade80;
+    --yellow:  #f59e0b;
+    --red:     #f87171;
+    --blue:    #60a5fa;
+    --r:       10px;
+    --mono:    'SF Mono','Fira Code',monospace;
+    --sidebar: 240px;
   }
-
   html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 15px; line-height: 1.65; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 15px;
-    line-height: 1.65;
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed; top: 0; left: 0;
+    width: var(--sidebar); height: 100vh;
+    background: var(--bg2); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    overflow-y: auto; z-index: 200;
   }
-
-  /* ─── NAV ─── */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(12,12,14,.92);
-    backdrop-filter: blur(12px);
+  .sidebar-logo {
+    padding: 20px 20px 16px;
     border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 0;
-    padding: 0 40px;
-    height: 52px;
+    flex-shrink: 0;
   }
-  .nav-logo {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: -.3px;
-    margin-right: 32px;
-    white-space: nowrap;
-  }
-  nav a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 13px;
-    padding: 0 14px;
-    height: 52px;
-    display: flex;
-    align-items: center;
-    border-bottom: 2px solid transparent;
-    transition: color .15s, border-color .15s;
-    white-space: nowrap;
-  }
-  nav a:hover { color: var(--text); border-color: var(--accent); }
+  .sidebar-logo-mark { font-size: 17px; font-weight: 800; color: var(--accent); letter-spacing: -.4px; }
+  .sidebar-logo-sub { font-size: 11px; color: var(--muted); margin-top: 2px; letter-spacing: .3px; }
 
-  /* ─── LAYOUT ─── */
-  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
-
-  section { padding: 72px 0; border-bottom: 1px solid var(--border); }
-  section:last-child { border-bottom: none; }
-
-  /* ─── TYPOGRAPHY ─── */
-  .section-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 12px;
+  .nav-section { padding: 16px 0 8px; flex-shrink: 0; }
+  .nav-section-label {
+    padding: 0 16px 6px;
+    font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
+    text-transform: uppercase; color: var(--muted);
   }
-  h1 { font-size: 38px; font-weight: 700; letter-spacing: -.5px; line-height: 1.15; }
-  h2 { font-size: 26px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 8px; }
-  h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-  p  { color: #b0b0be; margin-bottom: 16px; max-width: 680px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 16px; font-size: 13px; color: var(--muted);
+    text-decoration: none; border-radius: 0;
+    transition: color .12s, background .12s;
+    cursor: pointer; border: none; background: none; width: 100%; text-align: left;
+  }
+  .nav-item:hover { color: var(--text); background: var(--bg3); }
+  .nav-item.active { color: var(--text); background: rgba(124,110,247,.12); border-right: 2px solid var(--accent); }
+  .nav-item .ico { font-size: 14px; flex-shrink: 0; width: 18px; text-align: center; }
+  .nav-sub {
+    padding: 4px 16px 4px 42px; font-size: 12px; color: var(--muted);
+    text-decoration: none; display: block;
+    transition: color .12s;
+  }
+  .nav-sub:hover { color: var(--text); }
+  .nav-divider { height: 1px; background: var(--border); margin: 8px 16px; }
+
+  .badge {
+    margin-left: auto; font-size: 9px; font-weight: 700; letter-spacing: .5px;
+    padding: 2px 6px; border-radius: 20px; flex-shrink: 0;
+  }
+  .badge-primary { background: rgba(124,110,247,.2); color: var(--accent); }
+  .badge-hypo { background: rgba(245,158,11,.15); color: var(--yellow); }
+
+  /* ── MAIN ── */
+  .main { margin-left: var(--sidebar); min-height: 100vh; }
+
+  /* ── HERO ── */
+  .hero { padding: 56px 48px 40px; border-bottom: 1px solid var(--border); }
+  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  h1 { font-size: 34px; font-weight: 700; letter-spacing: -.5px; line-height: 1.15; }
+  .hero-sub { font-size: 16px; color: var(--muted); margin-top: 10px; max-width: 560px; }
+  .pills { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+  .pill { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px; font-size: 13px; color: var(--muted); }
+  .pill span { color: var(--text); font-weight: 500; }
+
+  /* ── SECTIONS ── */
+  .section { padding: 56px 48px; border-bottom: 1px solid var(--border); max-width: 1060px; }
+  .section:last-child { border-bottom: none; }
+  h2 { font-size: 24px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 6px; }
+  h3 { font-size: 15px; font-weight: 600; margin-bottom: 5px; }
+  p  { color: #b0b0be; margin-bottom: 14px; max-width: 680px; }
   p:last-child { margin-bottom: 0; }
 
-  .subtitle { font-size: 17px; color: var(--muted); margin-top: 12px; max-width: 600px; }
-
-  /* ─── HERO ─── */
-  .hero { padding: 64px 0 48px; border-bottom: 1px solid var(--border); }
-  .hero-meta {
-    display: flex;
-    gap: 24px;
-    margin-top: 32px;
-    flex-wrap: wrap;
-  }
-  .meta-pill {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 6px 14px;
-    font-size: 13px;
-    color: var(--muted);
-  }
-  .meta-pill span { color: var(--text); font-weight: 500; }
-
-  /* ─── TABLES ─── */
-  .table-wrap { overflow-x: auto; margin: 28px 0; border-radius: var(--radius); border: 1px solid var(--border); }
-  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-  thead th {
-    background: var(--bg3);
-    padding: 12px 16px;
-    text-align: left;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: .8px;
-    text-transform: uppercase;
-    color: var(--muted);
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
-  }
-  thead th:first-child { min-width: 140px; }
+  /* ── TABLES ── */
+  .table-wrap { overflow-x: auto; margin: 22px 0; border-radius: var(--r); border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { background: var(--bg3); padding: 10px 14px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
   tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
   tbody tr:last-child { border-bottom: none; }
   tbody tr:hover { background: var(--bg2); }
-  tbody td { padding: 12px 16px; vertical-align: top; color: #c0c0cc; line-height: 1.5; }
+  tbody td { padding: 10px 14px; vertical-align: top; color: #c0c0cc; line-height: 1.5; }
   tbody td:first-child { color: var(--text); font-weight: 500; white-space: nowrap; }
-
-  /* score cells */
-  .score { text-align: center !important; font-weight: 700; font-size: 15px; font-family: var(--mono); }
-  .s5 { color: var(--accent2); }
-  .s4 { color: #60a5fa; }
-  .s3 { color: var(--warn); }
-  .s2 { color: var(--danger); }
+  .score { text-align: center !important; font-weight: 700; font-size: 14px; font-family: var(--mono); }
+  .s5 { color: var(--green); } .s4 { color: var(--blue); } .s3 { color: var(--yellow); } .s2 { color: var(--red); }
   .total-row td { background: var(--bg3); font-weight: 700; color: var(--text) !important; font-size: 15px; }
-  .total-row .score { font-size: 17px; }
   .best { color: var(--accent) !important; }
+  .borrow-table td:first-child { color: var(--green); }
+  .borrow-table td:last-child { color: var(--muted); font-size: 13px; }
 
-  /* ─── SCREENS GRID ─── */
-  .screens {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-    margin: 28px 0;
-  }
-  .screen-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    transition: border-color .15s, transform .15s;
-  }
+  /* ── CARDS GENERIC ── */
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 20px 22px; }
+  .card-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .card-grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 16px; }
+
+  /* ── COMPETITOR GROUPS ── */
+  .group-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 22px 0; }
+  .group-card { background: var(--bg2); border-radius: var(--r); padding: 18px 20px; }
+  .group-hard  { border: 1px solid rgba(248,113,113,.25); }
+  .group-soft  { border: 1px solid rgba(245,158,11,.25); }
+  .group-aspir { border: 1px solid rgba(124,110,247,.25); }
+  .group-label { font-size: 10px; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; margin-bottom: 12px; }
+  .group-hard  .group-label { color: var(--red); }
+  .group-soft  .group-label { color: var(--yellow); }
+  .group-aspir .group-label { color: var(--accent); }
+  .group-item  { font-size: 13px; margin-bottom: 8px; }
+  .group-item strong { color: var(--text); }
+  .group-item span   { color: var(--muted); font-size: 12px; }
+
+  /* ── SCREENS ── */
+  .screens { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 14px; margin: 22px 0; }
+  .screen-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; transition: border-color .15s, transform .15s; }
   .screen-card:hover { border-color: var(--accent); transform: translateY(-2px); }
   .screen-card img { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
-  .screen-label {
-    padding: 10px 14px;
-    font-size: 12px;
-    color: var(--muted);
-    font-family: var(--mono);
-    border-top: 1px solid var(--border);
-  }
-  .screen-label strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 2px; font-family: inherit; }
+  .screen-label { padding: 8px 12px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
+  .screen-label strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 1px; }
 
-  /* ─── PATTERN CARDS ─── */
-  .patterns { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
-  .pattern-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px 28px;
-    display: grid;
-    grid-template-columns: 200px 1fr 1fr;
-    gap: 24px;
-    align-items: start;
-  }
-  .pattern-name { display: flex; flex-direction: column; gap: 6px; }
-  .pattern-num {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-  .pattern-title { font-size: 15px; font-weight: 700; color: var(--text); }
-  .pattern-sub { font-size: 12px; color: var(--muted); }
-  .pattern-meta { font-size: 13px; color: #9090a0; line-height: 1.6; }
-  .pattern-meta strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin-bottom: 4px; margin-top: 14px; }
-  .pattern-meta strong:first-child { margin-top: 0; }
-  .tag {
-    display: inline-block;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 2px 8px;
-    font-size: 11px;
-    color: var(--muted);
-    margin: 2px 2px 0 0;
-  }
-  .pattern-verdict { display: flex; flex-direction: column; gap: 12px; }
-  .verdict-block { background: var(--bg3); border-radius: 6px; padding: 12px 14px; }
-  .verdict-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
-  .verdict-ok .verdict-label  { color: var(--accent2); }
-  .verdict-bad .verdict-label { color: var(--danger); }
-  .verdict-block p { font-size: 12.5px; color: #9090a0; margin: 0; max-width: none; }
+  /* ── PATTERNS ── */
+  .patterns { display: flex; flex-direction: column; gap: 14px; margin-top: 22px; }
+  .pattern-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 22px 24px; display: grid; grid-template-columns: 190px 1fr 1fr; gap: 22px; align-items: start; }
+  .p-num { font-size: 10px; font-weight: 700; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; }
+  .p-title { font-size: 14px; font-weight: 700; color: var(--text); margin: 4px 0 2px; }
+  .p-sub { font-size: 12px; color: var(--muted); }
+  .p-tags { margin-top: 10px; }
+  .tag { display: inline-block; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; font-size: 11px; color: var(--muted); margin: 2px 2px 0 0; }
+  .p-meta { font-size: 13px; color: #9090a0; line-height: 1.6; }
+  .p-meta b { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin: 12px 0 3px; }
+  .p-meta b:first-child { margin-top: 0; }
+  .verdict-wrap { display: flex; flex-direction: column; gap: 10px; }
+  .verdict { background: var(--bg3); border-radius: 6px; padding: 10px 12px; }
+  .verdict-ok .v-label  { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--green); margin-bottom: 5px; }
+  .verdict-bad .v-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--red); margin-bottom: 5px; }
+  .verdict p { font-size: 12px; color: #9090a0; margin: 0; max-width: none; }
 
-  /* ─── TAKEAWAYS ─── */
-  .takeaways { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 28px; }
-  .takeaway {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 22px 22px 22px;
-  }
-  .takeaway-num { font-size: 28px; font-weight: 800; color: var(--accent); font-family: var(--mono); line-height: 1; margin-bottom: 12px; }
-  .takeaway h3 { font-size: 14px; margin-bottom: 8px; }
+  /* ── TAKEAWAYS ── */
+  .takeaways { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 22px; }
+  .takeaway { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 20px; }
+  .t-num { font-size: 26px; font-weight: 800; color: var(--accent); font-family: var(--mono); line-height: 1; margin-bottom: 10px; }
+  .takeaway h3 { font-size: 14px; margin-bottom: 7px; }
   .takeaway p { font-size: 13px; color: #8888a0; max-width: none; margin: 0; }
 
-  .antipattern {
-    background: rgba(248,113,113,.06);
-    border: 1px solid rgba(248,113,113,.2);
-    border-radius: var(--radius);
-    padding: 24px 28px;
-    margin-top: 16px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 20px;
-    align-items: start;
-  }
-  .anti-icon { font-size: 28px; line-height: 1; }
-  .antipattern h3 { color: var(--danger); margin-bottom: 8px; }
-  .antipattern p { color: #9090a0; font-size: 13px; max-width: none; margin-bottom: 8px; }
+  .antipattern { background: rgba(248,113,113,.05); border: 1px solid rgba(248,113,113,.2); border-radius: var(--r); padding: 22px 24px; margin-top: 14px; display: grid; grid-template-columns: auto 1fr; gap: 18px; }
+  .anti-ico { font-size: 26px; line-height: 1; }
+  .antipattern h3 { color: var(--red); margin-bottom: 7px; }
+  .antipattern p { color: #9090a0; font-size: 13px; max-width: none; margin-bottom: 7px; }
 
-  .gap-box {
-    background: linear-gradient(135deg, rgba(124,110,247,.1), rgba(74,222,128,.06));
-    border: 1px solid rgba(124,110,247,.3);
-    border-radius: var(--radius);
-    padding: 28px 32px;
-    margin-top: 32px;
-  }
-  .gap-box p { font-size: 16px; color: var(--text); max-width: none; line-height: 1.7; }
+  .gap-box { background: linear-gradient(135deg,rgba(124,110,247,.1),rgba(74,222,128,.06)); border: 1px solid rgba(124,110,247,.3); border-radius: var(--r); padding: 24px 28px; margin-top: 28px; }
+  .gap-box p { font-size: 15px; color: var(--text); max-width: none; line-height: 1.7; }
   .gap-box strong { color: var(--accent); }
 
-  /* ─── BORROW TABLE ─── */
-  .borrow-table td:first-child { color: var(--accent2); font-weight: 500; }
-  .borrow-table td:last-child  { color: var(--muted); font-size: 13px; }
+  /* ── PERSONAS ── */
+  .persona-card { border-radius: var(--r); padding: 28px; margin-bottom: 20px; }
+  .persona-primary { background: var(--bg2); border: 1px solid rgba(124,110,247,.35); }
+  .persona-secondary { background: var(--bg2); border: 1px solid var(--border); }
+  .persona-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+  .persona-avatar { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .avatar-primary { background: rgba(124,110,247,.15); }
+  .avatar-secondary { background: var(--bg3); }
+  .persona-title-block { flex: 1; }
+  .persona-role { font-size: 20px; font-weight: 700; letter-spacing: -.2px; }
+  .persona-desc { font-size: 13px; color: var(--muted); margin-top: 3px; }
+  .persona-why { font-size: 12px; margin-top: 8px; color: #9090a0; max-width: none; }
+  .persona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .persona-block { background: var(--bg3); border-radius: 8px; padding: 16px 18px; }
+  .pb-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+  .pb-jobs  .pb-label { color: var(--blue); }
+  .pb-pains .pb-label { color: var(--red); }
+  .pb-trust .pb-label { color: var(--green); }
+  .pb-jobs-item { font-size: 13px; color: #c0c0cc; padding: 5px 0; border-bottom: 1px solid var(--border); display: flex; gap: 8px; }
+  .pb-jobs-item:last-child { border-bottom: none; }
+  .pb-pain-item { font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .pb-pain-item:last-child { border-bottom: none; }
+  .pain-text { color: #c0c0cc; }
+  .pain-src  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .trust-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+  .trust-good { font-size: 12px; color: var(--green); background: rgba(74,222,128,.07); border-radius: 6px; padding: 8px 10px; }
+  .trust-bad  { font-size: 12px; color: var(--red);   background: rgba(248,113,113,.07); border-radius: 6px; padding: 8px 10px; }
+  .trust-label { font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; margin-bottom: 4px; }
+  .trust-good .trust-label { color: var(--green); }
+  .trust-bad  .trust-label { color: var(--red); }
+  .quote-block { background: rgba(124,110,247,.06); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 12px 16px; margin-top: 14px; }
+  .quote-text { font-size: 14px; font-style: italic; color: var(--text); line-height: 1.6; }
+  .quote-src  { font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .hypo-quote { border-left-color: var(--muted); background: rgba(107,107,122,.06); }
+  .hypo-quote .quote-text { color: var(--muted); }
+  .validation-bar { display: flex; gap: 6px; align-items: center; margin-bottom: 20px; }
+  .v-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .v-dot-real { background: var(--green); }
+  .v-dot-hypo { background: var(--yellow); }
+  .v-legend   { font-size: 11px; color: var(--muted); }
 
-  /* ─── FOOTER ─── */
-  footer {
-    padding: 28px 40px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-    color: var(--muted);
-  }
+  /* ── BENCHMARK COMMENTS ── */
+  .bench-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .bench-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 16px 18px; }
+  .bench-card.danger { border-color: rgba(248,113,113,.2); }
+  .bench-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+  .bench-score { font-size: 20px; font-weight: 800; font-family: var(--mono); }
 
-  @media (max-width: 900px) {
+  /* ── INSIGHT BOXES (competitor patterns) ── */
+  .insight-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+  .insight { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 18px 20px; }
+  .insight-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+  .insight-item { margin-bottom: 12px; }
+  .insight-item h3 { font-size: 13px; margin-bottom: 3px; }
+  .insight-item p { font-size: 13px; margin: 0; max-width: none; }
+
+  /* ── FOOTER ── */
+  footer { padding: 24px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+
+  @media (max-width: 1000px) {
     .pattern-card { grid-template-columns: 1fr; }
     .takeaways { grid-template-columns: 1fr; }
+    .persona-grid { grid-template-columns: 1fr; }
+    .card-grid3 { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">Kiwi Research</div>
-  <a href="#competitors">Конкуренти</a>
-  <a href="#benchmark">Бенчмарк</a>
-  <a href="#patterns">Патерни карток</a>
-  <a href="#conclusions">Висновки</a>
+<!-- ═══ SIDEBAR ═══ -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-mark">Kiwi</div>
+    <div class="sidebar-logo-sub">Research Hub · 2026</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Огляд</div>
+    <a href="#hero" class="nav-item"><span class="ico">🏠</span>Головна</a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Research</div>
+    <a href="#competitors" class="nav-item"><span class="ico">🗺</span>Конкуренти</a>
+    <a href="#comp-groups" class="nav-sub">→ Групи (Хард / Софт / Асп.)</a>
+    <a href="#comp-table" class="nav-sub">→ Таблиця порівняння</a>
+    <a href="#comp-screens" class="nav-sub">→ Скріни</a>
+    <a href="#comp-patterns" class="nav-sub">→ Спільні патерни</a>
+
+    <a href="#benchmark" class="nav-item"><span class="ico">📊</span>Бенчмарк конверсії</a>
+    <a href="#bench-criteria" class="nav-sub">→ Критерії оцінки</a>
+    <a href="#bench-scores" class="nav-sub">→ Оцінки (1–5)</a>
+
+    <a href="#patterns" class="nav-item"><span class="ico">🃏</span>Патерни карток</a>
+    <a href="#conclusions" class="nav-item"><span class="ico">💡</span>Висновки</a>
+    <a href="#card-decision" class="nav-sub">→ Рішення по картках</a>
+    <a href="#mechanisms" class="nav-sub">→ Топ-3 механізми</a>
+    <a href="#gap" class="nav-sub">→ Gap ринку</a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Персони</div>
+    <a href="#personas" class="nav-item"><span class="ico">👥</span>Всі персони</a>
+    <a href="#persona-curator" class="nav-sub">→ Куратор <span style="color:var(--accent);font-size:10px;">PRIMARY</span></a>
+    <a href="#persona-deadline" class="nav-sub">→ Мисливець на дедлайн</a>
+    <a href="#persona-ad" class="nav-sub">→ Арт-директор</a>
+  </div>
 </nav>
 
+<!-- ═══ MAIN ═══ -->
+<div class="main">
+
 <!-- HERO -->
-<div class="hero">
-  <div class="wrap">
-    <div class="section-label">Research · 2026</div>
-    <h1>Kiwi — Competitive<br>& UX Research</h1>
-    <p class="subtitle">Аналіз конкурентів, бенчмарк візуальної конверсії та патерни карток — все що потрібно для старту MVP.</p>
-    <div class="hero-meta">
-      <div class="meta-pill">Продуктів проаналізовано: <span>10</span></div>
-      <div class="meta-pill">Скринів зібрано: <span>5</span></div>
-      <div class="meta-pill">Критеріїв оцінки: <span>8 + 5</span></div>
-      <div class="meta-pill">Патернів розібрано: <span>5</span></div>
+<div class="hero" id="hero">
+  <div class="section-label">Kiwi · Research Hub · 2026</div>
+  <h1>Competitive &<br>User Research</h1>
+  <p class="hero-sub" style="color:var(--muted);font-size:16px;margin-top:10px;max-width:520px;">Аналіз конкурентів, бенчмарк візуальної конверсії, патерни карток і профілі персон.</p>
+  <div class="pills">
+    <div class="pill">Конкурентів: <span>10</span></div>
+    <div class="pill">Скринів: <span>5</span></div>
+    <div class="pill">Критеріїв: <span>8</span></div>
+    <div class="pill">Персон: <span>3</span></div>
+    <div class="pill">Інтерв'ю: <span>1</span></div>
+  </div>
+</div>
+
+<!-- ═══ COMPETITORS ═══ -->
+<div class="section" id="competitors">
+  <div class="section-label">Розділ 01</div>
+  <h2>Конкурентна карта</h2>
+  <p>Три групи конкурентів: прямі (той самий продукт), софт (той самий JTBD), аспіраційні (еталони в категорії).</p>
+
+  <div class="group-grid" id="comp-groups">
+    <div class="group-card group-hard">
+      <div class="group-label">🔴 Хард — той самий продукт</div>
+      <div class="group-item"><strong>UI8.net</strong><br><span>кюрований маркетплейс файлів, та сама аудиторія</span></div>
+      <div class="group-item"><strong>Envato Elements</strong><br><span>підписочна модель, але масовий і незакюрований</span></div>
+      <div class="group-item"><strong>Creative Market</strong><br><span>авторська платформа, модель автора + покупця</span></div>
+      <div class="group-item"><strong>Mobbin</strong><br><span>той самий дизайнер, підписка, але без редагованих файлів</span></div>
+      <div class="group-item"><strong>Gumroad (design)</strong><br><span>куди автори йдуть замість маркетплейсу</span></div>
+    </div>
+    <div class="group-card group-soft">
+      <div class="group-label">🟡 Софт — той самий JTBD</div>
+      <div class="group-item"><strong>Figma Community</strong><br><span>та сама аудиторія, але безкоштовно і без кюрації</span></div>
+      <div class="group-item"><strong>Dribbble</strong><br><span>натхнення, але без файлів; ми — наступний крок</span></div>
+      <div class="group-item"><strong>Framer Templates</strong><br><span>той самий JTBD, але прив'язаний до одного інструменту</span></div>
+      <div class="group-item"><strong>Lapa.ninja / Land-book</strong><br><span>інспірація лендінгів без файлів</span></div>
+      <div class="group-item"><strong>Webflow Marketplace</strong><br><span>готові сайти, але тільки для Webflow</span></div>
+    </div>
+    <div class="group-card group-aspir">
+      <div class="group-label">🔵 Аспіраційні — еталони</div>
+      <div class="group-item"><strong>Unsplash</strong><br><span>еталон UX: контент → підписка без friction</span></div>
+      <div class="group-item"><strong>Shopify Themes</strong><br><span>найполірованіший маркетплейс шаблонів</span></div>
+      <div class="group-item"><strong>Notion Templates</strong><br><span>мінімалістичний UX: знайшов → один клік</span></div>
+      <div class="group-item"><strong>Apple App Store</strong><br><span>еталон редакційних добірок і кюрації</span></div>
+      <div class="group-item"><strong>Awwwards</strong><br><span>візуальна мова «преміум» у вебі</span></div>
+    </div>
+  </div>
+
+  <div id="comp-table">
+    <h3 style="margin:28px 0 4px;">Порівняльна таблиця 5×5</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Вісь</th><th>UI8.net</th><th>Envato Elements</th><th>Dribbble</th><th>Pinterest</th><th>Awwwards</th></tr></thead>
+        <tbody>
+          <tr><td>Аудиторія</td><td>Профі-дизайнери, фрілансери, агентства</td><td>Широкі креатори: дизайнери, відеоедитори, маркетологи</td><td>Дизайнери за інспірацією + клієнти, що шукають виконавців</td><td>Загальна аудиторія; дизайнери — мудборди</td><td>Профі-дизайнери, агентства, журі</td></tr>
+          <tr><td>Основа</td><td>Кюрований маркетплейс файлів (Figma, Sketch, XD)</td><td>Масова бібліотека + AI-інструменти</td><td>Галерея-портфоліо / маркетплейс таланту</td><td>Візуальний пошуковик / дошка натхнення</td><td>Рейтинговий каталог з журі-оцінками</td></tr>
+          <tr><td>Механізм</td><td>Подвійне превʼю на hover; теги по інструменту</td><td>Ліміт завантажень/день; Featured/Trending/Recent</td><td>Кольоровий фільтр (48+), PRO-бейджі</td><td>Нескінченна масонрі, алгоритм рекомендацій</td><td>Числова оцінка /10, Site of the Day/Year</td></tr>
+          <tr><td>Довіра</td><td>Лайки; Trusted by Airbnb/Google; автор</td><td>1M+ авторів; логотипи підприємств</td><td>Лайки до 5.9k; PRO/PRO+ бейджі</td><td>Pin saves, підписники дошок</td><td>Журі, awards-лічильник</td></tr>
+          <tr><td>Монетизація</td><td>Разова $34–99+ · підписка $179–$699/рік</td><td>Підписка $179–$299/рік з лімітом</td><td>PRO-членство; найм; 0 файлів</td><td>Реклама; Shopping</td><td>PRO-членство; курси</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="comp-screens">
+    <h3 style="margin:28px 0 4px;">Скріни з живих сайтів</h3>
+    <p style="margin-bottom:0;">Зібрано через Playwright, червень 2026.</p>
+    <div class="screens">
+      <div class="screen-card"><img src="screens/ui8-home.jpg" alt="UI8" loading="lazy"><div class="screen-label"><strong>UI8.net</strong>homepage · прямий конкурент</div></div>
+      <div class="screen-card"><img src="screens/dribbble-shots.jpg" alt="Dribbble" loading="lazy"><div class="screen-label"><strong>Dribbble</strong>shots catalog · натхнення без файлів</div></div>
+      <div class="screen-card"><img src="screens/awwwards-catalog.jpg" alt="Awwwards" loading="lazy"><div class="screen-label"><strong>Awwwards</strong>websites catalog · журі-рейтинг</div></div>
+      <div class="screen-card"><img src="screens/framer-templates.jpg" alt="Framer" loading="lazy"><div class="screen-label"><strong>Framer Templates</strong>template marketplace · еталон конверсії</div></div>
+      <div class="screen-card"><img src="screens/pinterest-home.jpg" alt="Pinterest" loading="lazy"><div class="screen-label"><strong>Pinterest</strong>login gate · контент без файлів</div></div>
+    </div>
+  </div>
+
+  <div class="insight-pair" id="comp-patterns">
+    <div class="insight">
+      <div class="insight-label" style="color:var(--green);">3 спільних патерни</div>
+      <div class="insight-item"><h3 style="color:var(--green);font-size:13px;">01 · Візуально важка сітка</h3><p style="font-size:13px;">Всі 5 будують каталог навколо великих карток. Текст вторинний — дизайнер сканує очима.</p></div>
+      <div class="insight-item"><h3 style="color:var(--green);font-size:13px;">02 · Соціальні цифри на картці</h3><p style="font-size:13px;">Лайки, збереження, рейтинги — метрики залучення видно без кліку в деталі.</p></div>
+      <div class="insight-item"><h3 style="color:var(--green);font-size:13px;">03 · Browse безкоштовно, цінність — платно</h3><p style="font-size:13px;">Friction перенесена максимально далеко від відкриття.</p></div>
+    </div>
+    <div class="insight">
+      <div class="insight-label" style="color:var(--yellow);">3 ключові відмінності</div>
+      <div class="insight-item"><h3 style="font-size:13px;">01 · Файли vs натхнення</h3><p style="font-size:13px;">UI8/Envato — робочі файли. Dribbble/Pinterest/Awwwards — ідеї для повторення вручну.</p></div>
+      <div class="insight-item"><h3 style="font-size:13px;">02 · Кюрація vs обсяг</h3><p style="font-size:13px;">UI8 — мала але відібрана. Envato — мільйони з низькою планкою. Kiwi йде за UI8.</p></div>
+      <div class="insight-item"><h3 style="font-size:13px;">03 · Несумісні бізнес-моделі</h3><p style="font-size:13px;">Kiwi єдиний, хто комбінує підписку без лімітів + разову покупку для однієї аудиторії.</p></div>
     </div>
   </div>
 </div>
 
-<!-- ─── COMPETITORS ─── -->
-<section id="competitors">
-  <div class="wrap">
-    <div class="section-label">Розділ 01</div>
-    <h2>Конкурентна карта</h2>
-    <p>Три групи конкурентів: прямі (той самий продукт), софт (той самий JTBD), аспіраційні (еталони в категорії).</p>
+<!-- ═══ BENCHMARK ═══ -->
+<div class="section" id="benchmark">
+  <div class="section-label">Розділ 02</div>
+  <h2>Бенчмарк візуальної конверсії</h2>
+  <p>Хто найкраще візуально комунікує «тут багато корисного, і я хочу це купити» — за перші 5 секунд?</p>
 
-    <!-- Competitor groups -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:28px 0;">
-      <div style="background:var(--bg2);border:1px solid rgba(248,113,113,.25);border-radius:var(--radius);padding:20px 22px;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:1.2px;color:var(--danger);margin-bottom:14px;">ХАРД — той самий продукт</div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">UI8.net</span> <span style="color:var(--muted);font-size:12px;">— кюрований маркетплейс файлів, та сама аудиторія</span></div>
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Envato Elements</span> <span style="color:var(--muted);font-size:12px;">— підписочна модель, але масовий і незакюрований</span></div>
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Creative Market</span> <span style="color:var(--muted);font-size:12px;">— авторська платформа, модель автора + покупця</span></div>
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Mobbin</span> <span style="color:var(--muted);font-size:12px;">— той самий дизайнер, підписка, але без редагованих файлів</span></div>
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Gumroad (design)</span> <span style="color:var(--muted);font-size:12px;">— куди автори йдуть замість маркетплейсу</span></div>
-        </div>
-      </div>
-      <div style="background:var(--bg2);border:1px solid rgba(245,158,11,.25);border-radius:var(--radius);padding:20px 22px;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:1.2px;color:var(--warn);margin-bottom:14px;">СОФТ — той самий JTBD</div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Figma Community</span> <span style="color:var(--muted);font-size:12px;">— та сама аудиторія, але безкоштовно і без кюрації</span></div>
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Dribbble</span> <span style="color:var(--muted);font-size:12px;">— натхнення, але без файлів; ми — наступний крок</span></div>
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Framer Templates</span> <span style="color:var(--muted);font-size:12px;">— той самий JTBD, але прив'язаний до одного інструменту</span></div>
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Lapa.ninja / Land-book</span> <span style="color:var(--muted);font-size:12px;">— інспірація лендінгів без файлів</span></div>
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Webflow Marketplace</span> <span style="color:var(--muted);font-size:12px;">— готові сайти, але тільки для Webflow</span></div>
-        </div>
-      </div>
-      <div style="background:var(--bg2);border:1px solid rgba(124,110,247,.25);border-radius:var(--radius);padding:20px 22px;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:1.2px;color:var(--accent);margin-bottom:14px;">АСПІРАЦІЙНІ — еталони категорії</div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Unsplash</span> <span style="color:var(--muted);font-size:12px;">— еталон UX: контент → підписка без friction</span></div>
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Shopify Themes</span> <span style="color:var(--muted);font-size:12px;">— найполірованіший маркетплейс шаблонів</span></div>
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Notion Templates</span> <span style="color:var(--muted);font-size:12px;">— мінімалістичний UX: знайшов → один клік → дублювати</span></div>
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Apple App Store</span> <span style="color:var(--muted);font-size:12px;">— еталон редакційних добірок і кюрації</span></div>
-          <div><span style="color:var(--text);font-weight:600;font-size:13px;">Awwwards</span> <span style="color:var(--muted);font-size:12px;">— візуальна мова «преміум» у вебі</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Comparison table -->
+  <div id="bench-criteria">
+    <h3 style="margin:22px 0 4px;">Критерії оцінки</h3>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Вісь</th>
-            <th>UI8.net</th>
-            <th>Envato Elements</th>
-            <th>Dribbble</th>
-            <th>Pinterest</th>
-            <th>Awwwards</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Аудиторія</td>
-            <td>Профі-дизайнери, фрілансери, агентства</td>
-            <td>Широкі креатори: дизайнери, відеоедитори, маркетологи</td>
-            <td>Дизайнери за інспірацією + клієнти, що шукають виконавців</td>
-            <td>Загальна аудиторія; дизайнери — мудборди</td>
-            <td>Профі-дизайнери, агентства, журі</td>
-          </tr>
-          <tr>
-            <td>Основа</td>
-            <td>Кюрований маркетплейс файлів (Figma, Sketch, XD)</td>
-            <td>Масова бібліотека + AI-інструменти</td>
-            <td>Галерея-портфоліо / маркетплейс таланту</td>
-            <td>Візуальний пошуковик / дошка натхнення</td>
-            <td>Рейтинговий каталог з журі-оцінками</td>
-          </tr>
-          <tr>
-            <td>Механізм</td>
-            <td>Подвійне превʼю на hover; теги по інструменту; кюрація</td>
-            <td>Ліміт завантажень/день; Featured/Trending/Recent</td>
-            <td>Кольоровий фільтр (48+), PRO-бейджі</td>
-            <td>Нескінченна масонрі, алгоритм рекомендацій</td>
-            <td>Числова оцінка /10, Site of the Day/Month/Year</td>
-          </tr>
-          <tr>
-            <td>Довіра</td>
-            <td>Лайки; Trusted by Airbnb/Google/Spotify; автор</td>
-            <td>1M+ авторів; логотипи підприємств; «20 нових релізів»</td>
-            <td>Лайки до 5.9k; PRO/PRO+ бейджі</td>
-            <td>Pin saves, підписники дошок</td>
-            <td>Журі, PRO-верифікація, awards-лічильник</td>
-          </tr>
-          <tr>
-            <td>Монетизація</td>
-            <td>Разова $34–99+ · підписка $179–$699/рік</td>
-            <td>Підписка $179–$299/рік з лімітом завантажень</td>
-            <td>PRO-членство; найм дизайнерів; 0 продажу файлів</td>
-            <td>Реклама; Pinterest Shopping</td>
-            <td>PRO-членство; курси; конференції</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Screenshots -->
-    <h3 style="margin-top:36px;margin-bottom:4px;">Скріни з живих сайтів</h3>
-    <p>Зібрано через Playwright, червень 2026.</p>
-    <div class="screens">
-      <div class="screen-card">
-        <img src="screens/ui8-home.jpg" alt="UI8 homepage" loading="lazy">
-        <div class="screen-label"><strong>UI8.net</strong>homepage · прямий конкурент</div>
-      </div>
-      <div class="screen-card">
-        <img src="screens/dribbble-shots.jpg" alt="Dribbble shots" loading="lazy">
-        <div class="screen-label"><strong>Dribbble</strong>shots catalog · натхнення без файлів</div>
-      </div>
-      <div class="screen-card">
-        <img src="screens/awwwards-catalog.jpg" alt="Awwwards websites" loading="lazy">
-        <div class="screen-label"><strong>Awwwards</strong>websites catalog · журі-рейтинг</div>
-      </div>
-      <div class="screen-card">
-        <img src="screens/framer-templates.jpg" alt="Framer templates" loading="lazy">
-        <div class="screen-label"><strong>Framer Templates</strong>template marketplace · еталон конверсії</div>
-      </div>
-      <div class="screen-card">
-        <img src="screens/pinterest-home.jpg" alt="Pinterest" loading="lazy">
-        <div class="screen-label"><strong>Pinterest</strong>login gate · контент без файлів</div>
-      </div>
-    </div>
-
-    <!-- Common patterns & differences -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;">
-        <div class="section-label" style="margin-bottom:16px;">3 спільних патерни</div>
-        <div style="margin-bottom:14px;">
-          <h3 style="color:var(--accent2);font-size:13px;margin-bottom:4px;">01 · Візуально важка сітка</h3>
-          <p style="font-size:13px;margin:0;">Всі 5 будують каталог навколо великих карток. Текст вторинний — дизайнер сканує очима.</p>
-        </div>
-        <div style="margin-bottom:14px;">
-          <h3 style="color:var(--accent2);font-size:13px;margin-bottom:4px;">02 · Соціальні цифри на картці</h3>
-          <p style="font-size:13px;margin:0;">Лайки, збереження, рейтинги — метрики залучення видно без кліку в деталі.</p>
-        </div>
-        <div>
-          <h3 style="color:var(--accent2);font-size:13px;margin-bottom:4px;">03 · Browse безкоштовно, цінність — платно</h3>
-          <p style="font-size:13px;margin:0;">Friction перенесена максимально далеко від відкриття — у точку дії.</p>
-        </div>
-      </div>
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;">
-        <div class="section-label" style="margin-bottom:16px;">3 ключові відмінності</div>
-        <div style="margin-bottom:14px;">
-          <h3 style="font-size:13px;margin-bottom:4px;">01 · Файли vs натхнення</h3>
-          <p style="font-size:13px;margin:0;">UI8/Envato — робочі файли. Dribbble/Pinterest/Awwwards — ідеї для повторення вручну.</p>
-        </div>
-        <div style="margin-bottom:14px;">
-          <h3 style="font-size:13px;margin-bottom:4px;">02 · Кюрація vs обсяг</h3>
-          <p style="font-size:13px;margin:0;">UI8 — мала але відібрана. Envato — мільйони з низькою планкою. Kiwi йде за UI8.</p>
-        </div>
-        <div>
-          <h3 style="font-size:13px;margin-bottom:4px;">03 · Несумісні бізнес-моделі</h3>
-          <p style="font-size:13px;margin:0;">Kiwi єдиний, хто комбінує підписку без лімітів + разову покупку для однієї аудиторії.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── BENCHMARK ─── -->
-<section id="benchmark">
-  <div class="wrap">
-    <div class="section-label">Розділ 02</div>
-    <h2>Бенчмарк візуальної конверсії</h2>
-    <p>Вимір: хто найкраще візуально комунікує «тут багато корисного, і я хочу це купити» — за перші 5 секунд?</p>
-
-    <!-- Criteria -->
-    <div class="table-wrap" style="margin-bottom:28px;">
-      <table>
-        <thead>
-          <tr><th>#</th><th>Критерій</th><th>Що вимірюємо</th></tr>
-        </thead>
+        <thead><tr><th>#</th><th>Критерій</th><th>Що вимірюємо</th></tr></thead>
         <tbody>
           <tr><td>C1</td><td>3-секундний тест</td><td>Зрозуміло без читання: що це, для кого, навіщо реєструватись</td></tr>
           <tr><td>C2</td><td>Щільність above the fold</td><td>Кількість якісних превʼю без жодного скролу</td></tr>
@@ -474,367 +394,360 @@
           <tr><td>C5</td><td>Соціальні докази</td><td>Кількість, якість і розміщення сигналів довіри</td></tr>
           <tr><td>C6</td><td>Масштаб бібліотеки</td><td>Чи відчуває користувач «тут є ВСЕ що мені треба»</td></tr>
           <tr><td>C7</td><td>Візуальна узгодженість</td><td>Типографіка, колір, ієрархія, ритм</td></tr>
-          <tr><td>C8</td><td>Friction до першої цінності</td><td>Кількість кроків/кліків до першого «вау»-моменту</td></tr>
+          <tr><td>C8</td><td>Friction до першої цінності</td><td>Кроків/кліків до першого «вау»-моменту</td></tr>
         </tbody>
       </table>
     </div>
+  </div>
 
-    <!-- Scores -->
+  <div id="bench-scores">
+    <h3 style="margin:22px 0 4px;">Оцінки (1–5)</h3>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Критерій</th>
-            <th style="text-align:center">Framer</th>
-            <th style="text-align:center">Unsplash</th>
-            <th style="text-align:center">UI8</th>
-            <th style="text-align:center">Mobbin</th>
-            <th style="text-align:center">Dribbble</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Критерій</th><th style="text-align:center">Framer</th><th style="text-align:center">Unsplash</th><th style="text-align:center">UI8</th><th style="text-align:center">Mobbin</th><th style="text-align:center">Dribbble</th></tr></thead>
         <tbody>
-          <tr>
-            <td>C1 · 3-сек тест</td>
-            <td class="score s5">5</td><td class="score s5">5</td><td class="score s4">4</td><td class="score s4">4</td><td class="score s3">3</td>
-          </tr>
-          <tr>
-            <td>C2 · Щільність above fold</td>
-            <td class="score s4">4</td><td class="score s5">5</td><td class="score s4">4</td><td class="score s4">4</td><td class="score s4">4</td>
-          </tr>
-          <tr>
-            <td>C3 · Якість превʼю</td>
-            <td class="score s5">5</td><td class="score s5">5</td><td class="score s5">5</td><td class="score s4">4</td><td class="score s4">4</td>
-          </tr>
-          <tr>
-            <td>C4 · Ієрархія CTA</td>
-            <td class="score s5">5</td><td class="score s4">4</td><td class="score s4">4</td><td class="score s4">4</td><td class="score s2">2</td>
-          </tr>
-          <tr>
-            <td>C5 · Соціальні докази</td>
-            <td class="score s3">3</td><td class="score s4">4</td><td class="score s4">4</td><td class="score s5">5</td><td class="score s4">4</td>
-          </tr>
-          <tr>
-            <td>C6 · Масштаб бібліотеки</td>
-            <td class="score s4">4</td><td class="score s5">5</td><td class="score s4">4</td><td class="score s5">5</td><td class="score s3">3</td>
-          </tr>
-          <tr>
-            <td>C7 · Візуальна узгодженість</td>
-            <td class="score s5">5</td><td class="score s5">5</td><td class="score s5">5</td><td class="score s4">4</td><td class="score s3">3</td>
-          </tr>
-          <tr>
-            <td>C8 · Friction до цінності</td>
-            <td class="score s5">5</td><td class="score s5">5</td><td class="score s3">3</td><td class="score s3">3</td><td class="score s4">4</td>
-          </tr>
-          <tr class="total-row">
-            <td>TOTAL / 40</td>
-            <td class="score">36</td>
-            <td class="score best">38</td>
-            <td class="score">33</td>
-            <td class="score">33</td>
-            <td class="score">27</td>
-          </tr>
+          <tr><td>C1 · 3-сек тест</td><td class="score s5">5</td><td class="score s5">5</td><td class="score s4">4</td><td class="score s4">4</td><td class="score s3">3</td></tr>
+          <tr><td>C2 · Щільність above fold</td><td class="score s4">4</td><td class="score s5">5</td><td class="score s4">4</td><td class="score s4">4</td><td class="score s4">4</td></tr>
+          <tr><td>C3 · Якість превʼю</td><td class="score s5">5</td><td class="score s5">5</td><td class="score s5">5</td><td class="score s4">4</td><td class="score s4">4</td></tr>
+          <tr><td>C4 · Ієрархія CTA</td><td class="score s5">5</td><td class="score s4">4</td><td class="score s4">4</td><td class="score s4">4</td><td class="score s2">2</td></tr>
+          <tr><td>C5 · Соціальні докази</td><td class="score s3">3</td><td class="score s4">4</td><td class="score s4">4</td><td class="score s5">5</td><td class="score s4">4</td></tr>
+          <tr><td>C6 · Масштаб бібліотеки</td><td class="score s4">4</td><td class="score s5">5</td><td class="score s4">4</td><td class="score s5">5</td><td class="score s3">3</td></tr>
+          <tr><td>C7 · Візуальна узгодженість</td><td class="score s5">5</td><td class="score s5">5</td><td class="score s5">5</td><td class="score s4">4</td><td class="score s3">3</td></tr>
+          <tr><td>C8 · Friction до цінності</td><td class="score s5">5</td><td class="score s5">5</td><td class="score s3">3</td><td class="score s3">3</td><td class="score s4">4</td></tr>
+          <tr class="total-row"><td>TOTAL / 40</td><td class="score">36</td><td class="score best">38</td><td class="score">33</td><td class="score">33</td><td class="score">27</td></tr>
         </tbody>
       </table>
     </div>
+    <div class="bench-cards">
+      <div class="bench-card"><div class="bench-head"><h3 style="font-size:14px;">Unsplash</h3><span class="bench-score" style="color:var(--accent);">38</span></div><p style="font-size:13px;margin:0;">Еталон. Пошук у центрі героя, одразу сітка. Unsplash+ через lock-іконки — не нав'язливо але очевидно. Нульова friction.</p></div>
+      <div class="bench-card"><div class="bench-head"><h3 style="font-size:14px;">Framer Templates</h3><span class="bench-score" style="color:var(--blue);">36</span></div><p style="font-size:13px;margin:0;">Герой — живі превʼю без пояснень. «Use template» — один клік. Слабкість: мінімум соціальних доказів.</p></div>
+      <div class="bench-card"><div class="bench-head"><h3 style="font-size:14px;">UI8 · Mobbin</h3><span class="bench-score" style="color:var(--yellow);">33</span></div><p style="font-size:13px;margin:0;">UI8: преміальний стиль, але підписка захована. Mobbin: «300k+ screens» у заголовку — сильно, але контент за логіном.</p></div>
+      <div class="bench-card danger"><div class="bench-head"><h3 style="font-size:14px;">Dribbble</h3><span class="bench-score" style="color:var(--red);">27</span></div><p style="font-size:13px;margin:0;">Антиприклад: два конкуруючих JTBD на одній сторінці. Жодного чіткого CTA. Не змішуй аудиторії.</p></div>
+    </div>
+  </div>
+</div>
 
-    <!-- Comments -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <h3 style="font-size:14px;">Unsplash</h3>
-          <span style="font-size:20px;font-weight:800;color:var(--accent);font-family:var(--mono);">38</span>
-        </div>
-        <p style="font-size:13px;margin:0;">Еталон. Пошук у центрі героя, одразу масонрі-сітка. Unsplash+ виникає органічно через lock-іконки — не нав'язливо але очевидно. Нульова friction: перше «вау» ще до першого скролу.</p>
+<!-- ═══ PATTERNS ═══ -->
+<div class="section" id="patterns">
+  <div class="section-label">Розділ 03</div>
+  <h2>5 патернів розміщення карток</h2>
+  <p>Принципово різні UX-підходи — не варіації. Кожен: як працює / де / коли підходить / коли ламається.</p>
+
+  <div class="patterns">
+    <div class="pattern-card">
+      <div><div class="p-num">01</div><div class="p-title">Masonry Grid</div><div class="p-sub">змінна висота</div><div class="p-tags"><span class="tag">Pinterest</span><span class="tag">Behance</span><span class="tag">Unsplash</span></div></div>
+      <div class="p-meta"><b>Як працює</b>Картки у N колонок, висота кожної — за контентом. Немає фіксованих рядів.<b>Коли підходить</b>Різні пропорції контенту. Режим натхнення, не порівняння. Важлива щільність.</div>
+      <div class="verdict-wrap">
+        <div class="verdict verdict-ok"><div class="v-label">Працює</div><p>Фото, ілюстрації — будь-який контент зі змінним aspect ratio.</p></div>
+        <div class="verdict verdict-bad"><div class="v-label">Ламається</div><p>Ціна і CTA не вирівнюються. При однаковому ratio — нічого не додає.</p></div>
       </div>
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <h3 style="font-size:14px;">Framer Templates</h3>
-          <span style="font-size:20px;font-weight:800;color:#60a5fa;font-family:var(--mono);">36</span>
-        </div>
-        <p style="font-size:13px;margin:0;">Герой — живі превʼю шаблонів без слова пояснення. "Use template" — один клік. Слабкість: мінімум соціальних доказів, немає лічильника завантажень.</p>
+    </div>
+    <div class="pattern-card">
+      <div><div class="p-num">02</div><div class="p-title">Uniform Fixed Grid</div><div class="p-sub">рівна сітка</div><div class="p-tags"><span class="tag">UI8</span><span class="tag">Framer</span><span class="tag">Shopify</span></div></div>
+      <div class="p-meta"><b>Як працює</b>Всі картки однакового розміру, жорсткі колонки. Метадані вирівняні під кожною.<b>Коли підходить</b>Продукти порівнюються. Стабільний aspect ratio. Ціна і CTA критичні.</div>
+      <div class="verdict-wrap">
+        <div class="verdict verdict-ok"><div class="v-label">Працює</div><p>Маркетплейси файлів, шаблони. Швидке сканування: превʼю → ціна → інструмент.</p></div>
+        <div class="verdict verdict-bad"><div class="v-label">Ламається</div><p>Різні пропорції — зрізається. Немає способу виділити featured.</p></div>
       </div>
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <h3 style="font-size:14px;">UI8 · Mobbin</h3>
-          <span style="font-size:20px;font-weight:800;color:var(--warn);font-family:var(--mono);">33</span>
-        </div>
-        <p style="font-size:13px;margin:0;">UI8: преміальний стиль, але підписка захована — головна CTA «Add to Cart». Mobbin: «300k+ screens» у заголовку — сильний масштаб, але контент за логіном — висока friction.</p>
+    </div>
+    <div class="pattern-card">
+      <div><div class="p-num">03</div><div class="p-title">Editorial Hero + Grid</div><div class="p-sub">редакційна ієрархія</div><div class="p-tags"><span class="tag">App Store</span><span class="tag">Awwwards</span><span class="tag">Webflow</span></div></div>
+      <div class="p-meta"><b>Як працює</b>1–2 великі featured-картки (hero) → решта у стандартній сітці нижче.<b>Коли підходить</b>Є редакційна команда. Платформа хоче передати «ми відібрали найкраще».</div>
+      <div class="verdict-wrap">
+        <div class="verdict verdict-ok"><div class="v-label">Працює</div><p>Передає довіру. Hero-слот — потенційно promoted placement.</p></div>
+        <div class="verdict verdict-bad"><div class="v-label">Ламається</div><p>Без редакції hero виглядає випадковим. UGC борються за featured-місце.</p></div>
       </div>
-      <div style="background:var(--bg2);border:1px solid rgba(248,113,113,.2);border-radius:var(--radius);padding:18px 20px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <h3 style="font-size:14px;">Dribbble</h3>
-          <span style="font-size:20px;font-weight:800;color:var(--danger);font-family:var(--mono);">27</span>
-        </div>
-        <p style="font-size:13px;margin:0;">Антиприклад: два конкуруючих JTBD (натхнення + найм) на одній сторінці. Жодного чіткого «підпишись і отримай X». Не змішуй аудиторії на одному екрані.</p>
+    </div>
+    <div class="pattern-card">
+      <div><div class="p-num">04</div><div class="p-title">Netflix Row Model</div><div class="p-sub">горизонтальні карусельні ряди</div><div class="p-tags"><span class="tag">Netflix</span><span class="tag">Spotify</span><span class="tag">Envato</span></div></div>
+      <div class="p-meta"><b>Як працює</b>Контент у горизонтальних рядах по категоріях. Кожен ряд скролиться незалежно.<b>Коли підходить</b>Багато категорій. Підписна модель. Ширина бібліотеки важлива.</div>
+      <div class="verdict-wrap">
+        <div class="verdict verdict-ok"><div class="v-label">Працює</div><p>Передає масштаб бібліотеки одним екраном. Ідеально для subscription upsell.</p></div>
+        <div class="verdict verdict-bad"><div class="v-label">Ламається</div><p>Мала бібліотека — ряди напівпорожні. Горизонтальний скрол ховає контент.</p></div>
+      </div>
+    </div>
+    <div class="pattern-card">
+      <div><div class="p-num">05</div><div class="p-title">List View + Preview</div><div class="p-sub">горизонтальний список</div><div class="p-tags"><span class="tag">Gumroad</span><span class="tag">B2B tools</span></div></div>
+      <div class="p-meta"><b>Як працює</b>Мінятюра ліворуч, метадані праворуч: назва, ціна, інструмент, теги, CTA.<b>Коли підходить</b>Метадані критичні. B2B, купівля за специфікацією.</div>
+      <div class="verdict-wrap">
+        <div class="verdict verdict-ok"><div class="v-label">Працює</div><p>Максимум інформації без кліку. Порівняння 3+ атрибутів одночасно.</p></div>
+        <div class="verdict verdict-bad"><div class="v-label">Ламається</div><p>Різко зменшує площу превʼю. Погано для browsing і натхнення.</p></div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ─── PATTERNS ─── -->
-<section id="patterns">
-  <div class="wrap">
-    <div class="section-label">Розділ 03</div>
-    <h2>5 патернів розміщення карток</h2>
-    <p>Принципово різні UX-підходи — не варіації. Кожен: як працює / де / коли підходить / коли ламається.</p>
+<!-- ═══ CONCLUSIONS ═══ -->
+<div class="section" id="conclusions">
+  <div class="section-label">Розділ 04</div>
+  <h2>Висновки для Kiwi MVP</h2>
 
-    <div class="patterns">
-
-      <div class="pattern-card">
-        <div class="pattern-name">
-          <span class="pattern-num">01</span>
-          <span class="pattern-title">Masonry Grid</span>
-          <span class="pattern-sub">змінна висота</span>
-          <div style="margin-top:12px;">
-            <span class="tag">Pinterest</span>
-            <span class="tag">Behance</span>
-            <span class="tag">Unsplash</span>
-          </div>
-        </div>
-        <div class="pattern-meta">
-          <strong>Як працює</strong>
-          Картки розміщуються у N колонок, висота кожної — за контентом. Немає фіксованих рядів і горизонтального вирівнювання.
-          <strong>Коли підходить</strong>
-          Контент з різними пропорціями (портрет/пейзаж/квадрат). Режим натхнення — не порівняння. Важлива щільність: показати максимум.
-        </div>
-        <div class="pattern-verdict">
-          <div class="verdict-block verdict-ok">
-            <div class="verdict-label">Працює</div>
-            <p>Фото, ілюстрації, мудборди — будь-який контент зі змінним aspect ratio.</p>
-          </div>
-          <div class="verdict-block verdict-bad">
-            <div class="verdict-label">Ламається</div>
-            <p>Ціна і CTA не вирівнюються між картками. При однаковому ratio — нічого не додає. Погано конвертує.</p>
-          </div>
+  <div id="card-decision">
+    <h3 style="margin:22px 0 12px;">Рішення по патерну карток</h3>
+    <div class="card-grid3">
+      <div class="card" style="border-color:rgba(74,222,128,.3);">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--green);margin-bottom:8px;">НАЙКРАЩЕ</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:12px;">Uniform Fixed Grid</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="background:var(--bg3);border-radius:6px;padding:9px 11px;"><div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:3px;">ПРИЧИНА 1 · Формат</div><p style="font-size:12px;margin:0;">Лендінги — ландшафтний 16:9. Fixed grid = оптимальне використання простору.</p></div>
+          <div style="background:var(--bg3);border-radius:6px;padding:9px 11px;"><div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:3px;">ПРИЧИНА 2 · Порівняння</div><p style="font-size:12px;margin:0;">Превʼю → ціна → інструмент → автор. Рівна сітка дає точки кріплення.</p></div>
+          <div style="background:var(--bg3);border-radius:6px;padding:9px 11px;"><div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:3px;">ПРИЧИНА 3 · Швидкість</div><p style="font-size:12px;margin:0;">9 продуктів above the fold за 3 секунди. Головна ціль: скоротити час пошуку.</p></div>
         </div>
       </div>
-
-      <div class="pattern-card">
-        <div class="pattern-name">
-          <span class="pattern-num">02</span>
-          <span class="pattern-title">Uniform Fixed Grid</span>
-          <span class="pattern-sub">рівна сітка</span>
-          <div style="margin-top:12px;">
-            <span class="tag">UI8</span>
-            <span class="tag">Framer</span>
-            <span class="tag">Shopify</span>
-          </div>
-        </div>
-        <div class="pattern-meta">
-          <strong>Як працює</strong>
-          Всі картки однакового розміру, жорсткі колонки і ряди. Метадані (ціна, тег, автор) вирівняні під кожною карткою.
-          <strong>Коли підходить</strong>
-          Продукти порівнюються між собою. Стабільний aspect ratio контенту. Ціна і CTA критичні на картці.
-        </div>
-        <div class="pattern-verdict">
-          <div class="verdict-block verdict-ok">
-            <div class="verdict-label">Працює</div>
-            <p>Маркетплейси файлів, теми, шаблони. Швидке сканування по горизонталі: превʼю → ціна → інструмент.</p>
-          </div>
-          <div class="verdict-block verdict-bad">
-            <div class="verdict-label">Ламається</div>
-            <p>Контент з різними пропорціями — зрізається. Немає способу виділити featured без злому сітки.</p>
-          </div>
-        </div>
+      <div class="card" style="border-color:rgba(245,158,11,.3);">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--yellow);margin-bottom:8px;">ДРУГИЙ ВИБІР: якщо є редакція</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;">Editorial Hero + Grid</div>
+        <p style="font-size:13px;margin:0;">Якщо Kiwi запускає «Краще цього тижня» — 1–2 hero-картки + звична сітка. Комунікує кюрацію і довіру. Hero-слот = promoted placement для авторів.</p>
       </div>
-
-      <div class="pattern-card">
-        <div class="pattern-name">
-          <span class="pattern-num">03</span>
-          <span class="pattern-title">Editorial Hero + Grid</span>
-          <span class="pattern-sub">редакційна ієрархія</span>
-          <div style="margin-top:12px;">
-            <span class="tag">App Store</span>
-            <span class="tag">Awwwards</span>
-            <span class="tag">Webflow</span>
-          </div>
-        </div>
-        <div class="pattern-meta">
-          <strong>Як працює</strong>
-          1–2 великі featured-картки (hero) → решта у стандартній сітці нижче. Розмір = пріоритет і кюрація.
-          <strong>Коли підходить</strong>
-          Є редакційна команда з editorial picks. Платформа хоче передати "ми відібрали найкраще". Підписна модель.
-        </div>
-        <div class="pattern-verdict">
-          <div class="verdict-block verdict-ok">
-            <div class="verdict-label">Працює</div>
-            <p>Передає довіру до платформи. Hero-слот — потенційно promoted placement для авторів.</p>
-          </div>
-          <div class="verdict-block verdict-bad">
-            <div class="verdict-label">Ламається</div>
-            <p>Без живої редакції hero виглядає випадковим. UGC: автори борються за featured-місце.</p>
-          </div>
-        </div>
+      <div class="card" style="border-color:rgba(248,113,113,.3);">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--red);margin-bottom:8px;">НЕ ПІДХОДИТЬ</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;">Masonry Grid</div>
+        <p style="font-size:13px;margin:0;">Скріни 16:9 → masonry нічого не додає. Ламає порівняння ціни. Сигналізує «натхнення», а не «купівля».</p>
       </div>
-
-      <div class="pattern-card">
-        <div class="pattern-name">
-          <span class="pattern-num">04</span>
-          <span class="pattern-title">Netflix Row Model</span>
-          <span class="pattern-sub">горизонтальні карусельні ряди</span>
-          <div style="margin-top:12px;">
-            <span class="tag">Netflix</span>
-            <span class="tag">Spotify</span>
-            <span class="tag">Envato</span>
-          </div>
-        </div>
-        <div class="pattern-meta">
-          <strong>Як працює</strong>
-          Контент розбитий по тематичних горизонтальних рядах (Landing Pages / Trending / New / By tool). Кожен ряд скролиться незалежно.
-          <strong>Коли підходить</strong>
-          Багато категорій із чіткими межами. Підписна модель — «тут є все». Ширина бібліотеки важлива.
-        </div>
-        <div class="pattern-verdict">
-          <div class="verdict-block verdict-ok">
-            <div class="verdict-label">Працює</div>
-            <p>Передає масштаб бібліотеки одним екраном. Ідеально для subscription upsell.</p>
-          </div>
-          <div class="verdict-block verdict-bad">
-            <div class="verdict-label">Ламається</div>
-            <p>Мала бібліотека — ряди напівпорожні. Одна категорія — надлишкова структура. Горизонтальний скрол ховає контент.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="pattern-card">
-        <div class="pattern-name">
-          <span class="pattern-num">05</span>
-          <span class="pattern-title">List View + Preview</span>
-          <span class="pattern-sub">горизонтальний список</span>
-          <div style="margin-top:12px;">
-            <span class="tag">Gumroad</span>
-            <span class="tag">B2B tools</span>
-            <span class="tag">Doc libs</span>
-          </div>
-        </div>
-        <div class="pattern-meta">
-          <strong>Як працює</strong>
-          Кожен продукт — горизонтальний рядок: мінятюра ліворуч, праворуч — назва, ціна, інструмент, теги, автор, CTA. Все метадані без кліку.
-          <strong>Коли підходить</strong>
-          Метадані критичні для рішення (ціна/інструмент/ліцензія). B2B, купівля за специфікацією.
-        </div>
-        <div class="pattern-verdict">
-          <div class="verdict-block verdict-ok">
-            <div class="verdict-label">Працює</div>
-            <p>Максимум інформації без переходу в деталі. Ідеально для порівняння 3+ атрибутів одночасно.</p>
-          </div>
-          <div class="verdict-block verdict-bad">
-            <div class="verdict-label">Ламається</div>
-            <p>Візуальний продукт: різко зменшує площу превʼю. Режим browsing — погано підходить для натхнення.</p>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
-</section>
 
-<!-- ─── CONCLUSIONS ─── -->
-<section id="conclusions">
-  <div class="wrap">
-    <div class="section-label">Розділ 04</div>
-    <h2>Висновки для Kiwi MVP</h2>
-
-    <!-- Pattern decision -->
-    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin:28px 0 16px;">
-      <div class="section-label" style="margin-bottom:16px;">Патерн карток для MVP</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
-        <div style="border-right:1px solid var(--border);padding-right:16px;">
-          <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--accent2);margin-bottom:8px;">НАЙКРАЩЕ</div>
-          <div style="font-size:15px;font-weight:700;margin-bottom:12px;">Uniform Fixed Grid</div>
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
-              <div style="font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--accent2);margin-bottom:4px;">ПРИЧИНА 1 · Формат диктує</div>
-              <p style="font-size:12px;margin:0;">Лендінги та вебсайти — завжди ландшафтний скрін 16:9. При однаковому ratio masonry нічого не дає — fixed grid використовує простір оптимально.</p>
-            </div>
-            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
-              <div style="font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--accent2);margin-bottom:4px;">ПРИЧИНА 2 · Дизайнер порівнює</div>
-              <p style="font-size:12px;margin:0;">При купівлі шаблону очі йдуть: превʼю → ціна → інструмент → автор. Рівна сітка дає точки кріплення — ці елементи вирівняні між всіма картками.</p>
-            </div>
-            <div style="background:var(--bg3);border-radius:6px;padding:10px 12px;">
-              <div style="font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--accent2);margin-bottom:4px;">ПРИЧИНА 3 · Швидке сканування</div>
-              <p style="font-size:12px;margin:0;">9 продуктів above the fold за 3 секунди. Це і є головна ціль Kiwi: «скоротити час пошуку». Розмір і відступи — єдине дизайн-рішення.</p>
-            </div>
-          </div>
-        </div>
-        <div style="border-right:1px solid var(--border);padding-right:16px;">
-          <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--warn);margin-bottom:8px;">ДРУГИЙ ВИБІР: якщо є редакція</div>
-          <div style="font-size:15px;font-weight:700;margin-bottom:8px;">Editorial Hero + Grid</div>
-          <p style="font-size:13px;margin:0;">Якщо Kiwi запускає регулярні добірки «Краще цього тижня» — 1–2 hero-картки + звична сітка. Комунікує кюрацію і довіру. Hero-слот = promoted placement для авторів.</p>
-        </div>
-        <div>
-          <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--danger);margin-bottom:8px;">НЕ ПІДХОДИТЬ</div>
-          <div style="font-size:15px;font-weight:700;margin-bottom:8px;">Masonry Grid</div>
-          <p style="font-size:13px;margin:0;">Скріни лендінгів мають однаковий ratio — masonry нічого не додає. Ламає порівняння: ціна першої картки вища за сусідню на 40px. Сигналізує «натхнення», а не «купівля».</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Top-3 mechanisms -->
-    <div class="section-label" style="margin:32px 0 16px;">Топ-3 конверсійних механізми → MVP</div>
+  <div id="mechanisms">
+    <h3 style="margin:32px 0 12px;">Топ-3 конверсійних механізми → MVP</h3>
     <div class="takeaways">
-      <div class="takeaway">
-        <div class="takeaway-num">01</div>
-        <h3>Content-first hero без слів</h3>
-        <p>Перший екран — сама сітка продуктів, без банера і пояснень. Дизайнер розуміє цінність очима за 2 секунди. Джерело: Unsplash + Framer.</p>
-      </div>
-      <div class="takeaway">
-        <div class="takeaway-num">02</div>
-        <h3>Lock-icon gate замість login wall</h3>
-        <p>Весь каталог відкритий без реєстрації. Subscribe-момент — тільки при натисканні Download, коли вже є емоція. Джерело: Unsplash.</p>
-      </div>
-      <div class="takeaway">
-        <div class="takeaway-num">03</div>
-        <h3>Масштаб числом у hero</h3>
-        <p>«500+ landing pages · Figma, Sketch, XD» — лічильники під пошуком. Число продає підписку краще за будь-який копірайт. Джерело: Mobbin.</p>
-      </div>
+      <div class="takeaway"><div class="t-num">01</div><h3>Content-first hero без слів</h3><p>Перший екран — сама сітка продуктів. Дизайнер розуміє цінність очима за 2 секунди. Джерело: Unsplash + Framer.</p></div>
+      <div class="takeaway"><div class="t-num">02</div><h3>Lock-icon gate замість login wall</h3><p>Весь каталог відкритий без реєстрації. Subscribe-момент — тільки при Download, коли вже є емоція. Джерело: Unsplash.</p></div>
+      <div class="takeaway"><div class="t-num">03</div><h3>Масштаб числом у hero</h3><p>«500+ landing pages · Figma, Sketch, XD» — лічильники під пошуком. Число продає підписку. Джерело: Mobbin.</p></div>
     </div>
+  </div>
 
-    <!-- Anti-pattern -->
-    <div class="section-label" style="margin:32px 0 16px;">Що НЕ спрацює</div>
+  <div style="margin-top:24px;">
+    <h3 style="margin-bottom:12px;">Що НЕ спрацює</h3>
     <div class="antipattern">
-      <div class="anti-icon">✕</div>
+      <div class="anti-ico">✕</div>
       <div>
         <h3>Author PRO-badge як сигнал якості</h3>
-        <p>Dribbble-патерн: бейдж «PRO» поруч з іменем автора на кожній картці. Dribbble продає <em>талант</em> — badge означає «варто найняти». Kiwi продає <em>файл</em> — покупцю байдуже, чи автор PRO чи ні. Питання одне: «чи підійде мені цей шаблон?»</p>
-        <p>Ризик: увага піде на соціальний статус замість якості контенту. Шум без конверсійного ефекту.</p>
-        <p style="color:var(--accent2);margin:0;">Замість: кюраторська позначка від редакції Kiwi — «Editor's Pick» або «Top Rated» — це сигнал якості продукту, а не статусу автора.</p>
+        <p>Dribbble продає <em>талант</em> — PRO означає «варто найняти». Kiwi продає <em>файл</em> — «чи підійде мені цей шаблон?» Увага піде на соціальний статус замість якості контенту.</p>
+        <p style="color:var(--green);margin:0;">Замість: «Editor's Pick» від команди Kiwi — сигнал якості продукту, а не автора.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap-box" id="gap">
+    <div class="section-label" style="margin-bottom:10px;">Gap ринку</div>
+    <p>Немає жодного продукту, який одночасно <strong>кюрований</strong> + <strong>tool-agnostic</strong> + <strong>підписка без лімітів</strong> + <strong>робочі файли</strong> (не скриншоти). Це і є вікно для Kiwi.</p>
+  </div>
+
+  <h3 style="margin:28px 0 4px;">Що і від кого беремо</h3>
+  <div class="table-wrap">
+    <table class="borrow-table">
+      <thead><tr><th>Механізм</th><th>Від кого</th></tr></thead>
+      <tbody>
+        <tr><td>Подвійне превʼю на hover картки</td><td>UI8</td></tr>
+        <tr><td>Content-first hero без тексту</td><td>Unsplash + Framer</td></tr>
+        <tr><td>Lock-icon gate при завантаженні</td><td>Unsplash</td></tr>
+        <tr><td>Масштаб бібліотеки числом у hero</td><td>Mobbin</td></tr>
+        <tr><td>Кольоровий + технологічний фільтр</td><td>Dribbble + Awwwards</td></tr>
+        <tr><td>Featured / Trending / Recent таби</td><td>Envato</td></tr>
+        <tr><td>«Trusted by» brand-логотипи</td><td>Envato</td></tr>
+        <tr><td>Editor's Pick замість author PRO-badge</td><td>Awwwards (адаптовано)</td></tr>
+        <tr><td>Масонрі скрол (ілюстрації, іконки — фаза 2)</td><td>Pinterest</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ PERSONAS ═══ -->
+<div class="section" id="personas">
+  <div class="section-label">Розділ 05</div>
+  <h2>Персони</h2>
+  <p>1 персона валідована інтерв'ю, 2 — гіпотетичні. Джерело зазначено для кожного блоку.</p>
+
+  <div class="validation-bar">
+    <div class="v-dot v-dot-real"></div><span class="v-legend">Зелений = валідовано (Інтерв'ю #1)</span>
+    <div style="width:16px;"></div>
+    <div class="v-dot v-dot-hypo"></div><span class="v-legend">Жовтий = гіпотеза, потребує перевірки</span>
+  </div>
+
+  <!-- PERSONA 1 PRIMARY -->
+  <div class="persona-card persona-primary" id="persona-curator">
+    <div class="persona-header">
+      <div class="persona-avatar avatar-primary">🎨</div>
+      <div class="persona-title-block">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="persona-role">Куратор</div>
+          <span class="badge badge-primary">PRIMARY</span>
+        </div>
+        <div class="persona-desc">Senior freelance designer · 5+ років · підписник UI8</div>
+        <p class="persona-why">Єдина персона, підтверджена реальними даними (Інтерв'ю #1). Найвищоцінніший тип: щоденна звичка → висока retention, power user → word-of-mouth.</p>
       </div>
     </div>
 
-    <!-- Market gap -->
-    <div class="gap-box">
-      <div class="section-label" style="margin-bottom:12px;">Gap ринку</div>
-      <p>Немає жодного продукту, який одночасно <strong>кюрований</strong> + <strong>tool-agnostic</strong> + <strong>підписка без лімітів</strong> + <strong>робочі файли для використання</strong> (не скриншоти для натхнення). Це і є вікно для Kiwi.</p>
+    <div class="persona-grid">
+      <div class="persona-block pb-jobs">
+        <div class="pb-label">Jobs to be done</div>
+        <div class="pb-jobs-item"><span>📅</span><span>Щодня моніторить нові ресурси — будує бібліотеку «на майбутнє» <em style="color:var(--muted);font-size:11px;">· Інтерв'ю #1</em></span></div>
+        <div class="pb-jobs-item"><span>🔍</span><span>Шукає стиль/настрій під проект, а не категорію <em style="color:var(--muted);font-size:11px;">· Інтерв'ю #1</em></span></div>
+        <div class="pb-jobs-item"><span>⚡</span><span>Скачує одразу, якщо є підписка — без зайвих кліків <em style="color:var(--muted);font-size:11px;">· Інтерв'ю #1</em></span></div>
+        <div class="pb-jobs-item"><span>⭐</span><span>Зберігає в обране для повернення пізніше <em style="color:var(--muted);font-size:11px;">· Інтерв'ю #1</em></span></div>
+      </div>
+
+      <div class="persona-block pb-pains">
+        <div class="pb-label">Болі</div>
+        <div class="pb-pain-item">
+          <div class="pain-text">Пошук по стилю/настрою не працює — «нудний стиль» не знаходить нічого</div>
+          <div class="pain-src">✅ Інтерв'ю #1 · Де: UI8</div>
+        </div>
+        <div class="pb-pain-item">
+          <div class="pain-text">Обкладинка обіцяє якість, якої нема у файлі</div>
+          <div class="pain-src">✅ Інтерв'ю #1 · Де: UI8</div>
+        </div>
+        <div class="pb-pain-item">
+          <div class="pain-text">Занадто багато контенту без смислового фільтру</div>
+          <div class="pain-src">⚠️ Гіпотеза · Де: Envato</div>
+        </div>
+      </div>
+
+      <div class="persona-block pb-trust" style="grid-column:1/-1;">
+        <div class="pb-label">Тригери довіри</div>
+        <div class="trust-row">
+          <div class="trust-good"><div class="trust-label">Переконує</div>Реальні екрани з файлу (не лише hero-shot) · Інтерв'ю #1</div>
+          <div class="trust-bad"><div class="trust-label">Відлякує</div>Обкладинка ≠ реальний дизайн · Інтерв'ю #1</div>
+          <div class="trust-good"><div class="trust-label">Переконує</div>Підписка = одразу скачати, без вагань · Інтерв'ю #1</div>
+          <div class="trust-bad"><div class="trust-label">Відлякує</div>Купа посереднього контенту · Гіпотеза</div>
+        </div>
+      </div>
     </div>
 
-    <!-- Borrow table -->
-    <div class="section-label" style="margin:32px 0 16px;">Що і від кого беремо</div>
-    <div class="table-wrap">
-      <table class="borrow-table">
-        <thead>
-          <tr><th>Механізм</th><th>Від кого</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Подвійне превʼю на hover картки</td><td>UI8</td></tr>
-          <tr><td>Content-first hero без тексту</td><td>Unsplash + Framer</td></tr>
-          <tr><td>Lock-icon gate при завантаженні</td><td>Unsplash</td></tr>
-          <tr><td>Масштаб бібліотеки числом у hero</td><td>Mobbin</td></tr>
-          <tr><td>Кольоровий + технологічний фільтр</td><td>Dribbble + Awwwards</td></tr>
-          <tr><td>Featured / Trending / Recent таби</td><td>Envato</td></tr>
-          <tr><td>«Trusted by» brand-логотипи</td><td>Envato</td></tr>
-          <tr><td>Editor's Pick замість author PRO-badge</td><td>Awwwards (адаптовано)</td></tr>
-          <tr><td>Нескінченний скрол масонрі (ілюстрації, іконки — фаза 2)</td><td>Pinterest</td></tr>
-        </tbody>
-      </table>
+    <div class="quote-block" style="margin-top:16px;">
+      <div class="quote-text">«Не міг знайти нудний стиль — за запитами їх просто не було, дизайну під цю тему не існувало»</div>
+      <div class="quote-src">✅ Реальна цитата · Інтерв'ю #1 · Червень 2026</div>
     </div>
   </div>
-</section>
+
+  <!-- PERSONA 2 SECONDARY -->
+  <div class="persona-card persona-secondary" id="persona-deadline">
+    <div class="persona-header">
+      <div class="persona-avatar avatar-secondary">⏱</div>
+      <div class="persona-title-block">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="persona-role">Мисливець на дедлайн</div>
+          <span class="badge badge-hypo">ГІПОТЕЗА</span>
+        </div>
+        <div class="persona-desc">Junior / mid designer · 1–3 роки · без постійної підписки</div>
+        <p class="persona-why">Виведена з брифу (junior у цільовій аудиторії) і конкурентного ландшафту. Жодних прямих даних — потребує валідації.</p>
+      </div>
+    </div>
+
+    <div class="persona-grid">
+      <div class="persona-block pb-jobs">
+        <div class="pb-label">Jobs to be done</div>
+        <div class="pb-jobs-item"><span>🎯</span><span>Знайти «достатньо добре» швидко під конкретний проект <em style="color:var(--muted);font-size:11px;">· Гіпотеза</em></span></div>
+        <div class="pb-jobs-item"><span>👤</span><span>Показати клієнту 2–3 варіанти напрямку <em style="color:var(--muted);font-size:11px;">· Гіпотеза</em></span></div>
+        <div class="pb-jobs-item"><span>🎨</span><span>Адаптувати під бренд: кольори, шрифти, контент <em style="color:var(--muted);font-size:11px;">· Гіпотеза</em></span></div>
+      </div>
+
+      <div class="persona-block pb-pains">
+        <div class="pb-label">Болі</div>
+        <div class="pb-pain-item">
+          <div class="pain-text">Envato — забагато шуму, важко фільтрувати якість</div>
+          <div class="pain-src">⚠️ Гіпотеза · конкурентна інференція</div>
+        </div>
+        <div class="pb-pain-item">
+          <div class="pain-text">UI8 — дорого для разової покупки, підписка не виправдана</div>
+          <div class="pain-src">⚠️ Гіпотеза</div>
+        </div>
+        <div class="pb-pain-item">
+          <div class="pain-text">Figma Community — безкоштовно але ризик «generic»-вигляду</div>
+          <div class="pain-src">⚠️ Гіпотеза</div>
+        </div>
+      </div>
+
+      <div class="persona-block pb-trust" style="grid-column:1/-1;">
+        <div class="pb-label">Тригери довіри · всі гіпотетичні</div>
+        <div class="trust-row">
+          <div class="trust-good"><div class="trust-label">Переконує</div>Тег Figma видно одразу на картці</div>
+          <div class="trust-bad"><div class="trust-label">Відлякує</div>Незрозуміло який формат файлу</div>
+          <div class="trust-good"><div class="trust-label">Переконує</div>Ціна видна без кліку в деталі</div>
+          <div class="trust-bad"><div class="trust-label">Відлякує</div>Лише один preview-скрін</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-block hypo-quote" style="margin-top:16px;">
+      <div class="quote-text">«Я просто хочу знайти щось пристойне за годину, а не витрачати день на перебирання»</div>
+      <div class="quote-src">⚠️ Гіпотетична цитата · зовнішні відгуки недоступні (403/404)</div>
+    </div>
+  </div>
+
+  <!-- PERSONA 3 SECONDARY -->
+  <div class="persona-card persona-secondary" id="persona-ad">
+    <div class="persona-header">
+      <div class="persona-avatar avatar-secondary">🏢</div>
+      <div class="persona-title-block">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="persona-role">Арт-директор</div>
+          <span class="badge badge-hypo">ГІПОТЕЗА</span>
+        </div>
+        <div class="persona-desc">Senior designer / AD в агентстві · 7+ років · шукає для команди</div>
+        <p class="persona-why">Агентства є в брифі (CLAUDE.md), але жодних даних про їх поведінку немає. Повністю гіпотетична — потребує окремих інтерв'ю перед будь-якими продуктовими рішеннями.</p>
+      </div>
+    </div>
+
+    <div class="persona-grid">
+      <div class="persona-block pb-jobs">
+        <div class="pb-label">Jobs to be done · гіпотеза</div>
+        <div class="pb-jobs-item"><span>👥</span><span>Знайти і надіслати команді референс-напрямок</span></div>
+        <div class="pb-jobs-item"><span>💼</span><span>Виправдати витрати перед менеджментом</span></div>
+        <div class="pb-jobs-item"><span>📚</span><span>Побудувати спільну бібліотеку ресурсів команди</span></div>
+      </div>
+
+      <div class="persona-block pb-pains">
+        <div class="pb-label">Болі · гіпотеза</div>
+        <div class="pb-pain-item">
+          <div class="pain-text">Немає командних акаунтів / спільних колекцій</div>
+          <div class="pain-src">⚠️ Гіпотеза · UI8 і Envato — персональні підписки</div>
+        </div>
+        <div class="pb-pain-item">
+          <div class="pain-text">Ліцензійна невизначеність для клієнтських проектів</div>
+          <div class="pain-src">⚠️ Гіпотеза</div>
+        </div>
+      </div>
+
+      <div class="persona-block pb-trust" style="grid-column:1/-1;">
+        <div class="pb-label">Тригери довіри · гіпотеза</div>
+        <div class="trust-row">
+          <div class="trust-good"><div class="trust-label">Переконує</div>Чітка комерційна ліцензія</div>
+          <div class="trust-bad"><div class="trust-label">Відлякує</div>«Тільки для особистого використання»</div>
+          <div class="trust-good"><div class="trust-label">Переконує</div>Спільні колекції для команди</div>
+          <div class="trust-bad"><div class="trust-label">Відлякує</div>Один логін на підписку</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-block hypo-quote" style="margin-top:16px;">
+      <div class="quote-text">«Мені потрібно щось, що я можу відправити команді і сказати: ось напрямок, адаптуйте»</div>
+      <div class="quote-src">⚠️ Гіпотетична цитата</div>
+    </div>
+  </div>
+</div>
 
 <footer>
-  <span>Kiwi Research · 2026</span>
-  <span>Зібрано через Playwright + WebFetch · Збережено в <code>research/</code></span>
+  <span>Kiwi Research Hub · 2026</span>
+  <span>Джерело правди — .md файли · HTML лише для відображення</span>
 </footer>
 
+</div><!-- /main -->
+
+<script>
+  // Highlight active nav item on scroll
+  const sections = document.querySelectorAll('[id]');
+  const navItems = document.querySelectorAll('.nav-item');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navItems.forEach(n => n.classList.remove('active'));
+        const active = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.2 });
+  sections.forEach(s => observer.observe(s));
+</script>
 </body>
 </html>
