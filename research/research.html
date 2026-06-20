@@ -374,6 +374,26 @@
   .sm-pill-yellow { background: rgba(245,158,11,.1);  color: var(--yellow); border: 1px solid rgba(245,158,11,.2); }
   .sm-pill-red    { background: rgba(248,113,113,.1); color: var(--red);    border: 1px solid rgba(248,113,113,.2); }
 
+  /* ── IA TREE ── */
+  .ia-tree {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 24px 28px;
+    font-family: 'SF Mono','Fira Code','Fira Mono',monospace;
+    font-size: 12px; line-height: 2; overflow-x: auto; margin: 0 0 36px;
+  }
+  .ia-tree .tr  { color: var(--border); }
+  .ia-tree .tg  { color: var(--accent); font-weight: 700; font-size: 11px; letter-spacing: .5px; }
+  .ia-tree .ts  { color: var(--text); font-weight: 700; }
+  .ia-tree .ti  { color: var(--muted); }
+  .ia-tree .tj  { color: var(--accent); font-size: 10px; font-weight: 700; padding: 1px 5px; background: rgba(124,110,247,.12); border-radius: 3px; margin-left: 4px; }
+  .ia-tree .tm  { color: var(--yellow); font-size: 10px; }
+  .ia-tree .td  { color: var(--accent); font-size: 10px; }
+  .ia-tree .tp  { color: var(--green); font-size: 10px; font-weight: 700; }
+  .ia-tree .tq  { color: var(--yellow); font-size: 10px; font-weight: 700; }
+  .ia-tree .tsr { color: var(--red); font-weight: 700; }
+  .ia-tree .tbadge-del { color: var(--red); font-size: 10px; font-weight: 700; padding: 1px 6px; background: rgba(248,113,113,.12); border-radius: 3px; }
+  .ia-tree .tbadge-bl  { color: var(--muted); font-size: 10px; font-weight: 700; padding: 1px 6px; background: rgba(107,107,122,.12); border-radius: 3px; }
+
   /* ── NAV DESIGN ── */
   .nav-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
   .nav-table thead th { background: var(--bg3); padding: 9px 14px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); }
@@ -1458,6 +1478,44 @@
     <span class="sm-pill sm-pill-yellow">⚠ 2 під питанням</span>
     <span class="sm-pill sm-pill-red">✕ 4 сироти</span>
   </div>
+
+  <div class="ia-tree"><pre>
+<span class="ts">Kiwi MVP · Information Architecture</span>
+<span class="tr">│</span>
+<span class="tr">├──</span> <span class="tg">A · ВІДКРИТТЯ</span>  <span class="ti">— Потрапити в продукт і знайти те, що шукаєш</span>
+<span class="tr">│   └──</span> <span class="ts">A1 · Каталог</span><span class="tj">RJ-1</span><span class="tj">RJ-5</span>  <span class="tp">PRIMARY</span>
+<span class="tr">│       ├──</span> <span class="ti">Пошуковий рядок</span>  <span class="tj">RJ-1</span>
+<span class="tr">│       ├──</span> <span class="ti">Фільтр стилю / настрою</span>  <span class="tj">RJ-1</span>  <span class="td">← диференціатор</span>
+<span class="tr">│       ├──</span> <span class="ti">Фільтр інструменту</span>  <span class="tj">RJ-1</span>
+<span class="tr">│       ├──</span> <span class="ti">Фільтр категорії</span>  <span class="tj">RJ-1</span>
+<span class="tr">│       └──</span> <span class="ti">Сортування: Нові / Популярні</span>  <span class="tj">RJ-5</span>  <span class="tm">← must-have (єдине покриття RJ-5)</span>
+<span class="tr">│</span>
+<span class="tr">├──</span> <span class="tg">B · ОЦІНКА</span>  <span class="ti">— Вирішити «це воно» до того як діяти</span>
+<span class="tr">│   └──</span> <span class="ts">B1 · Сторінка проекту</span><span class="tj">RJ-2</span><span class="tj">EJ-1</span>  <span class="tp">PRIMARY</span>
+<span class="tr">│       ├──</span> <span class="ti">Екрани з файлу (2–5)</span>  <span class="tj">RJ-2</span>  <span class="tm">← must-have (єдине покриття RJ-2)</span>
+<span class="tr">│       ├──</span> <span class="ti">Обкладинка + автор</span>  <span class="tj">EJ-1</span>
+<span class="tr">│       ├──</span> <span class="ti">Теги стилю (клікабельні → A1)</span>  <span class="tj">RJ-1</span>
+<span class="tr">│       ├──</span> <span class="ti">Інструмент + Ліцензія</span>  <span class="tj">RJ-4</span>
+<span class="tr">│       └──</span> <span class="ti">CTA: Зберегти / Завантажити</span>  <span class="tj">RJ-3</span><span class="tj">RJ-4</span>
+<span class="tr">│</span>
+<span class="tr">├──</span> <span class="tg">C · ЗБЕРЕЖЕННЯ</span>  <span class="ti">— Відкласти знахідку без зупинки потоку</span>
+<span class="tr">│   └──</span> <span class="ts">C1 · Збережене (Обране)</span><span class="tj">RJ-3</span>  <span class="tp">PRIMARY</span>
+<span class="tr">│</span>
+<span class="tr">├──</span> <span class="tg">D · ОТРИМАННЯ ФАЙЛУ</span>  <span class="ti">— Файл без зупинок якщо є підписка</span>
+<span class="tr">│   ├──</span> <span class="ts">D1 · Гейт завантаження</span>  <span class="ti">(overlay на B1)</span><span class="tj">RJ-4</span>  <span class="tp">PRIMARY</span>
+<span class="tr">│   ├──</span> <span class="ts">D2 · Вибір плану / Підписка</span><span class="tj">RJ-4</span><span class="tj">EJ-2</span>  <span class="tp">PRIMARY</span>
+<span class="tr">│   └──</span> <span class="ts">D3 · Разова оплата</span><span class="tj">RJ-4</span>  <span class="tq">SECONDARY ⚠</span>  <span class="tm">← під Мисливця (гіпотеза)</span>
+<span class="tr">│</span>
+<span class="tr">├──</span> <span class="tg">E · АКАУНТ</span>  <span class="ti">— Ідентифікація коли потрібна, не раніше</span>
+<span class="tr">│   ├──</span> <span class="ts">E1 · Реєстрація</span><span class="tj">RJ-3</span><span class="tj">RJ-4</span>  <span class="tp">PRIMARY</span>  <span class="ti">(тільки при дії)</span>
+<span class="tr">│   ├──</span> <span class="ts">E2 · Вхід</span><span class="tj">RJ-3</span><span class="tj">RJ-4</span>  <span class="tp">PRIMARY</span>
+<span class="tr">│   └──</span> <span class="ts">E3 · Особистий кабінет</span><span class="tj">EJ-2</span><span class="tj">RJ-3</span>  <span class="tp">PRIMARY</span>  <span class="tm">← мін. MVP: статус підписки</span>
+<span class="tr">│</span>
+<span class="tr">└──</span> <span class="tsr">SIROTA</span>  <span class="ti">— Не виводяться з підтверджених jobs</span>
+<span class="tr">    ├──</span> <span class="ti">S1 · Маркетинговий лендінг</span>  <span class="tbadge-del">ВИДАЛИТИ</span>  <span class="ti">A1 = home, дубль</span>
+<span class="tr">    ├──</span> <span class="ti">S2 · Профіль автора</span>  <span class="tbadge-bl">В BACKLOG</span>  <span class="ti">до валідації SJ-1</span>
+<span class="tr">    ├──</span> <span class="ti">S3 · Про платформу / About</span>  <span class="tbadge-del">ВИДАЛИТИ</span>  <span class="ti">footer-link достатньо</span>
+<span class="tr">    └──</span> <span class="ti">S4 · Командні колекції</span>  <span class="tbadge-bl">В BACKLOG</span>  <span class="ti">до валідації SJ-2 / Арт-директор</span></pre></div>
 
   <!-- GROUP A -->
   <div class="sitemap-group" id="sitemap-a">
