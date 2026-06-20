@@ -415,6 +415,37 @@
   .mermaid-wrap svg { max-width: 100%; height: auto; }
   .flow-block { margin-bottom: 8px; }
   .flow-block h3 { margin: 28px 0 6px; }
+
+  /* ── COVERAGE MATRIX ── */
+  .coverage-table th, .coverage-table td { text-align: center; padding: 8px 10px; font-size: 12px; }
+  .coverage-table th:first-child, .coverage-table td:first-child { text-align: left; white-space: nowrap; min-width: 210px; font-size: 13px; }
+  .coverage-table th.cov-orphan-col { color: var(--red); }
+  .coverage-table td.cov-orphan-col { background: rgba(248,113,113,.04); }
+  .coverage-table tr.cov-row-risk td { background: rgba(245,158,11,.04); }
+  .coverage-table tr.cov-row-hypo td:first-child { color: var(--muted); font-style: italic; }
+  .cov-check { color: var(--green); font-weight: 700; font-size: 15px; }
+  .cov-miss { color: var(--border); }
+  .cov-sum { font-weight: 700; border-left: 1px solid var(--border); padding-left: 12px !important; }
+  .cov-sum-ok { color: var(--text); }
+  .cov-sum-risk { color: var(--yellow); }
+  .cov-sum-zero { color: var(--red); }
+  .coverage-note { font-size: 12px; color: var(--muted); margin: 6px 0 24px; line-height: 1.7; }
+
+  .defect-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 28px; }
+  @media (max-width: 1000px) { .defect-grid { grid-template-columns: 1fr; } }
+  .defect-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r); padding: 16px 18px; }
+  .defect-card.dc-screen { border-left: 3px solid var(--red); }
+  .defect-card.dc-job { border-left: 3px solid var(--yellow); }
+  .dc-id { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .4px; margin-bottom: 5px; }
+  .dc-id-screen { color: var(--red); }
+  .dc-id-job { color: var(--yellow); }
+  .dc-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+  .dc-problem { font-size: 12px; color: var(--muted); margin-bottom: 10px; line-height: 1.6; }
+  .dc-solution { font-size: 12px; background: var(--bg2); border-radius: 6px; padding: 8px 11px; line-height: 1.55; }
+  .dc-solution-label { font-size: 10px; font-weight: 700; letter-spacing: .9px; text-transform: uppercase; margin-bottom: 3px; }
+  .dcs-delete { color: var(--red); }
+  .dcs-backlog { color: var(--muted); }
+  .dcs-fix { color: var(--green); }
 </style>
 </head>
 <body>
@@ -517,6 +548,14 @@
     <a href="#flow-rj1" class="nav-sub">→ RJ-1 · Знайти за стилем</a>
     <a href="#flow-rj2" class="nav-sub">→ RJ-2 · Файл = обкладинка</a>
     <a href="#flow-rj3" class="nav-sub">→ RJ-3 · Зберегти миттєво</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Трасування</div>
+    <a href="#tracing" class="nav-item"><span class="ico">🔗</span>Jobs × Screens</a>
+    <a href="#tracing-matrix" class="nav-sub">→ Матриця покриття</a>
+    <a href="#tracing-screen-orphans" class="nav-sub">→ Екрани-сироти</a>
+    <a href="#tracing-job-orphans" class="nav-sub">→ Jobs · тонке покриття</a>
   </div>
 </nav>
 
@@ -1949,6 +1988,214 @@ flowchart TD
     C1_POST --> OK2(["Збережено після реєстрації · RJ-3 виконано"])
     OK2 --> RESUME
 </pre>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TRACING ═══ -->
+<div class="section" id="tracing">
+  <div class="section-label">Розділ 11</div>
+  <h2>Трасування · Jobs × Screens</h2>
+  <p>Матриця покриття: кожен рядок — job, кожен стовпець — екран. ✓ = екран реально бере участь у закритті job. Порожній рядок або стовпець — дефект, не норма.</p>
+
+  <!-- MATRIX -->
+  <div id="tracing-matrix">
+    <h3 style="margin:24px 0 4px;">Матриця покриття</h3>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px;">⚠️ = job є гіпотезою · <span style="color:var(--yellow);">жовтий рядок</span> = одноточкове покриття (ризик реалізації) · <span style="color:var(--red);">червоний заголовок</span> = екран-сирота</p>
+    <div class="table-wrap">
+      <table class="coverage-table">
+        <thead>
+          <tr>
+            <th>Job</th>
+            <th>A1</th>
+            <th>B1</th>
+            <th>C1</th>
+            <th>D1</th>
+            <th>D2</th>
+            <th>D3</th>
+            <th>E1</th>
+            <th>E2</th>
+            <th>E3</th>
+            <th class="cov-orphan-col">S1</th>
+            <th class="cov-orphan-col">S2</th>
+            <th class="cov-orphan-col">S3</th>
+            <th class="cov-orphan-col">S4</th>
+            <th class="cov-sum">Σ✓</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>MAIN · Знайти ресурс і отримати файл</td>
+            <td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-check">✓</td>
+            <td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td>
+            <td class="cov-sum cov-sum-ok">9</td>
+          </tr>
+          <tr>
+            <td>RJ-1 · Знайти за стилем</td>
+            <td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td>
+            <td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td>
+            <td class="cov-sum cov-sum-ok">2</td>
+          </tr>
+          <tr class="cov-row-risk">
+            <td>RJ-2 · Файл = обкладинка</td>
+            <td class="cov-miss">—</td><td class="cov-check">✓</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td>
+            <td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td>
+            <td class="cov-sum cov-sum-risk">1</td>
+          </tr>
+          <tr>
+            <td>RJ-3 · Зберегти миттєво</td>
+            <td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-check">✓</td>
+            <td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td>
+            <td class="cov-sum cov-sum-ok">6</td>
+          </tr>
+          <tr>
+            <td>RJ-4 · Скачати без зупинок</td>
+            <td class="cov-miss">—</td><td class="cov-check">✓</td><td class="cov-miss">—</td><td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-check">✓</td>
+            <td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td>
+            <td class="cov-sum cov-sum-ok">7</td>
+          </tr>
+          <tr class="cov-row-risk">
+            <td>RJ-5 · Тримати руку на пульсі</td>
+            <td class="cov-check">✓</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td>
+            <td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td>
+            <td class="cov-sum cov-sum-risk">1</td>
+          </tr>
+          <tr>
+            <td>EJ-1 · Відчути «ось воно»</td>
+            <td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td>
+            <td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td>
+            <td class="cov-sum cov-sum-ok">2</td>
+          </tr>
+          <tr>
+            <td>EJ-2 · Підписка окупається</td>
+            <td class="cov-check">✓</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-check">✓</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-check">✓</td>
+            <td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td>
+            <td class="cov-sum cov-sum-ok">3</td>
+          </tr>
+          <tr class="cov-row-hypo">
+            <td>EJ-3 ⚠️ · Не виглядати як шаблон</td>
+            <td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td>
+            <td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td>
+            <td class="cov-sum cov-sum-ok">2</td>
+          </tr>
+          <tr class="cov-row-hypo">
+            <td>SJ-1 ⚠️ · Знати де брати якісне</td>
+            <td class="cov-check">✓</td><td class="cov-check">✓</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td>
+            <td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td>
+            <td class="cov-sum cov-sum-ok">2</td>
+          </tr>
+          <tr class="cov-row-hypo cov-row-risk">
+            <td>SJ-2 ⚠️ · Задати напрямок команді</td>
+            <td class="cov-miss">—</td><td class="cov-check">✓</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td><td class="cov-miss">—</td>
+            <td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-miss cov-orphan-col">—</td><td class="cov-check cov-orphan-col">✓</td>
+            <td class="cov-sum cov-sum-risk">2*</td>
+          </tr>
+          <!-- FOOTER ROW: column totals -->
+          <tr style="border-top:2px solid var(--border);">
+            <td style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;">Σ✓ jobs на екран</td>
+            <td class="cov-sum-ok" style="font-weight:700;">8</td>
+            <td class="cov-sum-ok" style="font-weight:700;">9</td>
+            <td class="cov-sum-ok" style="font-weight:700;">2</td>
+            <td class="cov-sum-ok" style="font-weight:700;">2</td>
+            <td class="cov-sum-ok" style="font-weight:700;">3</td>
+            <td class="cov-sum-ok" style="font-weight:700;">2</td>
+            <td class="cov-sum-ok" style="font-weight:700;">3</td>
+            <td class="cov-sum-ok" style="font-weight:700;">3</td>
+            <td class="cov-sum-ok" style="font-weight:700;">4</td>
+            <td class="cov-sum-zero cov-orphan-col" style="font-weight:700;">0</td>
+            <td class="cov-sum-zero cov-orphan-col" style="font-weight:700;">0</td>
+            <td class="cov-sum-zero cov-orphan-col" style="font-weight:700;">0</td>
+            <td class="cov-sum-risk cov-orphan-col" style="font-weight:700;">1*</td>
+            <td class="cov-sum"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="coverage-note">* S4 · SJ-2: єдиний ✓ — для гіпотетичного job ⚠️. Ефективно порожньо до валідації.<br>
+    Жовтий рядок (Σ=1): RJ-2 і RJ-5 — одна точка відмови. Якщо відповідна фіча не реалізується — job = 0 покриття.
+    </p>
+  </div>
+
+  <!-- SCREEN ORPHANS -->
+  <div id="tracing-screen-orphans">
+    <h3 style="margin:8px 0 4px;">Екрани-сироти — колонки без ✓</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">Екран є — job нема. Кожен кандидат на виліт або backlog.</p>
+    <div class="defect-grid">
+      <div class="defect-card dc-screen">
+        <div class="dc-id dc-id-screen">S1 · ЕКРАН-СИРОТА · Σ✓ = 0</div>
+        <div class="dc-name">Маркетинговий лендінг</div>
+        <div class="dc-problem">Job від бізнесу (конверсія), не від користувача. Жоден user-job не вимагає окремого Home.</div>
+        <div class="dc-solution">
+          <div class="dc-solution-label dcs-delete">Рішення · ВИДАЛИТИ</div>
+          A1·Каталог = точка входу (content-first hero). Окремий лендінг дублює функцію і додає тап до main job. Якщо потрібна SEO-сторінка — backlog, поза MVP sitemap.
+        </div>
+      </div>
+      <div class="defect-card dc-screen">
+        <div class="dc-id dc-id-screen">S2 · ЕКРАН-СИРОТА · Σ✓ = 0</div>
+        <div class="dc-name">Профіль автора</div>
+        <div class="dc-problem">Скопійовано з конкурентів. Жоден підтверджений job не вимагає «переглянути автора». Автор вже є полем-сигналом на B1.</div>
+        <div class="dc-solution">
+          <div class="dc-solution-label dcs-backlog">Рішення · В BACKLOG</div>
+          Може частково закрити SJ-1 після валідації з інтерв'ю. Автор залишається полем на B1 (EJ-1). До підтвердження job — не будувати окрему сторінку.
+        </div>
+      </div>
+      <div class="defect-card dc-screen">
+        <div class="dc-id dc-id-screen">S3 · ЕКРАН-СИРОТА · Σ✓ = 0</div>
+        <div class="dc-name">Про платформу / About</div>
+        <div class="dc-problem">Hygiene page. Жоден user-job не вимагає «дізнатись про Kiwi» як окремого екрану в product flow.</div>
+        <div class="dc-solution">
+          <div class="dc-solution-label dcs-delete">Рішення · ВИДАЛИТИ з sitemap</div>
+          Реалізується як /about route або footer link. Не є UX-screen продуктового sitemap — не займає місце серед flows.
+        </div>
+      </div>
+      <div class="defect-card dc-screen">
+        <div class="dc-id dc-id-screen">S4 · УМОВНА СИРОТА · Σ✓ = 1⚠️</div>
+        <div class="dc-name">Командні колекції</div>
+        <div class="dc-problem">Єдиний ✓ — SJ-2 «Задати напрямок команді». SJ-2 = гіпотеза, 0 валідованих даних. Ефективно порожньо.</div>
+        <div class="dc-solution">
+          <div class="dc-solution-label dcs-backlog">Рішення · В BACKLOG</div>
+          Не будувати до інтерв'ю з арт-директорами. Після валідації SJ-2 — додати S4 і оновити матрицю. SJ-2 поки покривається частково через B1 (share-лінк одного проекту).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOB ORPHANS / THIN COVERAGE -->
+  <div id="tracing-job-orphans">
+    <h3 style="margin:8px 0 4px;">Jobs · тонке покриття — ризики реалізації</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">Жоден job не має Σ✓ = 0 — кожен закритий хоча б одним екраном. Але три мають одноточкове покриття або втрачають екран при відрізанні SIROTA.</p>
+    <div class="defect-grid">
+      <div class="defect-card dc-job">
+        <div class="dc-id dc-id-job">RJ-2 · ОДНА ТОЧКА ВІДМОВИ · Σ✓ = 1</div>
+        <div class="dc-name">Файл = обкладинка</div>
+        <div class="dc-problem">Тільки B1 покриває. Якщо реальні екрани з файлу (2–5) не реалізуються на B1 — job = 0 покриття. Зникає головний диференціатор від UI8.</div>
+        <div class="dc-solution">
+          <div class="dc-solution-label dcs-fix">Рішення · ЗАКРІПИТИ НА B1</div>
+          «Екрани з файлу (2–5 реальних)» — must-have для B1, не nice-to-have. Без них RJ-2 = 0 і весь аргумент «ми не UI8» розвалюється. Перенести в вимоги до B1.
+        </div>
+      </div>
+      <div class="defect-card dc-job">
+        <div class="dc-id dc-id-job">RJ-5 · ОДНА ТОЧКА ВІДМОВИ · Σ✓ = 1</div>
+        <div class="dc-name">Тримати руку на пульсі</div>
+        <div class="dc-problem">Тільки A1 покриває — через сортування «Нові». Якщо сортування не реалізується — job = 0. Щоденний ритуал Куратора (Інтерв'ю #1) не підтримується.</div>
+        <div class="dc-solution">
+          <div class="dc-solution-label dcs-fix">Рішення · ЗАКРІПИТИ НА A1</div>
+          Сортування «Нові надходження» — must-have для A1, не опція. Також критично для EJ-2 (підписка окупається). Retention залежить від цього.
+        </div>
+      </div>
+      <div class="defect-card dc-job">
+        <div class="dc-id dc-id-job">SJ-2 ⚠️ · ТОНКЕ ПОКРИТТЯ · Σ MVP = 1</div>
+        <div class="dc-name">Задати напрямок команді одним посиланням</div>
+        <div class="dc-problem">S4 відрізана. B1 покриває частково (share-лінк одного проекту), але job вимагає «надіслати підбірку» — цього механізму нема.</div>
+        <div class="dc-solution">
+          <div class="dc-solution-label dcs-backlog">Рішення · В BACKLOG разом з S4</div>
+          До підтвердження SJ-2 через інтерв'ю з арт-директорами — share B1 є максимумом MVP. Після валідації: додати S4, оновити матрицю і flows.
+        </div>
+      </div>
+    </div>
+
+    <div class="gap-box" style="margin-top:4px;">
+      <strong>Підсумок дефектів:</strong> 3 екрани на виліт (S1, S3 видалити / S2 backlog) · S4 умовний backlog · 2 jobs потребують закріплення must-have вимог на B1 і A1 · SJ-2 чекає валідації персони Арт-директор.
     </div>
   </div>
 </div>
