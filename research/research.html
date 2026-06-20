@@ -289,6 +289,49 @@
   .question-item-why { font-size: 12px; color: var(--muted); line-height: 1.5; }
   .question-item-job { font-size: 11px; color: var(--yellow); margin-top: 6px; }
 
+  /* ── SITEMAP ── */
+  .sitemap-group { margin-bottom: 28px; }
+  .sitemap-group-header { display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--r) var(--r) 0 0; border-bottom: none; }
+  .sitemap-group-id { font-size: 11px; font-weight: 800; letter-spacing: 1.2px; font-family: var(--mono); color: var(--accent); }
+  .sitemap-group-name { font-size: 14px; font-weight: 700; }
+  .sitemap-group-goal { font-size: 12px; color: var(--muted); margin-left: auto; max-width: 280px; text-align: right; }
+  .sitemap-screens { border: 1px solid var(--border); border-radius: 0 0 var(--r) var(--r); overflow: hidden; }
+  .sitemap-screen { padding: 14px 18px; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 36px 1fr auto; gap: 12px; align-items: start; }
+  .sitemap-screen:last-child { border-bottom: none; }
+  .sitemap-screen:hover { background: var(--bg2); }
+  .screen-id { font-size: 13px; font-weight: 800; font-family: var(--mono); color: var(--accent); padding-top: 1px; }
+  .screen-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .screen-note { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .screen-note .kf { color: var(--accent); font-weight: 600; }
+  .screen-note .warn { color: var(--yellow); }
+  .screen-jobs { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; flex-shrink: 0; }
+  .screen-persona { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); margin-top: 4px; text-align: right; }
+  .screen-persona.primary { color: var(--accent); }
+  .screen-sub { padding: 8px 18px 10px 66px; border-bottom: 1px solid rgba(42,42,46,.4); background: rgba(12,12,14,.3); }
+  .screen-sub:last-child { border-bottom: none; }
+  .screen-sub-item { font-size: 12px; color: var(--muted); padding: 2px 0; display: flex; gap: 8px; }
+  .screen-sub-item .si-job { color: var(--accent); font-size: 10px; font-weight: 700; font-family: var(--mono); flex-shrink: 0; }
+  .screen-sub-item .si-key { color: #9898b8; }
+  .sitemap-summary { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 28px; }
+  .summary-card { border-radius: var(--r); padding: 18px 20px; }
+  .summary-core { background: rgba(124,110,247,.07); border: 1px solid rgba(124,110,247,.25); }
+  .summary-question { background: rgba(245,158,11,.05); border: 1px solid rgba(245,158,11,.2); }
+  .summary-cut { background: rgba(248,113,113,.05); border: 1px solid rgba(248,113,113,.15); }
+  .summary-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+  .summary-core .summary-label { color: var(--accent); }
+  .summary-question .summary-label { color: var(--yellow); }
+  .summary-cut .summary-label { color: var(--red); }
+  .summary-screens { display: flex; gap: 6px; flex-wrap: wrap; }
+  .s-chip { font-size: 12px; font-weight: 700; font-family: var(--mono); padding: 4px 9px; border-radius: 6px; }
+  .s-chip-core { background: rgba(124,110,247,.15); color: var(--accent); }
+  .s-chip-q { background: rgba(245,158,11,.12); color: var(--yellow); }
+  .s-chip-cut { background: rgba(248,113,113,.1); color: var(--red); }
+  .sirota-list { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+  .sirota-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; display: grid; grid-template-columns: 36px 1fr; gap: 10px; }
+  .sirota-id { font-size: 12px; font-weight: 800; font-family: var(--mono); color: var(--red); padding-top: 1px; }
+  .sirota-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .sirota-why { font-size: 12px; color: var(--muted); line-height: 1.45; }
+
   @media (max-width: 1000px) {
     .pattern-card { grid-template-columns: 1fr; }
     .takeaways { grid-template-columns: 1fr; }
@@ -296,6 +339,9 @@
     .card-grid3 { grid-template-columns: 1fr; }
     .mvp-core { grid-template-columns: 1fr; }
     .question-grid { grid-template-columns: 1fr; }
+    .sitemap-summary { grid-template-columns: 1fr; }
+    .sitemap-screen { grid-template-columns: 36px 1fr; }
+    .screen-jobs { display: none; }
   }
 </style>
 </head>
@@ -366,6 +412,19 @@
     <a href="#entity-download" class="nav-sub">→ Завантаження</a>
     <a href="#entity-subscription" class="nav-sub">→ Підписка</a>
     <a href="#entity-question" class="nav-sub">→ Під питанням</a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Sitemap</div>
+    <a href="#sitemap" class="nav-item"><span class="ico">🗂</span>Екрани MVP</a>
+    <a href="#sitemap-a" class="nav-sub">→ A · Відкриття</a>
+    <a href="#sitemap-b" class="nav-sub">→ B · Оцінка</a>
+    <a href="#sitemap-c" class="nav-sub">→ C · Збереження</a>
+    <a href="#sitemap-d" class="nav-sub">→ D · Отримання файлу</a>
+    <a href="#sitemap-e" class="nav-sub">→ E · Акаунт</a>
+    <a href="#sitemap-sirota" class="nav-sub">→ Сироти</a>
   </div>
 </nav>
 
@@ -1164,6 +1223,243 @@
         <div class="question-item-name">PRO-badge автора</div>
         <div class="question-item-why">Антипатерн з бенчмарку. Не закриває жоден job. До розробки не допускати.</div>
         <div class="question-item-job" style="color:var(--red);">Job: відсутній</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SITEMAP ═══ -->
+<div class="section" id="sitemap">
+  <div class="section-label">Розділ 08</div>
+  <h2>Sitemap — Екрани MVP</h2>
+  <p>Ієрархія екранів виведена з jobs (jtbd.md), не зі структури конкурентів. Кожен екран обслуговує конкретний job. Стани (empty, error) — не екрани.</p>
+
+  <!-- GROUP A -->
+  <div class="sitemap-group" id="sitemap-a">
+    <div class="sitemap-group-header">
+      <span class="sitemap-group-id">A</span>
+      <span class="sitemap-group-name">Відкриття</span>
+      <span class="sitemap-group-goal">Потрапити в продукт і знайти те, що шукаєш</span>
+    </div>
+    <div class="sitemap-screens">
+      <div class="sitemap-screen">
+        <div class="screen-id">A1</div>
+        <div>
+          <div class="screen-name">Каталог</div>
+          <div class="screen-note">Точка входу = Home. <span class="kf">Content-first hero</span> — каталог і є першим екраном, без окремого лендінгу.</div>
+          <div class="screen-sub" style="margin:8px -18px -14px -66px;">
+            <div class="screen-sub-item"><span class="si-job">RJ-1</span><span class="si-key">Пошуковий рядок</span><span>— мова дизайнера: «мінімалістичний», «editorial»</span></div>
+            <div class="screen-sub-item"><span class="si-job">RJ-1</span><span class="si-key">Фільтр стилю / настрою</span><span>— <strong style="color:var(--accent)">головний диференціатор</strong></span></div>
+            <div class="screen-sub-item"><span class="si-job">RJ-1</span><span class="si-key">Фільтр інструменту</span><span>— Figma / Sketch / XD</span></div>
+            <div class="screen-sub-item"><span class="si-job">RJ-1</span><span class="si-key">Фільтр категорії</span><span>— Landing / Website</span></div>
+            <div class="screen-sub-item"><span class="si-job">RJ-5</span><span class="si-key">Сортування</span><span>— Нові / Популярні</span></div>
+          </div>
+        </div>
+        <div class="screen-jobs">
+          <span class="job-tag job-tag-confirmed">RJ-1</span>
+          <span class="job-tag job-tag-confirmed">RJ-5</span>
+          <div class="screen-persona primary">PRIMARY + SECONDARY</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GROUP B -->
+  <div class="sitemap-group" id="sitemap-b">
+    <div class="sitemap-group-header">
+      <span class="sitemap-group-id">B</span>
+      <span class="sitemap-group-name">Оцінка</span>
+      <span class="sitemap-group-goal">Вирішити «це воно» до того як діяти</span>
+    </div>
+    <div class="sitemap-screens">
+      <div class="sitemap-screen">
+        <div class="screen-id">B1</div>
+        <div>
+          <div class="screen-name">Сторінка проекту</div>
+          <div class="screen-note"><span class="kf">Реальні екрани з файлу (2–5 шт.)</span> — ключове поле, закриває головний friction. CTA: Зберегти / Завантажити.</div>
+          <div class="screen-sub" style="margin:8px -18px -14px -66px;">
+            <div class="screen-sub-item"><span class="si-job">RJ-2</span><span class="si-key">Екрани з файлу (2–5)</span><span>— реальні скріни, не мокапи</span></div>
+            <div class="screen-sub-item"><span class="si-job">EJ-1</span><span class="si-key">Обкладинка + автор</span><span>— сигнали довіри</span></div>
+            <div class="screen-sub-item"><span class="si-job">RJ-1</span><span class="si-key">Теги стилю</span><span>— клікабельні, ведуть назад до каталогу</span></div>
+            <div class="screen-sub-item"><span class="si-job">RJ-4</span><span class="si-key">Інструмент + Ліцензія</span><span>— видно без кліку</span></div>
+            <div class="screen-sub-item"><span class="si-job">RJ-3, RJ-4</span><span class="si-key">CTA: Зберегти / Завантажити</span><span>— два окремих кроки</span></div>
+          </div>
+        </div>
+        <div class="screen-jobs">
+          <span class="job-tag job-tag-confirmed">RJ-2</span>
+          <span class="job-tag job-tag-confirmed">EJ-1</span>
+          <div class="screen-persona primary">PRIMARY + SECONDARY</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GROUP C -->
+  <div class="sitemap-group" id="sitemap-c">
+    <div class="sitemap-group-header">
+      <span class="sitemap-group-id">C</span>
+      <span class="sitemap-group-name">Збереження</span>
+      <span class="sitemap-group-goal">Відкласти знахідку без зупинки основного потоку</span>
+    </div>
+    <div class="sitemap-screens">
+      <div class="sitemap-screen">
+        <div class="screen-id">C1</div>
+        <div>
+          <div class="screen-name">Збережене (Обране)</div>
+          <div class="screen-note">Особиста бібліотека. Дія «Зберегти» — на A1 і B1. C1 — тільки для перегляду та управління зібраним.</div>
+        </div>
+        <div class="screen-jobs">
+          <span class="job-tag job-tag-confirmed">RJ-3</span>
+          <div class="screen-persona primary">PRIMARY</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GROUP D -->
+  <div class="sitemap-group" id="sitemap-d">
+    <div class="sitemap-group-header">
+      <span class="sitemap-group-id">D</span>
+      <span class="sitemap-group-name">Отримання файлу</span>
+      <span class="sitemap-group-goal">Отримати файл — без зупинок якщо є підписка</span>
+    </div>
+    <div class="sitemap-screens">
+      <div class="sitemap-screen">
+        <div class="screen-id">D1</div>
+        <div>
+          <div class="screen-name">Гейт завантаження <span style="font-size:11px;color:var(--muted);font-weight:400;">(overlay на B1)</span></div>
+          <div class="screen-note">Стан А: підписка активна → одразу завантаження. Стан Б: немає підписки → пропозиція D2 або D3. <span class="kf">Lock-icon gate</span>, не login wall.</div>
+        </div>
+        <div class="screen-jobs">
+          <span class="job-tag job-tag-confirmed">RJ-4</span>
+          <div class="screen-persona primary">PRIMARY + SECONDARY</div>
+        </div>
+      </div>
+      <div class="sitemap-screen">
+        <div class="screen-id">D2</div>
+        <div>
+          <div class="screen-name">Вибір плану / Підписка</div>
+          <div class="screen-note">Вибір тарифу → checkout через Stripe (зовнішній). Закриває EJ-2: підписка = підтвердження що плата виправдана.</div>
+        </div>
+        <div class="screen-jobs">
+          <span class="job-tag job-tag-confirmed">RJ-4</span>
+          <span class="job-tag job-tag-confirmed">EJ-2</span>
+          <div class="screen-persona primary">PRIMARY</div>
+        </div>
+      </div>
+      <div class="sitemap-screen">
+        <div class="screen-id">D3</div>
+        <div>
+          <div class="screen-name">Разова оплата <span style="font-size:11px;color:var(--yellow);font-weight:400;">⚠️ після валідації</span></div>
+          <div class="screen-note"><span class="warn">Весь цей екран будується під Мисливця на дедлайн — гіпотезу.</span> Не блокує MVP. Реалізується після валідації персони.</div>
+        </div>
+        <div class="screen-jobs">
+          <span class="job-tag job-tag-hypo">RJ-4 ⚠️</span>
+          <div class="screen-persona">SECONDARY ⚠️</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GROUP E -->
+  <div class="sitemap-group" id="sitemap-e">
+    <div class="sitemap-group-header">
+      <span class="sitemap-group-id">E</span>
+      <span class="sitemap-group-name">Акаунт</span>
+      <span class="sitemap-group-goal">Ідентифікація — потрібна для C1 і D1, не раніше</span>
+    </div>
+    <div class="sitemap-screens">
+      <div class="sitemap-screen">
+        <div class="screen-id">E1</div>
+        <div>
+          <div class="screen-name">Реєстрація</div>
+          <div class="screen-note">З'являється тільки в момент дії (save / download). <span class="kf">Не нав'язується</span> при вході в каталог.</div>
+        </div>
+        <div class="screen-jobs">
+          <span class="job-tag job-tag-confirmed">RJ-3</span>
+          <span class="job-tag job-tag-confirmed">RJ-4</span>
+          <div class="screen-persona primary">PRIMARY + SECONDARY</div>
+        </div>
+      </div>
+      <div class="sitemap-screen">
+        <div class="screen-id">E2</div>
+        <div>
+          <div class="screen-name">Вхід</div>
+          <div class="screen-note">Повернення до продукту. Supabase Auth.</div>
+        </div>
+        <div class="screen-jobs">
+          <span class="job-tag job-tag-confirmed">RJ-3</span>
+          <span class="job-tag job-tag-confirmed">RJ-4</span>
+          <div class="screen-persona primary">PRIMARY + SECONDARY</div>
+        </div>
+      </div>
+      <div class="sitemap-screen">
+        <div class="screen-id">E3</div>
+        <div>
+          <div class="screen-name">Особистий кабінет <span style="font-size:11px;color:var(--yellow);font-weight:400;">⚠️ мінімальний</span></div>
+          <div class="screen-note">MVP-варіант: тільки статус підписки + посилання на Збережене. Повна версія — після запуску.</div>
+        </div>
+        <div class="screen-jobs">
+          <span class="job-tag job-tag-confirmed">EJ-2</span>
+          <span class="job-tag job-tag-confirmed">RJ-3</span>
+          <div class="screen-persona primary">PRIMARY</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIROTA -->
+  <div id="sitemap-sirota">
+    <h3 style="margin-bottom:4px;">Екрани-сироти <span style="color:var(--red);font-size:13px;font-weight:400;">[SIROTA]</span></h3>
+    <p>Не виводяться з жодного підтвердженого job. Не включати в роботу без явного рішення.</p>
+    <div class="sirota-list">
+      <div class="sirota-item">
+        <div class="sirota-id">S1</div>
+        <div><div class="sirota-name">Маркетинговий лендінг (окремий Home)</div><div class="sirota-why">Job від бізнесу, не від користувача. Якщо Home = Каталог (content-first) — цей екран не потрібен взагалі.</div></div>
+      </div>
+      <div class="sirota-item">
+        <div class="sirota-id">S2</div>
+        <div><div class="sirota-name">Профіль автора</div><div class="sirota-why">Жоден підтверджений job не вимагає «переглянути всі роботи автора». Автор — поле на картці, не ціль навігації.</div></div>
+      </div>
+      <div class="sirota-item">
+        <div class="sirota-id">S3</div>
+        <div><div class="sirota-name">Про платформу / About</div><div class="sirota-why">Hygiene-сторінка. Не закриває жоден job. Додати після MVP якщо знадобиться для SEO.</div></div>
+      </div>
+      <div class="sirota-item">
+        <div class="sirota-id">S4</div>
+        <div><div class="sirota-name">Командні колекції</div><div class="sirota-why">Арт-директор — нульова валідація. SJ-2 є гіпотезою. Не будуємо до підтвердження персони.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="sitemap-summary" style="margin-top:32px;">
+    <div class="summary-card summary-core">
+      <div class="summary-label">Ядро MVP · 7 екранів</div>
+      <div class="summary-screens">
+        <span class="s-chip s-chip-core">A1</span>
+        <span class="s-chip s-chip-core">B1</span>
+        <span class="s-chip s-chip-core">C1</span>
+        <span class="s-chip s-chip-core">D1</span>
+        <span class="s-chip s-chip-core">D2</span>
+        <span class="s-chip s-chip-core">E1</span>
+        <span class="s-chip s-chip-core">E2</span>
+      </div>
+    </div>
+    <div class="summary-card summary-question">
+      <div class="summary-label">Після валідації</div>
+      <div class="summary-screens">
+        <span class="s-chip s-chip-q">D3</span>
+        <span class="s-chip s-chip-q">E3</span>
+        <span class="s-chip s-chip-q">S1</span>
+      </div>
+    </div>
+    <div class="summary-card summary-cut">
+      <div class="summary-label">Не будуємо</div>
+      <div class="summary-screens">
+        <span class="s-chip s-chip-cut">S2</span>
+        <span class="s-chip s-chip-cut">S3</span>
+        <span class="s-chip s-chip-cut">S4</span>
       </div>
     </div>
   </div>
