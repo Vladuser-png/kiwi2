@@ -262,12 +262,40 @@
   .cut-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
   .cut-why { font-size: 12px; color: var(--muted); line-height: 1.5; }
 
+  /* ── ENTITIES ── */
+  .entity-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 24px 26px; margin-bottom: 16px; }
+  .entity-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; }
+  .entity-num { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+  .entity-name { font-size: 18px; font-weight: 700; }
+  .entity-jobs { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; }
+  .job-tag { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; letter-spacing: .4px; }
+  .job-tag-confirmed { background: rgba(124,110,247,.15); color: var(--accent); border: 1px solid rgba(124,110,247,.3); }
+  .job-tag-hypo { background: rgba(245,158,11,.1); color: var(--yellow); border: 1px solid rgba(245,158,11,.25); }
+  .entity-desc { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
+  .entity-relations { font-size: 12px; color: var(--muted); margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .entity-relations strong { color: #9898b8; }
+  .entity-note { background: rgba(245,158,11,.06); border: 1px solid rgba(245,158,11,.2); border-radius: 6px; padding: 10px 14px; margin-top: 12px; font-size: 12px; color: #b0a070; line-height: 1.5; }
+  .entity-note.danger { background: rgba(248,113,113,.06); border-color: rgba(248,113,113,.2); color: #b07070; }
+  .fields-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 4px; }
+  .fields-table th { text-align: left; font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); padding: 6px 10px; border-bottom: 1px solid var(--border); }
+  .fields-table td { padding: 7px 10px; border-bottom: 1px solid rgba(42,42,46,.5); color: #a0a0b0; vertical-align: top; }
+  .fields-table td:first-child { color: var(--text); font-weight: 500; white-space: nowrap; }
+  .fields-table tr:last-child td { border-bottom: none; }
+  .field-key { color: var(--accent); font-size: 11px; font-weight: 700; }
+  .entity-map { background: var(--bg3); border-radius: var(--r); padding: 20px 24px; font-family: var(--mono); font-size: 12px; color: #9898b8; line-height: 1.8; white-space: pre; overflow-x: auto; margin: 20px 0; }
+  .question-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .question-item { background: rgba(248,113,113,.04); border: 1px solid rgba(248,113,113,.15); border-radius: 8px; padding: 14px 16px; }
+  .question-item-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+  .question-item-why { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .question-item-job { font-size: 11px; color: var(--yellow); margin-top: 6px; }
+
   @media (max-width: 1000px) {
     .pattern-card { grid-template-columns: 1fr; }
     .takeaways { grid-template-columns: 1fr; }
     .persona-grid { grid-template-columns: 1fr; }
     .card-grid3 { grid-template-columns: 1fr; }
     .mvp-core { grid-template-columns: 1fr; }
+    .question-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -325,6 +353,19 @@
     <a href="#jtbd-matrix" class="nav-sub">→ Матриця 10×3</a>
     <a href="#jtbd-core" class="nav-sub">→ Ядро MVP (3 jobs)</a>
     <a href="#jtbd-cut" class="nav-sub">→ Функції на виліт</a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Сутності</div>
+    <a href="#entities" class="nav-item"><span class="ico">🧱</span>Інвентаризація</a>
+    <a href="#entity-project" class="nav-sub">→ Проект</a>
+    <a href="#entity-search" class="nav-sub">→ Пошук + Фільтр</a>
+    <a href="#entity-saved" class="nav-sub">→ Збережене</a>
+    <a href="#entity-download" class="nav-sub">→ Завантаження</a>
+    <a href="#entity-subscription" class="nav-sub">→ Підписка</a>
+    <a href="#entity-question" class="nav-sub">→ Під питанням</a>
   </div>
 </nav>
 
@@ -955,6 +996,174 @@
           <div class="cut-name">AI-генерація контенту</div>
           <div class="cut-why">Не з'являється в жодному job — ні підтвердженому, ні гіпотетичному. Суперечить позиціонуванню «кюрований, а не масовий».</div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ENTITIES ═══ -->
+<div class="section" id="entities">
+  <div class="section-label">Розділ 07</div>
+  <h2>Інвентаризація сутностей</h2>
+  <p>Головні об'єкти, з якими людина має справу щоб закрити свої jobs. Сутність без job — секція «Під питанням».</p>
+
+  <!-- PROJECT -->
+  <div class="entity-card" id="entity-project">
+    <div class="entity-header">
+      <span class="entity-num">01</span>
+      <span class="entity-name">Проект</span>
+      <div class="entity-jobs">
+        <span class="job-tag job-tag-confirmed">RJ-1</span>
+        <span class="job-tag job-tag-confirmed">RJ-2</span>
+        <span class="job-tag job-tag-confirmed">RJ-4</span>
+        <span class="job-tag job-tag-confirmed">RJ-5</span>
+        <span class="job-tag job-tag-confirmed">EJ-1</span>
+      </div>
+    </div>
+    <div class="entity-desc">Центральна сутність. Все інше пов'язане з Проектом. Один Проект = один готовий дизайн-ресурс для завантаження.</div>
+    <table class="fields-table">
+      <thead><tr><th>Поле</th><th>Тип</th><th>Job</th><th>Примітка</th></tr></thead>
+      <tbody>
+        <tr><td>Назва</td><td>текст</td><td>RJ-1</td><td>пошук по назві</td></tr>
+        <tr><td>Обкладинка</td><td>зображення</td><td>EJ-1</td><td>перший візуальний фільтр · Інтерв'ю #1</td></tr>
+        <tr><td class="field-key">Екрани (2–5 шт.)</td><td>масив зображень</td><td><strong style="color:var(--accent)">RJ-2</strong></td><td>реальні скріни з файлу, не мокапи · ключове поле</td></tr>
+        <tr><td>Категорія</td><td>Landing Page / Website / …</td><td>RJ-1</td><td>груба навігація</td></tr>
+        <tr><td class="field-key">Теги стилю / настрою</td><td>масив рядків</td><td><strong style="color:var(--accent)">RJ-1</strong></td><td>«мінімалістичний», «editorial», «нудний» · головний диференціатор</td></tr>
+        <tr><td>Інструмент</td><td>Figma / Sketch / XD / …</td><td>RJ-1</td><td>фільтр на каталозі</td></tr>
+        <tr><td>Ціна (разова)</td><td>число</td><td>RJ-4</td><td>для не-підписників</td></tr>
+        <tr><td>Автор</td><td>посилання на Автора</td><td>EJ-1</td><td>сигнал довіри</td></tr>
+        <tr><td>Дата додавання</td><td>дата</td><td>RJ-5</td><td>для сортування «Нові»</td></tr>
+        <tr><td>Ліцензія</td><td>текст / enum</td><td>RJ-4</td><td>комерційна, стандартна</td></tr>
+        <tr><td>Файл для завантаження</td><td>посилання</td><td>RJ-4</td><td>.fig / .sketch / …</td></tr>
+        <tr><td>Editor's Pick</td><td>boolean</td><td>EJ-3 ⚠️</td><td>кюраційна мітка від редакції · job гіпотетичний</td></tr>
+      </tbody>
+    </table>
+    <div class="entity-relations"><strong>Зв'язки:</strong> Проект ↔ Автор · Проект ↔ Збережене · Проект ↔ Завантаження · Проект ↔ Покупка</div>
+  </div>
+
+  <!-- SEARCH + FILTER -->
+  <div class="entity-card" id="entity-search">
+    <div class="entity-header">
+      <span class="entity-num">02–03</span>
+      <span class="entity-name">Пошук + Фільтр</span>
+      <div class="entity-jobs">
+        <span class="job-tag job-tag-confirmed">RJ-1</span>
+        <span class="job-tag job-tag-confirmed">RJ-5</span>
+      </div>
+    </div>
+    <div class="entity-desc">Два пов'язані механізми звуження списку Проектів. Пошук — через текст, Фільтр — через параметри.</div>
+    <table class="fields-table">
+      <thead><tr><th>Поле</th><th>Тип</th><th>Job</th><th>Примітка</th></tr></thead>
+      <tbody>
+        <tr><td class="field-key">Текстовий запит</td><td>рядок</td><td><strong style="color:var(--accent)">RJ-1</strong></td><td>«мінімалістичний», «editorial», «нудний» — мова дизайнера, не категорія</td></tr>
+        <tr><td class="field-key">Стиль / настрій</td><td>мультивибір тегів</td><td><strong style="color:var(--accent)">RJ-1</strong></td><td>головний фільтр · підтверджений gap ринку</td></tr>
+        <tr><td>Інструмент</td><td>мультивибір enum</td><td>RJ-1</td><td>Figma / Sketch / XD</td></tr>
+        <tr><td>Категорія</td><td>мультивибір enum</td><td>RJ-1</td><td>Landing / Website</td></tr>
+        <tr><td>Ціна</td><td>діапазон / enum</td><td>RJ-4</td><td>безкоштовно / платно</td></tr>
+        <tr><td>Сортування</td><td>Нові / Популярні</td><td>RJ-5</td><td>«Нові» = головний для щоденного моніторингу</td></tr>
+        <tr><td>Результати</td><td>список Проектів</td><td>RJ-1</td><td>повертає відфільтрований список</td></tr>
+      </tbody>
+    </table>
+    <div class="entity-note">⚠️ Конкуренти (UI8, Envato) мають пошук по категоріях, не по настрою. Теги стилю — підтверджений gap · Інтерв'ю #1.</div>
+    <div class="entity-relations"><strong>Зв'язки:</strong> Пошук → Проект · Фільтр → Проект</div>
+  </div>
+
+  <!-- SAVED -->
+  <div class="entity-card" id="entity-saved">
+    <div class="entity-header">
+      <span class="entity-num">04</span>
+      <span class="entity-name">Збережене (Колекція)</span>
+      <div class="entity-jobs">
+        <span class="job-tag job-tag-confirmed">RJ-3</span>
+      </div>
+    </div>
+    <div class="entity-desc">Особиста бібліотека — проекти, відкладені «на майбутнє». Підтверджено Інтерв'ю #1: «зберігаю в обране».</div>
+    <table class="fields-table">
+      <thead><tr><th>Поле</th><th>Тип</th><th>Job</th><th>Примітка</th></tr></thead>
+      <tbody>
+        <tr><td>Список проектів</td><td>масив посилань</td><td>RJ-3</td><td></td></tr>
+        <tr><td>Дата збереження</td><td>дата</td><td>RJ-3</td><td>для сортування всередині</td></tr>
+        <tr><td>Назва колекції [?]</td><td>рядок</td><td>RJ-3 ⚠️</td><td>можливо потрібна тільки якщо кілька колекцій — не валідовано</td></tr>
+      </tbody>
+    </table>
+    <div class="entity-note">Один список «Обране» підтверджено. Кілька іменованих колекцій — [?], потребує валідації перед розробкою.</div>
+    <div class="entity-relations"><strong>Зв'язки:</strong> Збережене ↔ Проект · Збережене ↔ Користувач</div>
+  </div>
+
+  <!-- DOWNLOAD + SUBSCRIPTION + PURCHASE -->
+  <div class="entity-card" id="entity-download">
+    <div class="entity-header">
+      <span class="entity-num">05–07</span>
+      <span class="entity-name">Завантаження · Підписка · Покупка</span>
+      <div class="entity-jobs">
+        <span class="job-tag job-tag-confirmed">RJ-4</span>
+        <span class="job-tag job-tag-confirmed">EJ-2</span>
+      </div>
+    </div>
+    <div class="entity-desc">Три сутності одного потоку: Підписка розблоковує Завантаження без тертя. Покупка — альтернативний шлях для не-підписника.</div>
+    <table class="fields-table">
+      <thead><tr><th>Сутність · Поле</th><th>Тип</th><th>Job</th><th>Примітка</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Підписка</strong> · Статус</td><td>активна / неактивна</td><td>RJ-4</td><td>головне поле для gate-логіки</td></tr>
+        <tr><td>Підписка · Тип плану [?]</td><td>місячна / річна</td><td>EJ-2</td><td></td></tr>
+        <tr><td>Підписка · Дата закінчення</td><td>дата</td><td>EJ-2</td><td></td></tr>
+        <tr><td><strong>Завантаження</strong> · Тип доступу</td><td>підписка / покупка</td><td>RJ-4</td><td></td></tr>
+        <tr><td>Завантаження · Файл</td><td>посилання</td><td>RJ-4</td><td></td></tr>
+        <tr><td>Завантаження · Ліцензія прийнята</td><td>boolean</td><td>RJ-4</td><td>автоматично при скачуванні</td></tr>
+        <tr><td><strong>Покупка</strong> · Сума</td><td>число</td><td>RJ-4</td><td>ціна з поля Проекту</td></tr>
+        <tr><td>Покупка · Статус оплати</td><td>enum</td><td>RJ-4</td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="entity-note danger">⚠️ Весь UX разової Покупки будується під Мисливця на дедлайн — гіпотезу без валідації. RJ-4 для Куратора закривається Підпискою.</div>
+    <div class="entity-relations"><strong>Зв'язки:</strong> Підписка ↔ Користувач → Завантаження · Покупка ↔ Проект ↔ Користувач</div>
+  </div>
+
+  <!-- ENTITY MAP -->
+  <h3 style="margin:32px 0 10px;">Карта зв'язків</h3>
+  <div class="entity-map">Користувач ──── має ──────→ Підписка
+     │                           │
+     ├── зберігає ──→ Збережене  │ розблоковує
+     │                    ↕      ↓
+     └── завантажує ──→ Завантаження
+               │             │
+               │         (або без підписки)
+               └──────→ Покупка
+                            │
+                            ↓
+                         Проект
+                            │
+               ┌────────────┼────────────┐
+               ↓            ↓            ↓
+           Екрани       Теги стилю    Автор
+           (RJ-2)         (RJ-1)      (EJ-1)
+
+Пошук ──────────────────────────────→ Проект (список)
+Фільтр ─────────────────────────────→ Проект (список)</div>
+
+  <!-- UNDER QUESTION -->
+  <div id="entity-question" style="margin-top:16px;">
+    <h3 style="margin-bottom:10px;">Під питанням — сутності без підтвердженого job</h3>
+    <p style="margin-bottom:12px;">Не включати в роботу до валідації відповідного job.</p>
+    <div class="question-grid">
+      <div class="question-item">
+        <div class="question-item-name">Профіль автора (окрема сторінка)</div>
+        <div class="question-item-why">Жоден підтверджений job не вимагає «переглянути всі роботи автора»</div>
+        <div class="question-item-job">Міг би виправдати: SJ-1 ⚠️ гіпотеза</div>
+      </div>
+      <div class="question-item">
+        <div class="question-item-name">Командні колекції</div>
+        <div class="question-item-why">SJ-2 (Арт-директор) — повністю гіпотетичний, 0 даних</div>
+        <div class="question-item-job">Міг би виправдати: SJ-2 ⚠️ гіпотеза</div>
+      </div>
+      <div class="question-item">
+        <div class="question-item-name">Рейтинг / лайки від юзерів</div>
+        <div class="question-item-why">EJ-3 — гіпотеза; конкуренти вже мають — диференціатором не стане</div>
+        <div class="question-item-job">Міг би виправдати: EJ-3 ⚠️ гіпотеза</div>
+      </div>
+      <div class="question-item">
+        <div class="question-item-name">PRO-badge автора</div>
+        <div class="question-item-why">Антипатерн з бенчмарку. Не закриває жоден job. До розробки не допускати.</div>
+        <div class="question-item-job" style="color:var(--red);">Job: відсутній</div>
       </div>
     </div>
   </div>
