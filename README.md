@@ -19,6 +19,19 @@
 
 ---
 
+## Структура · Ключові IA-документи
+
+| Файл | Зміст |
+|------|-------|
+| [`sitemap.md`](./sitemap.md) | Інвентар сутностей · Ієрархія екранів A–E + SIROTA · Навігація і глибина · Матриця трасування Jobs × Screens |
+| [`flows.md`](./flows.md) | 4 user flows у Mermaid (Main Job · RJ-1 · RJ-2 · RJ-3) |
+| [`ia.html`](./ia.html) | IA living document: дерево sitemap + flows + матриця покриття |
+| [`research/jtbd.md`](./research/jtbd.md) | JTBD framework · 10 jobs · матриця Jobs × Персони |
+| [`research/personas.md`](./research/personas.md) | 3 персони (1 валідована ✅ · 2 гіпотези ⚠️) |
+| [`research/research.html`](./research/research.html) | Research hub (11 розділів) |
+
+---
+
 ## Product in one line
 Kiwi cuts designer search time by offering a curated, tool-agnostic library of polished UI resources — accessible via flat subscription or one-time purchase.
 

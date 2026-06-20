@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiwi — IA</title>
+<style>
+  :root {
+    --bg:#0c0c0e; --bg2:#141416; --bg3:#1c1c1f; --border:#2a2a2e;
+    --text:#e8e8ec; --muted:#6b6b7a; --accent:#7c6ef7;
+    --green:#4ade80; --yellow:#f59e0b; --red:#f87171; --blue:#60a5fa;
+    --r:10px; --sidebar:240px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    width: var(--sidebar);
+    min-width: var(--sidebar);
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+    padding: 24px 0 40px;
+    z-index: 100;
+  }
+
+  .sidebar-logo {
+    padding: 0 20px 24px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.3px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+
+  .sidebar-logo span {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 400;
+    display: block;
+    margin-top: 2px;
+    letter-spacing: 0;
+  }
+
+  .sidebar-section {
+    padding: 8px 20px 4px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .sidebar-nav {
+    list-style: none;
+  }
+
+  .sidebar-nav a {
+    display: block;
+    padding: 6px 20px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    border-left: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sidebar-nav a:hover {
+    color: var(--text);
+    background: rgba(124,110,247,0.06);
+  }
+
+  .sidebar-nav a.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background: rgba(124,110,247,0.08);
+  }
+
+  .sidebar-nav .sub {
+    padding-left: 32px;
+    font-size: 12px;
+  }
+
+  /* ─── MAIN ─── */
+  .main {
+    margin-left: var(--sidebar);
+    flex: 1;
+    padding: 48px 48px 80px;
+    max-width: calc(100vw - var(--sidebar));
+  }
+
+  /* ─── SECTION HEADERS ─── */
+  .section {
+    margin-bottom: 72px;
+  }
+
+  .section-header {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    margin-bottom: 6px;
+  }
+
+  .section-header p {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  /* ─── PILLS ─── */
+  .pill-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .pill.green { background: rgba(74,222,128,0.1); color: var(--green); border: 1px solid rgba(74,222,128,0.2); }
+  .pill.yellow { background: rgba(245,158,11,0.1); color: var(--yellow); border: 1px solid rgba(245,158,11,0.2); }
+  .pill.red { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
+  .pill.accent { background: rgba(124,110,247,0.1); color: var(--accent); border: 1px solid rgba(124,110,247,0.2); }
+
+  /* ─── GROUP CARDS ─── */
+  .group-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .group-card {
+    background: var(--bg3);
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .group-card.group-normal { border-left: 3px solid var(--green); }
+  .group-card.group-sirota { border-left: 3px solid var(--red); }
+
+  .group-header {
+    padding: 14px 20px 12px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.015);
+  }
+
+  .group-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .group-label .group-id {
+    color: var(--accent);
+    font-family: 'SF Mono', 'Fira Mono', monospace;
+  }
+
+  .group-purpose {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .group-body {
+    padding: 12px 0;
+  }
+
+  .screen-item {
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(42,42,46,0.5);
+  }
+
+  .screen-item:last-child { border-bottom: none; }
+
+  .screen-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+
+  .screen-id {
+    font-family: 'SF Mono', 'Fira Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .screen-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .screen-tags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .job-tag {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Fira Mono', monospace;
+    background: rgba(124,110,247,0.15);
+    color: var(--accent);
+    border: 1px solid rgba(124,110,247,0.25);
+    white-space: nowrap;
+  }
+
+  .job-tag.hypo {
+    background: rgba(245,158,11,0.12);
+    color: var(--yellow);
+    border-color: rgba(245,158,11,0.25);
+  }
+
+  .priority-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .priority-badge.primary { background: rgba(74,222,128,0.1); color: var(--green); border: 1px solid rgba(74,222,128,0.2); }
+  .priority-badge.secondary { background: rgba(245,158,11,0.1); color: var(--yellow); border: 1px solid rgba(245,158,11,0.2); }
+  .priority-badge.unknown { background: rgba(107,107,122,0.15); color: var(--muted); border: 1px solid var(--border); }
+  .priority-badge.sirota { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
+
+  .screen-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* ─── TREE ITEMS ─── */
+  .tree-items {
+    margin-top: 8px;
+    padding-left: 8px;
+  }
+
+  .tree-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 4px 0;
+  }
+
+  .tree-sym {
+    font-family: 'SF Mono', 'Fira Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    padding-top: 1px;
+  }
+
+  .tree-text {
+    font-size: 12px;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .tree-note {
+    font-size: 11px;
+    color: var(--accent);
+    font-style: italic;
+    margin-left: 4px;
+    opacity: 0.8;
+  }
+
+  .tree-tags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .resolution-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .resolution-badge.delete { background: rgba(248,113,113,0.12); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
+  .resolution-badge.backlog { background: rgba(245,158,11,0.1); color: var(--yellow); border: 1px solid rgba(245,158,11,0.2); }
+
+  /* ─── FLOWS ─── */
+  .flow-block {
+    margin-bottom: 48px;
+  }
+
+  .flow-block h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.2px;
+    color: var(--text);
+  }
+
+  .job-statement-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+  }
+
+  .job-statement-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .job-statement-text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 8px;
+    font-style: italic;
+  }
+
+  .job-statement-persona {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .flow-legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding: 10px 16px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+
+  .flow-legend-item {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'SF Mono', 'Fira Mono', monospace;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .flow-legend-item span {
+    font-family: inherit;
+    color: var(--accent);
+  }
+
+  .mermaid-wrap {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 24px 20px;
+    overflow-x: auto;
+  }
+
+  .mermaid-wrap pre.mermaid {
+    background: transparent;
+    min-width: 600px;
+  }
+
+  /* ─── MATRIX ─── */
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    min-width: 900px;
+  }
+
+  thead th {
+    background: var(--bg3);
+    padding: 10px 8px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    font-family: 'SF Mono', 'Fira Mono', monospace;
+  }
+
+  thead th:first-child {
+    text-align: left;
+    padding-left: 16px;
+    min-width: 220px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  thead th.orphan-col { color: var(--red); }
+
+  tbody tr {
+    border-bottom: 1px solid rgba(42,42,46,0.5);
+    transition: background 0.1s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+  tbody tr.risk-row { background: rgba(245,158,11,0.04); }
+  tbody tr.risk-row:hover { background: rgba(245,158,11,0.07); }
+
+  tbody tr.hypo-row td:first-child { color: var(--muted); font-style: italic; }
+
+  td {
+    padding: 9px 8px;
+    text-align: center;
+    color: var(--border);
+    white-space: nowrap;
+  }
+
+  td:first-child {
+    text-align: left;
+    padding-left: 16px;
+    color: var(--text);
+    font-size: 12px;
+    min-width: 220px;
+  }
+
+  td.check {
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  td.sum {
+    font-weight: 700;
+    color: var(--text);
+    background: rgba(255,255,255,0.02);
+  }
+
+  td.sum-zero { color: var(--red); }
+  td.sum-one { color: var(--yellow); }
+
+  tfoot td {
+    padding: 10px 8px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--bg3);
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'SF Mono', 'Fira Mono', monospace;
+    white-space: nowrap;
+  }
+
+  tfoot td:first-child {
+    text-align: left;
+    padding-left: 16px;
+    color: var(--muted);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 11px;
+  }
+
+  tfoot td.col-zero { color: var(--red); }
+  tfoot td.col-one { color: var(--yellow); }
+  tfoot td.col-norm { color: var(--green); }
+
+  .matrix-note {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--muted);
+    padding: 10px 16px;
+    background: rgba(245,158,11,0.06);
+    border: 1px solid rgba(245,158,11,0.15);
+    border-radius: 6px;
+  }
+
+  /* ─── SUB-SECTIONS ─── */
+  .sub-section {
+    margin-top: 40px;
+  }
+
+  .sub-section h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.2px;
+  }
+
+  .sub-section p.sub-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .cards-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 900px) {
+    .cards-grid-2 { grid-template-columns: 1fr; }
+  }
+
+  .risk-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 16px 18px;
+  }
+
+  .risk-card.red-card { border-left: 3px solid var(--red); }
+  .risk-card.yellow-card { border-left: 3px solid var(--yellow); }
+
+  .risk-card-id {
+    font-family: 'SF Mono', 'Fira Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .risk-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .risk-card-sigma {
+    font-size: 12px;
+    padding: 1px 8px;
+    border-radius: 4px;
+  }
+
+  .risk-card-sigma.red { background: rgba(248,113,113,0.12); color: var(--red); }
+  .risk-card-sigma.yellow { background: rgba(245,158,11,0.1); color: var(--yellow); }
+
+  .risk-card-resolution {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .risk-card-resolution.delete { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
+  .risk-card-resolution.backlog { background: rgba(245,158,11,0.08); color: var(--yellow); border: 1px solid rgba(245,158,11,0.2); }
+  .risk-card-resolution.mustfix { background: rgba(74,222,128,0.08); color: var(--green); border: 1px solid rgba(74,222,128,0.2); }
+
+  .risk-card-body {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 8px;
+  }
+
+  .risk-card-action {
+    font-size: 12px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- ─── SIDEBAR ─── -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    Kiwi
+    <span>IA Document</span>
+  </div>
+
+  <div class="sidebar-section">Sitemap</div>
+  <ul class="sidebar-nav">
+    <li><a href="#sitemap-tree" data-target="sitemap-tree">Ієрархія екранів</a></li>
+    <li><a href="#sitemap-tree" class="sub" data-target="sitemap-tree">Групи A–E + Сироти</a></li>
+  </ul>
+
+  <div class="sidebar-section">Flows</div>
+  <ul class="sidebar-nav">
+    <li><a href="#flow-main" class="sub" data-target="flow-main">Main Job</a></li>
+    <li><a href="#flow-rj1" class="sub" data-target="flow-rj1">RJ-1 · За стилем</a></li>
+    <li><a href="#flow-rj2" class="sub" data-target="flow-rj2">RJ-2 · Файл = обкладинка</a></li>
+    <li><a href="#flow-rj3" class="sub" data-target="flow-rj3">RJ-3 · Зберегти</a></li>
+  </ul>
+
+  <div class="sidebar-section">Трасування</div>
+  <ul class="sidebar-nav">
+    <li><a href="#ia-tracing" data-target="ia-tracing">Jobs × Screens</a></li>
+    <li><a href="#ia-screen-orphans" class="sub" data-target="ia-screen-orphans">Екрани-сироти</a></li>
+    <li><a href="#ia-job-risks" class="sub" data-target="ia-job-risks">Jobs · тонке покриття</a></li>
+  </ul>
+</aside>
+
+<!-- ─── MAIN ─── -->
+<main class="main">
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 1 — SITEMAP TREE
+  ════════════════════════════════════════════ -->
+  <section class="section" id="sitemap-tree">
+    <div class="section-header">
+      <h2>Sitemap · Ієрархія екранів</h2>
+      <p>Виведено з jobs. Кожен екран → хоча б один job. Немає job → SIROTA.</p>
+    </div>
+
+    <div class="pill-row">
+      <span class="pill green">7 MVP екранів</span>
+      <span class="pill yellow">2 під питанням</span>
+      <span class="pill red">4 сироти</span>
+    </div>
+
+    <div class="group-list">
+
+      <!-- GROUP A -->
+      <div class="group-card group-normal">
+        <div class="group-header">
+          <div class="group-label"><span class="group-id">A</span> · ВІДКРИТТЯ</div>
+          <div class="group-purpose">Потрапити в продукт і знайти те, що шукаєш</div>
+        </div>
+        <div class="group-body">
+          <div class="screen-item">
+            <div class="screen-top">
+              <span class="screen-id">A1</span>
+              <span class="screen-name">Каталог</span>
+              <div class="screen-tags">
+                <span class="job-tag">RJ-1</span>
+                <span class="job-tag">RJ-5</span>
+              </div>
+              <span class="priority-badge primary">PRIMARY</span>
+              <span class="priority-badge primary">SECONDARY</span>
+            </div>
+            <div class="tree-items">
+              <div class="tree-row">
+                <span class="tree-sym">├──</span>
+                <span class="tree-text">Пошуковий рядок</span>
+                <div class="tree-tags"><span class="job-tag">RJ-1</span></div>
+              </div>
+              <div class="tree-row">
+                <span class="tree-sym">├──</span>
+                <span class="tree-text">Фільтр стилю / настрою<span class="tree-note">← головний диференціатор</span></span>
+                <div class="tree-tags"><span class="job-tag">RJ-1</span></div>
+              </div>
+              <div class="tree-row">
+                <span class="tree-sym">├──</span>
+                <span class="tree-text">Фільтр інструменту</span>
+                <div class="tree-tags"><span class="job-tag">RJ-1</span></div>
+              </div>
+              <div class="tree-row">
+                <span class="tree-sym">├──</span>
+                <span class="tree-text">Фільтр категорії</span>
+                <div class="tree-tags"><span class="job-tag">RJ-1</span></div>
+              </div>
+              <div class="tree-row">
+                <span class="tree-sym">└──</span>
+                <span class="tree-text">Сортування Нові / Популярні<span class="tree-note">← must-have (єдине покриття RJ-5)</span></span>
+                <div class="tree-tags"><span class="job-tag">RJ-5</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUP B -->
+      <div class="group-card group-normal">
+        <div class="group-header">
+          <div class="group-label"><span class="group-id">B</span> · ОЦІНКА</div>
+          <div class="group-purpose">Вирішити «це воно» до того як діяти</div>
+        </div>
+        <div class="group-body">
+          <div class="screen-item">
+            <div class="screen-top">
+              <span class="screen-id">B1</span>
+              <span class="screen-name">Сторінка проекту</span>
+              <div class="screen-tags">
+                <span class="job-tag">RJ-2</span>
+                <span class="job-tag">EJ-1</span>
+              </div>
+              <span class="priority-badge primary">PRIMARY</span>
+              <span class="priority-badge primary">SECONDARY</span>
+            </div>
+            <div class="tree-items">
+              <div class="tree-row">
+                <span class="tree-sym">├──</span>
+                <span class="tree-text">Екрани з файлу (2–5 реальних)<span class="tree-note">← must-have (єдине покриття RJ-2)</span></span>
+                <div class="tree-tags"><span class="job-tag">RJ-2</span></div>
+              </div>
+              <div class="tree-row">
+                <span class="tree-sym">├──</span>
+                <span class="tree-text">Теги стилю / настрою</span>
+                <div class="tree-tags"><span class="job-tag">RJ-1</span></div>
+              </div>
+              <div class="tree-row">
+                <span class="tree-sym">├──</span>
+                <span class="tree-text">Інструмент + ліцензія</span>
+                <div class="tree-tags"><span class="job-tag">RJ-4</span></div>
+              </div>
+              <div class="tree-row">
+                <span class="tree-sym">└──</span>
+                <span class="tree-text">CTA: Зберегти / Завантажити</span>
+                <div class="tree-tags"><span class="job-tag">RJ-3</span><span class="job-tag">RJ-4</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUP C -->
+      <div class="group-card group-normal">
+        <div class="group-header">
+          <div class="group-label"><span class="group-id">C</span> · ЗБЕРЕЖЕННЯ</div>
+          <div class="group-purpose">Відкласти знахідку без зупинки основного потоку</div>
+        </div>
+        <div class="group-body">
+          <div class="screen-item">
+            <div class="screen-top">
+              <span class="screen-id">C1</span>
+              <span class="screen-name">Збережене (Обране)</span>
+              <div class="screen-tags">
+                <span class="job-tag">RJ-3</span>
+              </div>
+              <span class="priority-badge primary">PRIMARY</span>
+            </div>
+            <div class="tree-items">
+              <div class="tree-row">
+                <span class="tree-sym">└──</span>
+                <span class="tree-text">Список збережених проектів</span>
+                <div class="tree-tags"><span class="job-tag">RJ-3</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUP D -->
+      <div class="group-card group-normal">
+        <div class="group-header">
+          <div class="group-label"><span class="group-id">D</span> · ОТРИМАННЯ ФАЙЛУ</div>
+          <div class="group-purpose">Отримати файл без зупинок якщо є підписка</div>
+        </div>
+        <div class="group-body">
+          <div class="screen-item">
+            <div class="screen-top">
+              <span class="screen-id">D1</span>
+              <span class="screen-name">Гейт завантаження</span>
+              <div class="screen-tags">
+                <span class="job-tag">RJ-4</span>
+              </div>
+              <span class="priority-badge primary">PRIMARY</span>
+              <span class="priority-badge primary">SECONDARY</span>
+            </div>
+            <div class="screen-note">overlay на B1</div>
+          </div>
+          <div class="screen-item">
+            <div class="screen-top">
+              <span class="screen-id">D2</span>
+              <span class="screen-name">Вибір плану / Підписка</span>
+              <div class="screen-tags">
+                <span class="job-tag">RJ-4</span>
+                <span class="job-tag">EJ-2</span>
+              </div>
+              <span class="priority-badge primary">PRIMARY</span>
+            </div>
+          </div>
+          <div class="screen-item">
+            <div class="screen-top">
+              <span class="screen-id">D3</span>
+              <span class="screen-name">Разова оплата</span>
+              <div class="screen-tags">
+                <span class="job-tag">RJ-4</span>
+              </div>
+              <span class="priority-badge secondary">SECONDARY ⚠️</span>
+            </div>
+            <div class="screen-note">будується під Мисливця — гіпотезу. Не блокує MVP.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUP E -->
+      <div class="group-card group-normal">
+        <div class="group-header">
+          <div class="group-label"><span class="group-id">E</span> · АКАУНТ</div>
+          <div class="group-purpose">Ідентифікація — потрібна для C1 і D1, не раніше</div>
+        </div>
+        <div class="group-body">
+          <div class="screen-item">
+            <div class="screen-top">
+              <span class="screen-id">E1</span>
+              <span class="screen-name">Реєстрація</span>
+              <div class="screen-tags">
+                <span class="job-tag">RJ-3</span>
+                <span class="job-tag">RJ-4</span>
+              </div>
+              <span class="priority-badge primary">PRIMARY</span>
+              <span class="priority-badge primary">SECONDARY</span>
+            </div>
+            <div class="screen-note">з'являється тільки при дії</div>
+          </div>
+          <div class="screen-item">
+            <div class="screen-top">
+              <span class="screen-id">E2</span>
+              <span class="screen-name">Вхід</span>
+              <div class="screen-tags">
+                <span class="job-tag">RJ-3</span>
+                <span class="job-tag">RJ-4</span>
+              </div>
+              <span class="priority-badge primary">PRIMARY</span>
+              <span class="priority-badge primary">SECONDARY</span>
+            </div>
+          </div>
+          <div class="screen-item">
+            <div class="screen-top">
+              <span class="screen-id">E3</span>
+              <span class="screen-name">Особистий кабінет</span>
+              <div class="screen-tags">
+                <span class="job-tag">EJ-2</span>
+                <span class="job-tag">RJ-3</span>
+              </div>
+              <span class="priority-badge primary">PRIMARY</span>
+              <span class="priority-badge unknown">[?]</span>
+            </div>
+            <div class="screen-note">мін. MVP: тільки статус підписки</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUP SIROTA -->
+      <div class="group-card group-sirota">
+        <div class="group-header">
+          <div class="group-label" style="color: var(--red);">SIROTA · ЕКРАНИ-СИРОТИ</div>
+          <div class="group-purpose">Не виводяться з підтверджених jobs</div>
+        </div>
+        <div class="group-body">
+          <div class="screen-item">
+            <div class="screen-top">
+              <span class="screen-id" style="color: var(--red);">S1</span>
+              <span class="screen-name">Маркетинговий лендінг</span>
+              <span class="priority-badge sirota">SIROTA</span>
+              <span class="resolution-badge delete">ВИДАЛИТИ</span>
+            </div>
+            <div class="screen-note">A1 = home. Окремий лендінг дублює функцію.</div>
+          </div>
+          <div class="screen-item">
+            <div class="screen-top">
+              <span class="screen-id" style="color: var(--red);">S2</span>
+              <span class="screen-name">Профіль автора</span>
+              <span class="priority-badge sirota">SIROTA</span>
+              <span class="resolution-badge backlog">BACKLOG</span>
+            </div>
+            <div class="screen-note">до валідації SJ-1</div>
+          </div>
+          <div class="screen-item">
+            <div class="screen-top">
+              <span class="screen-id" style="color: var(--red);">S3</span>
+              <span class="screen-name">Про платформу / About</span>
+              <span class="priority-badge sirota">SIROTA</span>
+              <span class="resolution-badge delete">ВИДАЛИТИ</span>
+            </div>
+            <div class="screen-note">Footer link достатньо. Не UX-screen.</div>
+          </div>
+          <div class="screen-item">
+            <div class="screen-top">
+              <span class="screen-id" style="color: var(--red);">S4</span>
+              <span class="screen-name">Командні колекції</span>
+              <span class="priority-badge sirota">SIROTA</span>
+              <span class="job-tag hypo">SJ-2 ⚠️</span>
+              <span class="resolution-badge backlog">BACKLOG</span>
+            </div>
+            <div class="screen-note">до валідації SJ-2</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 2 — FLOWS
+  ════════════════════════════════════════════ -->
+  <section class="section" id="ia-flows">
+    <div class="section-header">
+      <h2>User Flows · Mermaid</h2>
+    </div>
+
+    <div class="flow-legend">
+      <div class="flow-legend-item"><span>[ ]</span> = Screen</div>
+      <div class="flow-legend-item"><span>{ }</span> = Decision</div>
+      <div class="flow-legend-item"><span>[/ /]</span> = State</div>
+      <div class="flow-legend-item"><span>([ ])</span> = Terminal</div>
+    </div>
+
+    <!-- FLOW 1 — Main Job -->
+    <div class="flow-block" id="flow-main">
+      <h3>Flow 1 — Main Job</h3>
+      <div class="job-statement-card">
+        <div class="job-statement-label">JOB STATEMENT</div>
+        <div class="job-statement-text">
+          "Коли я знаю що треба зробити але не хочу починати з нуля, я хочу знайти готовий ресурс що відповідає стилю і потребам проекту, щоб вийти на результат швидше, не жертвуючи якістю."
+        </div>
+        <div class="job-statement-persona">
+          <span class="job-tag">Куратор</span>
+          <span class="priority-badge primary">primary</span>
+          <span style="color: var(--green);">✅ validated</span>
+        </div>
+      </div>
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+flowchart TD
+    START(["Куратор відкриває Kiwi"]) --> A1["A1 · Каталог"]
+    A1 --> LOAD[/"Завантаження результатів"/]
+    LOAD --> Q_NET{"Завантажилось?"}
+    Q_NET -->|ні| ERR_NET[/"Помилка мережі"/]
+    ERR_NET --> A1
+    Q_NET -->|так| Q_RES{"Є результати?"}
+    Q_RES -->|ні| EMPTY[/"Пусто — нічого не знайшлось"/]
+    EMPTY -->|змінити запит або фільтр| A1
+    EMPTY --> DEAD_EMPTY(["Кінець · Залишив без знахідки"])
+    Q_RES -->|так| Q_COV{"Обкладинка відгукується?"}
+    Q_COV -->|ні| Q_MORE{"Є ще картки?"}
+    Q_MORE -->|так| Q_COV
+    Q_MORE -->|ні| EXHAUST[/"Каталог вичерпано — підходящого немає"/]
+    EXHAUST -->|розширити запит| A1
+    EXHAUST --> DEAD_EX(["Кінець · Залишив без знахідки"])
+    Q_COV -->|так| B1["B1 · Сторінка проекту"]
+    B1 --> Q_FILE{"Екрани відповідають обкладинці?"}
+    Q_FILE -->|ні| Q_BACK{"Спробувати іншу картку?"}
+    Q_BACK -->|так| Q_COV
+    Q_BACK -->|ні| DEAD_DIS(["Кінець · Розчарування після B1"])
+    Q_FILE -->|так| Q_ACT{"Що далі?"}
+    Q_ACT -->|"Зберегти ♥"| Q_AUTH_S{"Є акаунт?"}
+    Q_AUTH_S -->|так| C1_S["C1 · Збережене"]
+    Q_AUTH_S -->|ні| AUTH_S["E1 · Реєстрація / E2 · Вхід"]
+    AUTH_S --> Q_REG_S{"Авторизація успішна?"}
+    Q_REG_S -->|ні| DEAD_SAVE(["Кінець · Вийшов без збереження"])
+    Q_REG_S -->|так| C1_S
+    C1_S --> OK_SAVE(["Збережено · повернення до перегляду"])
+    Q_ACT -->|Завантажити| D1["D1 · Гейт завантаження"]
+    D1 --> Q_SUB{"Підписка активна?"}
+    Q_SUB -->|так| DL_OK(["Файл завантажено · Main Job виконано"])
+    Q_SUB -->|ні| Q_AUTH_D{"Є акаунт?"}
+    Q_AUTH_D -->|так| D2["D2 · Вибір плану / Підписка"]
+    Q_AUTH_D -->|ні| AUTH_D["E1 · Реєстрація / E2 · Вхід"]
+    AUTH_D --> Q_REG_D{"Авторизація успішна?"}
+    Q_REG_D -->|ні| DEAD_DL(["Кінець · Вийшов на гейті завантаження"])
+    Q_REG_D -->|так| D2
+    D2 --> Q_PLAN{"Тип оплати?"}
+    Q_PLAN -->|підписка| STRIPE_S[/"Stripe · Checkout підписки"/]
+    Q_PLAN -->|разова оплата| D3["D3 · Разова оплата"]
+    D3 --> STRIPE_O[/"Stripe · Checkout разової"/]
+    STRIPE_S --> Q_PAY{"Оплата успішна?"}
+    STRIPE_O --> Q_PAY
+    Q_PAY -->|так| DL_OK
+    Q_PAY -->|відхилено| ERR_PAY[/"Помилка оплати — перевір картку"/]
+    ERR_PAY -->|спробувати ще| D2
+    ERR_PAY -->|скасувати| DEAD_PAY(["Кінець · Покупку скасовано"])
+        </pre>
+      </div>
+    </div>
+
+    <!-- FLOW 2 — RJ-1 -->
+    <div class="flow-block" id="flow-rj1">
+      <h3>Flow 2 — RJ-1 · Знайти за стилем / настроєм</h3>
+      <div class="job-statement-card">
+        <div class="job-statement-label">JOB STATEMENT</div>
+        <div class="job-statement-text">
+          "Коли я маю відчуття потрібної естетики але не слів для точного пошуку, я хочу знаходити ресурси за настроєм і візуальним характером, щоб не витрачати годину на підбір тегів і все одно прийти ні з чим."
+        </div>
+        <div class="job-statement-persona">
+          <span class="job-tag">Куратор</span>
+          <span class="priority-badge primary">primary</span>
+          <span style="color: var(--green);">✅ validated</span>
+        </div>
+      </div>
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+flowchart TD
+    START(["Куратор має відчуття стилю — але не знає точних слів"]) --> A1["A1 · Каталог"]
+    A1 --> FILT["Обирає теги стилю або вводить запит настрою"]
+    FILT --> LOAD[/"Завантаження результатів за стилем"/]
+    LOAD --> Q_RES{"Є результати для цього стилю?"}
+    Q_RES -->|ні| EMPTY[/"Пусто — стиль не представлений у каталозі"/]
+    EMPTY --> Q_SYN{"Є схожі теги для спроби?"}
+    Q_SYN -->|так| A1
+    Q_SYN -->|ні| DEAD_STYLE(["Кінець · Стиль відсутній в каталозі — gap продукту"])
+    Q_RES -->|так| Q_COV{"Обкладинка передає потрібний стиль?"}
+    Q_COV -->|ні| Q_MORE{"Є ще картки?"}
+    Q_MORE -->|так| Q_COV
+    Q_MORE -->|ні| EXHAUST[/"Всі картки переглянуто — стиль не підходить"/]
+    EXHAUST --> Q_WIDEN{"Розширити або змінити теги?"}
+    Q_WIDEN -->|так| A1
+    Q_WIDEN -->|ні| DEAD_EX(["Кінець · Підходящого стилю немає — залишив"])
+    Q_COV -->|так| B1["B1 · Сторінка проекту"]
+    B1 --> Q_CONF{"Реальні екрани підтверджують стиль?"}
+    Q_CONF -->|ні — обкладинка обманула| Q_TRUST{"Продовжити пошук?"}
+    Q_TRUST -->|так| Q_COV
+    Q_TRUST -->|ні| DEAD_DIS(["Кінець · Розчарування — довіра до каталогу знизилась"])
+    Q_CONF -->|так| OK(["RJ-1 виконано · стиль знайдено"])
+        </pre>
+      </div>
+    </div>
+
+    <!-- FLOW 3 — RJ-2 -->
+    <div class="flow-block" id="flow-rj2">
+      <h3>Flow 3 — RJ-2 · Файл = обкладинка</h3>
+      <div class="job-statement-card">
+        <div class="job-statement-label">JOB STATEMENT</div>
+        <div class="job-statement-text">
+          "Коли я бачу обкладинку що зацікавила, я хочу побачити реальний вміст файлу до того як приймати рішення, щоб не витрачати час і емоції на розчарування після переходу."
+        </div>
+        <div class="job-statement-persona">
+          <span class="job-tag">Куратор</span>
+          <span class="priority-badge primary">primary</span>
+          <span style="color: var(--green);">✅ validated</span>
+        </div>
+      </div>
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+flowchart TD
+    START(["Куратор клікнув на картку — обкладинка зацікавила"]) --> LOAD_B1
+    LOAD_B1[/"Завантаження сторінки проекту"/] --> B1["B1 · Сторінка проекту"]
+    B1 --> Q_HAS{"На сторінці є реальні екрани з файлу?"}
+    Q_HAS -->|ні — тільки hero-shot| RISK[/"Ризик: рішення на основі одного зображення"/]
+    RISK --> Q_TRUST{"Довіряєш лише обкладинці?"}
+    Q_TRUST -->|ні — недостатньо| BACK1(["Повернення до A1 · Каталог — пропустив проект"])
+    Q_TRUST -->|так — ризикую| Q_QUAL{"Якість деталей прийнятна?"}
+    Q_HAS -->|так — є 2–5 реальних екранів| Q_MATCH{"Екрани відповідають очікуванням?"}
+    Q_MATCH -->|ні — обкладинка обманула| Q_RETRY{"Спробувати іншу картку?"}
+    Q_RETRY -->|так| BACK2(["Повернення до A1 · Каталог"])
+    Q_RETRY -->|ні| DEAD(["Кінець · Розчарування — витрачено час і довіру"])
+    Q_MATCH -->|так| Q_QUAL
+    Q_QUAL -->|ні — посередньо| Q_FALLBACK{"Зберегти як запасний варіант?"}
+    Q_FALLBACK -->|так| C1_FB["C1 · Збережене"]
+    C1_FB --> SAVED_FB(["Збережено як запасний варіант · повернення до пошуку"])
+    Q_FALLBACK -->|ні| BACK2
+    Q_QUAL -->|так — це воно!| OK(["RJ-2 виконано · файл = обкладинка · переходить до дії"])
+        </pre>
+      </div>
+    </div>
+
+    <!-- FLOW 4 — RJ-3 -->
+    <div class="flow-block" id="flow-rj3">
+      <h3>Flow 4 — RJ-3 · Зберегти миттєво</h3>
+      <div class="job-statement-card">
+        <div class="job-statement-label">JOB STATEMENT</div>
+        <div class="job-statement-text">
+          "Коли я знаходжу ресурс що може стати в нагоді пізніше, я хочу відкласти його в одне місце миттєво, щоб повернутись коли прийде відповідний проект, не шукаючи знову."
+        </div>
+        <div class="job-statement-persona">
+          <span class="job-tag">Куратор</span>
+          <span class="priority-badge primary">primary</span>
+          <span style="color: var(--green);">✅ validated</span>
+        </div>
+      </div>
+      <div class="mermaid-wrap">
+        <pre class="mermaid">
+flowchart TD
+    START_A(["На A1 · Каталог — hover → іконка ♥ на картці"]) --> Q_AUTH{"Є акаунт?"}
+    START_B(["На B1 · Сторінка проекту → кнопка Зберегти"]) --> Q_AUTH
+    Q_AUTH -->|так| C1["C1 · Збережене"]
+    C1 --> OK(["Збережено миттєво · RJ-3 виконано"])
+    OK --> RESUME(["Продовжує перегляд A1 або B1"])
+    Q_AUTH -->|ні| E1E2["E1 · Реєстрація / E2 · Вхід"]
+    E1E2 --> Q_INTENT{"Готовий зареєструватись?"}
+    Q_INTENT -->|ні — не очікував переривки| FAIL1(["Кінець · Вийшов не зберігши"])
+    Q_INTENT -->|так| Q_REG{"Реєстрація успішна?"}
+    Q_REG -->|ні| ERR[/"Помилка — перевір email або пароль"/]
+    ERR --> Q_RETRY{"Спробувати ще?"}
+    Q_RETRY -->|так| E1E2
+    Q_RETRY -->|ні| FAIL2(["Кінець · Реєстрація не вдалась"])
+    Q_REG -->|так| C1_POST["C1 · Збережене"]
+    C1_POST --> OK2(["Збережено після реєстрації · RJ-3 виконано"])
+    OK2 --> RESUME
+        </pre>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 3 — TRACING MATRIX
+  ════════════════════════════════════════════ -->
+  <section class="section" id="ia-tracing">
+    <div class="section-header">
+      <h2>Трасування · Jobs × Screens</h2>
+      <p>Мета: жодного порожнього рядка і стовпця. Порожній — дефект.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Job</th>
+            <th>A1</th>
+            <th>B1</th>
+            <th>C1</th>
+            <th>D1</th>
+            <th>D2</th>
+            <th>D3</th>
+            <th>E1</th>
+            <th>E2</th>
+            <th>E3</th>
+            <th class="orphan-col">S1</th>
+            <th class="orphan-col">S2</th>
+            <th class="orphan-col">S3</th>
+            <th class="orphan-col">S4</th>
+            <th>Σ✓</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>MAIN · Знайти ресурс і отримати файл</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="sum">9</td>
+          </tr>
+          <tr>
+            <td>RJ-1 · Знайти за стилем</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="sum">2</td>
+          </tr>
+          <tr class="risk-row">
+            <td>RJ-2 · Файл = обкладинка</td>
+            <td>—</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="sum sum-one">1</td>
+          </tr>
+          <tr>
+            <td>RJ-3 · Зберегти миттєво</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="sum">6</td>
+          </tr>
+          <tr>
+            <td>RJ-4 · Скачати без зупинок</td>
+            <td>—</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="sum">7</td>
+          </tr>
+          <tr class="risk-row">
+            <td>RJ-5 · Тримати руку на пульсі</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="sum sum-one">1</td>
+          </tr>
+          <tr>
+            <td>EJ-1 · Відчути «ось воно»</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="sum">2</td>
+          </tr>
+          <tr>
+            <td>EJ-2 · Підписка окупається</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="sum">3</td>
+          </tr>
+          <tr class="hypo-row">
+            <td>EJ-3 ⚠️ · Не виглядати як шаблон</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="sum">2</td>
+          </tr>
+          <tr class="hypo-row">
+            <td>SJ-1 ⚠️ · Знати де брати якісне</td>
+            <td class="check">✓</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="sum">2</td>
+          </tr>
+          <tr class="hypo-row risk-row">
+            <td>SJ-2 ⚠️ · Задати напрямок команді</td>
+            <td>—</td>
+            <td class="check">✓</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td class="check">✓</td>
+            <td class="sum sum-one">2*</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>Σ по екрану</td>
+            <td class="col-norm">8</td>
+            <td class="col-norm">9</td>
+            <td class="col-norm">2</td>
+            <td class="col-norm">2</td>
+            <td class="col-norm">3</td>
+            <td class="col-norm">2</td>
+            <td class="col-norm">3</td>
+            <td class="col-norm">3</td>
+            <td class="col-norm">4</td>
+            <td class="col-zero">0</td>
+            <td class="col-zero">0</td>
+            <td class="col-zero">0</td>
+            <td class="col-one">1*</td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="matrix-note">
+      * S4·SJ-2: єдиний ✓ для гіпотетичного job. Жовтий рядок = одна точка відмови.
+    </div>
+
+    <!-- Orphan screens sub-section -->
+    <div class="sub-section" id="ia-screen-orphans">
+      <h3>Екрани-сироти</h3>
+      <p class="sub-desc">Σ✓=0 — жодного підтвердженого job. Рішення прийняте.</p>
+      <div class="cards-grid-2">
+
+        <div class="risk-card red-card">
+          <div class="risk-card-id">S1</div>
+          <div class="risk-card-title">
+            Маркетинговий лендінг
+            <span class="risk-card-sigma red">Σ✓=0</span>
+          </div>
+          <div class="risk-card-resolution delete">ВИДАЛИТИ</div>
+          <div class="risk-card-body">A1·Каталог = точка входу. Окремий лендінг дублює функцію.</div>
+        </div>
+
+        <div class="risk-card red-card">
+          <div class="risk-card-id">S2</div>
+          <div class="risk-card-title">
+            Профіль автора
+            <span class="risk-card-sigma red">Σ✓=0</span>
+          </div>
+          <div class="risk-card-resolution backlog">В BACKLOG</div>
+          <div class="risk-card-body">Може закрити SJ-1 після валідації. Автор є полем на B1.</div>
+        </div>
+
+        <div class="risk-card red-card">
+          <div class="risk-card-id">S3</div>
+          <div class="risk-card-title">
+            Про платформу / About
+            <span class="risk-card-sigma red">Σ✓=0</span>
+          </div>
+          <div class="risk-card-resolution delete">ВИДАЛИТИ</div>
+          <div class="risk-card-body">Footer link достатньо. Не UX-screen.</div>
+        </div>
+
+        <div class="risk-card red-card">
+          <div class="risk-card-id">S4</div>
+          <div class="risk-card-title">
+            Командні колекції
+            <span class="risk-card-sigma yellow">Σ✓=1⚠️</span>
+          </div>
+          <div class="risk-card-resolution backlog">В BACKLOG</div>
+          <div class="risk-card-body">Єдиний job (SJ-2) — гіпотеза. Валідувати з арт-директорами.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Job risks sub-section -->
+    <div class="sub-section" id="ia-job-risks">
+      <h3>Jobs · тонке покриття</h3>
+      <p class="sub-desc">Σ✓=1 — одна точка відмови. Потребує фіксації як must-have.</p>
+      <div class="cards-grid-2">
+
+        <div class="risk-card yellow-card">
+          <div class="risk-card-id">RJ-2</div>
+          <div class="risk-card-title">
+            Файл = обкладинка
+            <span class="risk-card-sigma yellow">Σ✓=1 (тільки B1)</span>
+          </div>
+          <div class="risk-card-body">
+            Якщо реальні екрани не реалізуються на B1 — зникає головний диференціатор від UI8.
+          </div>
+          <div class="risk-card-action">Рішення: <span style="color:var(--green); font-weight:600;">ЗАКРІПИТИ як must-have вимогу B1</span></div>
+        </div>
+
+        <div class="risk-card yellow-card">
+          <div class="risk-card-id">RJ-5</div>
+          <div class="risk-card-title">
+            Тримати руку на пульсі
+            <span class="risk-card-sigma yellow">Σ✓=1 (тільки A1)</span>
+          </div>
+          <div class="risk-card-body">
+            Якщо «Нові» сортування cut — щоденний ритуал Куратора не підтримується.
+          </div>
+          <div class="risk-card-action">Рішення: <span style="color:var(--green); font-weight:600;">ЗАКРІПИТИ як must-have вимогу A1</span></div>
+        </div>
+
+        <div class="risk-card yellow-card">
+          <div class="risk-card-id">SJ-2 ⚠️</div>
+          <div class="risk-card-title">
+            Задати напрямок команді
+            <span class="risk-card-sigma yellow">S4 відрізана</span>
+          </div>
+          <div class="risk-card-body">
+            B1 share-лінк = часткове. Full job потребує S4.
+          </div>
+          <div class="risk-card-action">Рішення: <span style="color:var(--yellow); font-weight:600;">В BACKLOG разом з S4</span></div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    Kiwi · IA Document · Джерело правди: sitemap.md · flows.md
+  </footer>
+
+</main>
+
+<!-- ─── MERMAID ─── -->
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      background: '#0c0c0e',
+      mainBkg: '#1c1c1f',
+      nodeBorder: '#2a2a2e',
+      clusterBkg: '#141416',
+      titleColor: '#e8e8ec',
+      edgeLabelBackground: '#141416',
+      lineColor: '#6b6b7a',
+      primaryColor: '#1c1c1f',
+      primaryTextColor: '#e8e8ec',
+      primaryBorderColor: '#2a2a2e',
+      secondaryColor: '#141416',
+      tertiaryColor: '#0c0c0e',
+      fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif',
+      fontSize: '13px'
+    }
+  });
+</script>
+
+<!-- ─── SCROLL SPY ─── -->
+<script>
+  (function () {
+    const navLinks = document.querySelectorAll('.sidebar-nav a[data-target]');
+
+    const targets = Array.from(navLinks)
+      .map(link => {
+        const id = link.getAttribute('data-target');
+        return { link, el: document.getElementById(id) };
+      })
+      .filter(({ el }) => el !== null);
+
+    function setActive(id) {
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('data-target') === id);
+      });
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-20% 0px -70% 0px',
+        threshold: 0
+      }
+    );
+
+    targets.forEach(({ el }) => observer.observe(el));
+  })();
+</script>
+
+</body>
+</html>
