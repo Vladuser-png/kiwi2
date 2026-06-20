@@ -390,6 +390,31 @@
     .tier-grid { grid-template-columns: 1fr; }
   }
 
+  /* ── CRITIQUE ── */
+  .critique-class { margin-bottom: 48px; }
+  .critique-class-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+    margin: 32px 0 14px; display: flex; align-items: center; gap: 14px;
+    padding: 11px 16px; background: var(--bg3); border-radius: 6px; border-left: 3px solid currentColor;
+  }
+  .critique-class-title .ct-sub {
+    font-size: 12px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted);
+  }
+  .critique-table td:first-child {
+    color: var(--accent); font-family: var(--mono); font-size: 11px; font-weight: 700;
+    white-space: nowrap; min-width: 40px;
+  }
+  .critique-table td:nth-child(2) { max-width: 200px; }
+  .critique-table td:nth-child(3) { max-width: 300px; }
+  .critique-table td:nth-child(4) { color: #8080a0; }
+  .critique-counters { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0 36px; }
+  .crit-counter {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 14px 20px; min-width: 90px; text-align: center;
+  }
+  .crit-counter-num { font-size: 30px; font-weight: 800; font-family: var(--mono); line-height: 1; margin-bottom: 5px; }
+  .crit-counter-lbl { font-size: 11px; color: var(--muted); letter-spacing: .3px; }
+
   /* ── USER FLOWS ── */
   .flow-job-card {
     background: var(--bg3); border: 1px solid var(--border);
@@ -556,6 +581,27 @@
     <a href="#tracing-matrix" class="nav-sub">→ Матриця покриття</a>
     <a href="#tracing-screen-orphans" class="nav-sub">→ Екрани-сироти</a>
     <a href="#tracing-job-orphans" class="nav-sub">→ Jobs · тонке покриття</a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Аудит</div>
+    <a href="#critique" class="nav-item"><span class="ico">🔍</span>Критика flows & sitemap</a>
+    <a href="#critique-deadends" class="nav-sub">→ Тупики (6)</a>
+    <a href="#critique-missing-states" class="nav-sub">→ Відсутні стани (12)</a>
+    <a href="#critique-depth" class="nav-sub">→ Зайва глибина (3)</a>
+    <a href="#critique-orphans" class="nav-sub">→ Сироти (7)</a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Дані</div>
+    <a href="#data-gaps" class="nav-item"><span class="ico">⚠</span>Прогалини в даних</a>
+    <a href="#gap-personas" class="nav-sub">→ Невалідовані персони (2)</a>
+    <a href="#gap-risks" class="nav-sub">→ Ризики реалізації (2)</a>
+    <a href="#gap-producer" class="nav-sub">→ Producer flows (0 екранів)</a>
   </div>
 </nav>
 
@@ -2196,6 +2242,406 @@ flowchart TD
 
     <div class="gap-box" style="margin-top:4px;">
       <strong>Підсумок дефектів:</strong> 3 екрани на виліт (S1, S3 видалити / S2 backlog) · S4 умовний backlog · 2 jobs потребують закріплення must-have вимог на B1 і A1 · SJ-2 чекає валідації персони Арт-директор.
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CRITIQUE ═══ -->
+<div class="section" id="critique">
+  <div class="section-label">Розділ 12</div>
+  <h2>Аудит · Критика Flows &amp; Sitemap</h2>
+  <p>Прискіплива критика flows.md і sitemap.md за чотирма класами дефектів. Джерело: аналіз червень 2026.</p>
+
+  <div class="critique-counters">
+    <div class="crit-counter" style="border-color:rgba(248,113,113,.3);">
+      <div class="crit-counter-num" style="color:var(--red);">6</div>
+      <div class="crit-counter-lbl">Тупики</div>
+    </div>
+    <div class="crit-counter" style="border-color:rgba(245,158,11,.3);">
+      <div class="crit-counter-num" style="color:var(--yellow);">12</div>
+      <div class="crit-counter-lbl">Відсутні стани</div>
+    </div>
+    <div class="crit-counter" style="border-color:rgba(96,165,250,.3);">
+      <div class="crit-counter-num" style="color:var(--blue);">3</div>
+      <div class="crit-counter-lbl">Зайва глибина</div>
+    </div>
+    <div class="crit-counter">
+      <div class="crit-counter-num" style="color:var(--muted);">7</div>
+      <div class="crit-counter-lbl">Сироти</div>
+    </div>
+    <div class="crit-counter" style="border-color:rgba(248,113,113,.2);background:rgba(248,113,113,.04);">
+      <div class="crit-counter-num" style="color:var(--red);">7</div>
+      <div class="crit-counter-lbl">Критично</div>
+    </div>
+    <div class="crit-counter" style="border-color:rgba(245,158,11,.2);background:rgba(245,158,11,.04);">
+      <div class="crit-counter-num" style="color:var(--yellow);">21</div>
+      <div class="crit-counter-lbl">Важливо</div>
+    </div>
+  </div>
+
+  <!-- 1 · ТУПИКИ -->
+  <div class="critique-class" id="critique-deadends">
+    <div class="critique-class-title" style="color:var(--red);">
+      01 · Тупики
+      <span class="ct-sub">де flow приходить в глухий кут без виходу назовні</span>
+    </div>
+    <div class="table-wrap">
+      <table class="critique-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Де</th>
+            <th>Що (дефект)</th>
+            <th>Як лагодити</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>T1</td>
+            <td>Main Job<br><code style="font-size:11px;color:var(--muted);">ERR_PAY → скасувати → DEAD_PAY</code></td>
+            <td>Відмова від оплати після помилки картки → термінальний вузол. «Скасувати» нікуди не веде у продукті.</td>
+            <td>Замінити DEAD_PAY на → B1 · Сторінка проекту (звідки прийшов юзер перед гейтом)</td>
+          </tr>
+          <tr>
+            <td>T2</td>
+            <td>Main Job<br><code style="font-size:11px;color:var(--muted);">Q_REG_D → ні → DEAD_DL</code></td>
+            <td>Провалена авторизація в гейті завантаження веде в тупик. У RJ-3 є петля ERR→Q_RETRY — тут нема. Непослідовність.</td>
+            <td>Додати ERR_AUTH → Q_RETRY (як у RJ-3); при відмові від повторної спроби → B1, не термінальний вузол</td>
+          </tr>
+          <tr>
+            <td>T3</td>
+            <td>Main Job<br><code style="font-size:11px;color:var(--muted);">Q_BACK → ні → DEAD_DIS</code></td>
+            <td>На B1 юзер вирішив не пробувати іншу картку → DEAD_DIS. Breadcrumb у sitemap є, але у flow не підключений — wireframe-ризик.</td>
+            <td>Провести ребро з DEAD_DIS → A1 через глобальну навігацію; вузол зробити не термінальним</td>
+          </tr>
+          <tr>
+            <td>T4</td>
+            <td>Main Job + всі flows<br><code style="font-size:11px;color:var(--muted);">Stripe checkout</code></td>
+            <td>«Юзер закрив Stripe без завершення» — стан відсутній цілком. Є відхилено і так, але немає «закрив вікно без дії».</td>
+            <td>Додати гілку: Stripe → закрито без дії → D2 (повернення на вибір плану)</td>
+          </tr>
+          <tr>
+            <td>T5</td>
+            <td>Main Job<br><code style="font-size:11px;color:var(--muted);">Q_SUB → так → DL_OK</code></td>
+            <td>Завантаження файлу вважається завжди успішним. CDN-помилка не передбачена. Silent dead end при реальному збої.</td>
+            <td>Додати [/Завантаження файлу…/] → Q_DL успішно? → ні → ERR_DL → «Спробувати ще / Написати нам»</td>
+          </tr>
+          <tr>
+            <td>T6</td>
+            <td>RJ-3<br><code style="font-size:11px;color:var(--muted);">Q_INTENT → ні → FAIL1</code></td>
+            <td>Юзер не очікував переривки на реєстрацію — вийшов. Нема CTA «повернись на картку» після відмови.</td>
+            <td>Додати ребро FAIL1 → B1 або A1 залежно від контексту; вийшов без збереження — не термінально</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 2 · ВІДСУТНІ СТАНИ -->
+  <div class="critique-class" id="critique-missing-states">
+    <div class="critique-class-title" style="color:var(--yellow);">
+      02 · Відсутні стани
+      <span class="ct-sub">happy-path без empty / error / loading</span>
+    </div>
+    <div class="table-wrap">
+      <table class="critique-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Де</th>
+            <th>Який стан відсутній</th>
+            <th>Як лагодити</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>VS1</td>
+            <td>C1 · Збережене</td>
+            <td><strong>Empty</strong> — нема жодного збереженого проекту. C1 ніколи не показується порожнім у жодному flow.</td>
+            <td>[/C1 · Порожньо — ще нічого не збережено/] → «Почати переглядати» → A1</td>
+          </tr>
+          <tr>
+            <td>VS2</td>
+            <td>C1 · Збережене</td>
+            <td><strong>Loading</strong> — запит до Supabase при відкритті списку збережень. Flow переходить одразу до списку.</td>
+            <td>[/Завантаження збережених/] → Q_RES → є / нема → список / empty</td>
+          </tr>
+          <tr>
+            <td>VS3</td>
+            <td>C1 · Збережене</td>
+            <td><strong>Error on save</strong> — збереження не вдалось (DB / network). Flow вважає save → OK завжди успішним.</td>
+            <td>C1 → ні → [/Не вдалось зберегти/] → Q_RETRY → так → повторити / ні → повернутись</td>
+          </tr>
+          <tr>
+            <td>VS4</td>
+            <td>D1 · Гейт завантаження</td>
+            <td><strong>Loading</strong> — перевірка статусу підписки в Supabase. Без стану юзер бачить blank або flash кнопки.</td>
+            <td>D1 → [/Перевірка підписки…/] → Q_SUB</td>
+          </tr>
+          <tr>
+            <td>VS5</td>
+            <td>D1 · Гейт завантаження</td>
+            <td><strong>Error</strong> — перевірку підписки не вдалось виконати (Supabase timeout / network).</td>
+            <td>Q_SUB → помилка → [/Не вдалось перевірити/] → «Спробувати ще» або «Підписатись»</td>
+          </tr>
+          <tr>
+            <td>VS6</td>
+            <td>Main Job<br><code style="font-size:11px;color:var(--muted);">Q_SUB → так → DL_OK</code></td>
+            <td><strong>Download progress</strong> — файл завантажується, може займати секунди. Стан між клоком і файлом відсутній.</td>
+            <td>Вставити [/Завантаження файлу…/] між Q_SUB та DL_OK</td>
+          </tr>
+          <tr>
+            <td>VS7</td>
+            <td>Main Job → DL_OK</td>
+            <td><strong>Download error</strong> — CDN-помилка при отриманні файлу. (Перетинається з T5.)</td>
+            <td>ERR_DL → «Спробувати ще» або «Написати нам» → не термінальний</td>
+          </tr>
+          <tr>
+            <td>VS8</td>
+            <td>Main Job vs RJ-2</td>
+            <td><strong>B1 loading error</strong> є у RJ-2 (LOAD_B1 → Q_B1), але відсутній у Main Job flow. Непослідовність.</td>
+            <td>Main Job: Q_COV → так → [/Завантаження проекту/] → Q_B1_OK → ні → ERR_B1 → A1</td>
+          </tr>
+          <tr>
+            <td>VS9</td>
+            <td>E1 · Реєстрація / E2 · Вхід</td>
+            <td><strong>Loading</strong> під час відправки форми. E1E2 → Q_REG без проміжного стану завантаження.</td>
+            <td>E1E2 → submit → [/Перевірка…/] → Q_REG</td>
+          </tr>
+          <tr>
+            <td>VS10</td>
+            <td>RJ-1<br><code style="font-size:11px;color:var(--muted);">LOAD → Q_RES</code></td>
+            <td><strong>Network error</strong> відсутній у RJ-1, хоча в Main Job є Q_NET перевірка. Непослідовність між flows.</td>
+            <td>RJ-1: LOAD → Q_NET → ні → ERR_NET → LOAD; так → Q_RES</td>
+          </tr>
+          <tr>
+            <td>VS11</td>
+            <td>E3 · Кабінет</td>
+            <td><strong>Loading</strong> даних підписки і download history. E3 показується без жодного стану завантаження даних.</td>
+            <td>E3 → [/Завантаження акаунту/] → Q_E3_OK → ні → ERR_E3 з fallback CTA</td>
+          </tr>
+          <tr>
+            <td>VS12</td>
+            <td>E3 · Кабінет</td>
+            <td><strong>Empty history</strong> — у нового юзера нема жодного завантаження. Стан не показаний.</td>
+            <td>[/Ще не завантажував нічого/] → «Переглянути каталог» → A1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 3 · ЗАЙВА ГЛИБИНА -->
+  <div class="critique-class" id="critique-depth">
+    <div class="critique-class-title" style="color:var(--blue);">
+      03 · Зайва глибина
+      <span class="ct-sub">main job ховається глибше 3 тапів або контекст губиться після дії</span>
+    </div>
+    <div class="table-wrap">
+      <table class="critique-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Де</th>
+            <th>Що (дефект)</th>
+            <th>Як лагодити</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ZG1</td>
+            <td>sitemap.md<br>§Глибина тапів · без підписки</td>
+            <td>Формула хибна для нового юзера: показано 3 тапи до D2, але для unauth: A1→B1→D1→E1/E2→D2 = <strong>4 тапи</strong>. Крок E1/E2 пропущено в розрахунку.</td>
+            <td>Додати рядок «Варіант без акаунту і підписки (4 тапи)» з позначкою ⚠️; переглянути прийнятність</td>
+          </tr>
+          <tr>
+            <td>ZG2</td>
+            <td>Main Job<br>після D2+Stripe → DL_OK</td>
+            <td>Після успішної оплати юзер отримує файл, але контекст проекту (B1) втрачено. Де юзер фізично опиняється — flow не відповідає.</td>
+            <td>Після DL_OK → B1 (автоматично, той самий проект) з CTA «Відкрити файл / Продовжити перегляд»</td>
+          </tr>
+          <tr>
+            <td>ZG3</td>
+            <td>RJ-3<br><code style="font-size:11px;color:var(--muted);">OK2 → RESUME</code></td>
+            <td>RESUME([«Продовжує перегляд»]) — абстрактний вузол. Не ясно куди саме юзер повертається: B1 чи A1, і як.</td>
+            <td>Два конкретні ребра: OK2 → A1 (якщо save з каталогу) і OK2 → B1 (якщо save зі сторінки проекту)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 4 · СИРОТИ -->
+  <div class="critique-class" id="critique-orphans">
+    <div class="critique-class-title" style="color:var(--muted);">
+      04 · Сироти
+      <span class="ct-sub">екрани без flow · jobs без flow · phantom ✓ у матриці</span>
+    </div>
+    <div class="table-wrap">
+      <table class="critique-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Де / Тип</th>
+            <th>Що (дефект)</th>
+            <th>Як лагодити</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>OR1</td>
+            <td>E3 · Кабінет<br><span style="font-size:10px;color:var(--red);">ЕКРАН БЕЗ FLOW</span></td>
+            <td>Немає жодного flow: перегляд статусу підписки, скасування, зміна плану, перегляд history — все відсутнє. ГЛИБОКА навігація перераховує дії, але flows нема.</td>
+            <td>Написати EJ-2 management flow: E3 → Q_SUB_STATUS → active / expired → Скасувати / Оновити → Stripe</td>
+          </tr>
+          <tr>
+            <td>OR2</td>
+            <td>C1 · Збережене (перегляд)<br><span style="font-size:10px;color:var(--red);">ЕКРАН БЕЗ FLOW</span></td>
+            <td>C1 фігурує тільки як «точка прибуття після save». Нема flow «юзер відкриває C1 → клікає проект → B1 → завантажує».</td>
+            <td>Додати RJ-3 return flow: N3 (клік) → C1 [список] → клік на проект → B1 → D1</td>
+          </tr>
+          <tr>
+            <td>OR3</td>
+            <td>D3 · Разова оплата<br><span style="font-size:10px;color:var(--red);">ЕКРАН БЕЗ FLOW</span></td>
+            <td>Лише вузол у Main Job. Нема окремого flow для single-purchase: що до/після Stripe, куди повертається юзер.</td>
+            <td>Написати D3 flow або явно зазначити що D3 ≡ subset Main Job і посилатись на нього</td>
+          </tr>
+          <tr>
+            <td>OR4</td>
+            <td>RJ-5 · Тримати руку на пульсі<br><span style="font-size:10px;color:var(--yellow);">JOB БЕЗ FLOW</span></td>
+            <td>Σ✓=1 у матриці (тільки A1). Нема власного flow. Ключова retention-механіка Куратора — підтверджено Інтерв'ю #1.</td>
+            <td>Написати RJ-5 flow: Logo → A1 [sort=Нові] → нові картки → B1 → ...; підкреслити щоденний ритуал</td>
+          </tr>
+          <tr>
+            <td>OR5</td>
+            <td>EJ-2 · Підписка окупається<br><span style="font-size:10px;color:var(--yellow);">JOB БЕЗ FLOW</span></td>
+            <td>Підписка купується в Main Job, але управління (оновлення, скасування, зміна плану) — нуль flows. EJ-2 покрито тільки у D2 (момент покупки).</td>
+            <td>Написати EJ-2 management flow; зараз це flow-ізольований job після точки оплати</td>
+          </tr>
+          <tr>
+            <td>OR6</td>
+            <td>B1 / SJ-1⚠️ та B1 / SJ-2⚠️<br><span style="font-size:10px;color:var(--red);">PHANTOM ✓ У МАТРИЦІ</span></td>
+            <td>Обґрунтування: «share-лінк на проект». Але share як feature <em>ніде не визначена</em> в sitemap. Це ✓ на неіснуючий UI.</td>
+            <td>Або додати share-кнопку явно в B1 screen spec → тоді ✓ валідне. Або замінити ✓ на — в матриці.</td>
+          </tr>
+          <tr>
+            <td>OR7</td>
+            <td>A1 / EJ-2<br><span style="font-size:10px;color:var(--yellow);">РОЗТЯГНУТИЙ ✓ У МАТРИЦІ</span></td>
+            <td>Обґрунтування: «Нові/Популярні = підписка окупається». Але A1 — discovery, не proof-of-value. EJ-2 = «бачу що отримав за гроші» — A1 цього не показує.</td>
+            <td>Замінити ✓ на — і перенести покриття EJ-2 на E3 (статус підписки + download history)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="gap-box">
+    <strong>Пріоритет виправлень:</strong><br>
+    <span style="color:var(--red);font-weight:600;">Критично (блокує MVP-впевненість):</span> T1, T2, VS1, VS4, ZG1, OR4, OR5<br>
+    <span style="color:var(--yellow);font-weight:600;">Важливо (виявиться при тестуванні):</span> T3, T4, T5, VS3, VS5–VS9, ZG2, OR1, OR2<br>
+    <span style="color:var(--muted);">Прибрати з матриці зараз:</span> OR6, OR7
+  </div>
+</div>
+
+<!-- ═══ 13 · IA DATA GAPS ═══ -->
+<div class="section" id="data-gaps">
+  <div class="section-label">13 · Прогалини в даних</div>
+  <h2>Виявлені прогалини в даних</h2>
+  <p style="color:var(--muted);margin-bottom:32px;">Знайдено під час побудови IA: sitemap + flows + матриця трасування. Червень 2026. Джерело: <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">research.md §IA</code></p>
+
+  <!-- НЕВАЛІДОВАНІ ПЕРСОНИ -->
+  <div id="gap-personas" style="margin-bottom:48px;">
+    <div class="section-label" style="color:var(--red);margin-bottom:20px;">Невалідовані персони · 2 з 3</div>
+
+    <div class="defect-grid">
+      <div class="defect-card dc-screen" style="border-left-color:var(--red)">
+        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
+          <strong style="font-size:13px;">Мисливець на дедлайн</strong>
+          <span style="font-size:10px;background:rgba(248,113,113,.15);color:var(--red);padding:3px 8px;border-radius:4px;font-weight:700;">⚠️ ГІПОТЕЗА</span>
+        </div>
+        <p style="color:var(--muted);font-size:12px;margin-bottom:12px;">Екран D3 (Разова оплата) побудований виключно під цю персону. Жодного інтерв'ю, жодного підтвердженого pain point.</p>
+        <div style="font-size:11px;color:var(--yellow);font-weight:600;margin-bottom:4px;">РИЗИК</div>
+        <p style="color:var(--muted);font-size:12px;margin-bottom:12px;">Якщо Мисливець не є реальним сегментом або не готовий платити поштучно — весь flow D3 (Stripe one-time) буде невикористаним.</p>
+        <div style="font-size:11px;color:var(--green);font-weight:600;margin-bottom:4px;">ДІЯ</div>
+        <p style="color:var(--muted);font-size:12px;">Провести 2–3 інтерв'ю з дизайнерами, що не купують підписки. Підтвердити або спростувати до реалізації D3.</p>
+      </div>
+
+      <div class="defect-card dc-screen" style="border-left-color:var(--red)">
+        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
+          <strong style="font-size:13px;">Арт-директор</strong>
+          <span style="font-size:10px;background:rgba(248,113,113,.15);color:var(--red);padding:3px 8px;border-radius:4px;font-weight:700;">⚠️ ГІПОТЕЗА</span>
+        </div>
+        <p style="color:var(--muted);font-size:12px;margin-bottom:12px;">Екран S4 (Командні колекції) і job SJ-2 («задати напрямок команді») — гіпотетичні. Жодного інтерв'ю.</p>
+        <div style="font-size:11px;color:var(--yellow);font-weight:600;margin-bottom:4px;">РИЗИК</div>
+        <p style="color:var(--muted);font-size:12px;margin-bottom:12px;">Командна функція може бути складнішою (ролі, коментарі, шеринг) — без даних невідомий мінімальний розмір рішення.</p>
+        <div style="font-size:11px;color:var(--green);font-weight:600;margin-bottom:4px;">ДІЯ</div>
+        <p style="color:var(--muted);font-size:12px;">Підтвердити SJ-2 до початку проектування S4. До підтвердження — в backlog.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- РИЗИКИ РЕАЛІЗАЦІЇ -->
+  <div id="gap-risks" style="margin-bottom:48px;">
+    <div class="section-label" style="color:var(--yellow);margin-bottom:20px;">Ризики реалізації · єдині точки відмови</div>
+
+    <div class="defect-grid">
+      <div class="defect-card dc-job" style="border-left-color:var(--yellow)">
+        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
+          <strong style="font-size:13px;">RJ-2 · Файл = обкладинка</strong>
+          <span style="font-size:10px;background:rgba(245,158,11,.15);color:var(--yellow);padding:3px 8px;border-radius:4px;font-weight:700;">Σ=1 / тільки B1</span>
+        </div>
+        <p style="color:var(--muted);font-size:12px;margin-bottom:12px;">Job «Переконатись що файл = обкладинка» покривається лише однією фічею на B1: реальні екрани з файлу (2–5 шт.).</p>
+        <div style="font-size:11px;color:var(--red);font-weight:600;margin-bottom:4px;">РИЗИК</div>
+        <p style="color:var(--muted);font-size:12px;margin-bottom:12px;">Якщо ця фіча відрізається або спрощується — зникає головний диференціатор від UI8.</p>
+        <div style="font-size:11px;color:var(--green);font-weight:600;margin-bottom:4px;">ДІЯ</div>
+        <p style="color:var(--muted);font-size:12px;">ЗАКРІПИТИ як must-have вимогу B1. Не підлягає negotiation без окремого рішення.</p>
+      </div>
+
+      <div class="defect-card dc-job" style="border-left-color:var(--yellow)">
+        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
+          <strong style="font-size:13px;">RJ-5 · Тримати руку на пульсі</strong>
+          <span style="font-size:10px;background:rgba(245,158,11,.15);color:var(--yellow);padding:3px 8px;border-radius:4px;font-weight:700;">Σ=1 / тільки A1</span>
+        </div>
+        <p style="color:var(--muted);font-size:12px;margin-bottom:12px;">Job «Тримати руку на пульсі нових надходжень» покривається тільки сортуванням «Нові» на A1.</p>
+        <div style="font-size:11px;color:var(--red);font-weight:600;margin-bottom:4px;">РИЗИК</div>
+        <p style="color:var(--muted);font-size:12px;margin-bottom:12px;">Якщо сортування відкладається — щоденний ритуал Куратора не підтримується. Це механізм утримання.</p>
+        <div style="font-size:11px;color:var(--green);font-weight:600;margin-bottom:4px;">ДІЯ</div>
+        <p style="color:var(--muted);font-size:12px;">ЗАКРІПИТИ як must-have вимогу A1. Не «nice to have» — це retention.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCER FLOWS -->
+  <div id="gap-producer">
+    <div class="section-label" style="color:var(--red);margin-bottom:20px;">Producer-side flows · відсутні в sitemap</div>
+
+    <div class="gap-box" style="border-color:var(--red);background:rgba(248,113,113,.04);">
+      <strong style="display:block;margin-bottom:12px;">❌ Gap в IA — 0 екранів для producer і admin flows</strong>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:16px;">MVP scope (CLAUDE.md) містить «Кабінет автора — завантаження власних робіт» і «Адмін: модерація контенту» — але жоден з цих flows не має екранів у sitemap.md. Весь поточний sitemap описує тільки consumer-side journey.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--yellow);margin-bottom:8px;letter-spacing:.8px;">ПОТРІБНО ДОДАТИ ДО SITEMAP</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.8;">
+            GROUP F · PRODUCER<br>
+            &nbsp;&nbsp;F1 · Кабінет автора<br>
+            &nbsp;&nbsp;F2 · Upload файлу<br>
+            &nbsp;&nbsp;F3 · Preview / Submit
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--yellow);margin-bottom:8px;letter-spacing:.8px;">&nbsp;</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.8;">
+            GROUP G · ADMIN<br>
+            &nbsp;&nbsp;G1 · Черга модерації<br>
+            &nbsp;&nbsp;G2 · Перегляд і рішення<br>
+            &nbsp;&nbsp;G3 · Публікація / Відхилення
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:20px;font-size:12px;">
+        <span style="color:var(--green);font-weight:600;">ДІЯ: </span>
+        <span style="color:var(--muted);">Додати GROUP F і GROUP G до sitemap.md до початку проектування цих flows.</span>
+      </div>
     </div>
   </div>
 </div>
