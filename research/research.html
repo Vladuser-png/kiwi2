@@ -46,6 +46,26 @@
     padding: 0 16px 6px;
     font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
     text-transform: uppercase; color: var(--muted);
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; user-select: none;
+  }
+  .nav-section-label::after {
+    content: '▾';
+    font-size: 11px; color: var(--border);
+    transition: transform .2s, color .15s;
+    flex-shrink: 0; padding-right: 2px;
+  }
+  .nav-section-label:hover::after { color: var(--muted); }
+  .nav-section.collapsed .nav-section-label::after { transform: rotate(-90deg); }
+  .nav-section-body {
+    overflow: hidden;
+    max-height: 600px;
+    opacity: 1;
+    transition: max-height .28s ease, opacity .2s ease;
+  }
+  .nav-section.collapsed .nav-section-body {
+    max-height: 0;
+    opacity: 0;
   }
   .nav-item {
     display: flex; align-items: center; gap: 8px;
@@ -2691,6 +2711,19 @@ flowchart TD
     });
   }, { threshold: 0.2 });
   sections.forEach(s => observer.observe(s));
+</script>
+
+<script>
+  // Collapsible sidebar sections
+  document.querySelectorAll('.nav-section').forEach(section => {
+    const label = section.querySelector('.nav-section-label');
+    if (!label) return;
+    const body = document.createElement('div');
+    body.className = 'nav-section-body';
+    [...section.children].slice(1).forEach(el => body.appendChild(el));
+    section.appendChild(body);
+    label.addEventListener('click', () => section.classList.toggle('collapsed'));
+  });
 </script>
 </body>
 </html>
