@@ -332,6 +332,51 @@
   .sirota-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
   .sirota-why { font-size: 12px; color: var(--muted); line-height: 1.45; }
 
+  /* ── NAV DESIGN ── */
+  .nav-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+  .nav-table thead th { background: var(--bg3); padding: 9px 14px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); }
+  .nav-table tbody tr { border-bottom: 1px solid var(--border); }
+  .nav-table tbody tr:last-child { border-bottom: none; }
+  .nav-table tbody tr:hover { background: var(--bg2); }
+  .nav-table td { padding: 11px 14px; vertical-align: top; color: #b0b0be; }
+  .nav-table td:first-child { font-weight: 700; color: var(--text); white-space: nowrap; font-size: 14px; }
+  .nav-item-id { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--muted); }
+  .nav-logo-row td { color: var(--muted) !important; font-style: italic; }
+
+  .tap-flow { background: var(--bg3); border-radius: var(--r); padding: 22px 26px; margin: 16px 0; }
+  .tap-scenario { margin-bottom: 22px; }
+  .tap-scenario:last-child { margin-bottom: 0; }
+  .tap-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+  .tap-title.ok { color: var(--green); }
+  .tap-title.warn { color: var(--yellow); }
+  .tap-steps { display: flex; flex-direction: column; gap: 0; }
+  .tap-step { display: grid; grid-template-columns: 60px 1fr; gap: 0; align-items: stretch; }
+  .tap-label { font-size: 11px; font-weight: 700; font-family: var(--mono); padding: 8px 0; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .tap-label .tl-num { color: var(--accent); font-size: 12px; }
+  .tap-label .tl-line { width: 1px; flex: 1; background: var(--border); margin: 3px auto; min-height: 10px; }
+  .tap-content { border-left: 1px solid var(--border); padding: 7px 0 7px 16px; margin-left: -1px; }
+  .tap-screen { font-size: 13px; font-weight: 600; color: var(--text); }
+  .tap-note { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .tap-result { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; background: rgba(74,222,128,.1); border: 1px solid rgba(74,222,128,.25); border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 700; color: var(--green); }
+  .tap-result.warn-result { background: rgba(245,158,11,.1); border-color: rgba(245,158,11,.25); color: var(--yellow); }
+  .tap-summary-row { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+  .tap-count { font-size: 28px; font-weight: 800; font-family: var(--mono); color: var(--green); line-height: 1; }
+  .tap-count.warn { color: var(--yellow); }
+
+  .tier-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .tier-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r); padding: 18px 20px; }
+  .tier-label { font-size: 10px; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; margin-bottom: 12px; }
+  .tier-global .tier-label { color: var(--accent); }
+  .tier-context .tier-label { color: var(--blue); }
+  .tier-deep .tier-label { color: var(--muted); }
+  .tier-item { font-size: 12px; color: #9898b8; padding: 5px 0; border-bottom: 1px solid rgba(42,42,46,.5); display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .tier-item:last-child { border-bottom: none; }
+  .tier-item-label { color: #c0c0cc; }
+  .tier-item-job { font-size: 10px; font-weight: 700; font-family: var(--mono); color: var(--muted); flex-shrink: 0; }
+  .tier-group { font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); margin: 10px 0 4px; }
+
+  .flow-diagram { background: var(--bg3); border-radius: var(--r); padding: 24px 28px; font-family: var(--mono); font-size: 12px; color: #9898b8; line-height: 1.9; white-space: pre; overflow-x: auto; }
+
   @media (max-width: 1000px) {
     .pattern-card { grid-template-columns: 1fr; }
     .takeaways { grid-template-columns: 1fr; }
@@ -342,6 +387,7 @@
     .sitemap-summary { grid-template-columns: 1fr; }
     .sitemap-screen { grid-template-columns: 36px 1fr; }
     .screen-jobs { display: none; }
+    .tier-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -425,6 +471,17 @@
     <a href="#sitemap-d" class="nav-sub">→ D · Отримання файлу</a>
     <a href="#sitemap-e" class="nav-sub">→ E · Акаунт</a>
     <a href="#sitemap-sirota" class="nav-sub">→ Сироти</a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Навігація</div>
+    <a href="#nav-design" class="nav-item"><span class="ico">🧭</span>Навігація MVP</a>
+    <a href="#nav-global" class="nav-sub">→ Глобальна (4 пункти)</a>
+    <a href="#nav-depth" class="nav-sub">→ Глибина тапів</a>
+    <a href="#nav-tiers" class="nav-sub">→ Рівні навігації</a>
+    <a href="#nav-flow" class="nav-sub">→ Потік primary-персони</a>
   </div>
 </nav>
 
@@ -1462,6 +1519,202 @@
         <span class="s-chip s-chip-cut">S4</span>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ═══ NAV DESIGN ═══ -->
+<div class="section" id="nav-design">
+  <div class="section-label">Розділ 09</div>
+  <h2>Навігація MVP</h2>
+  <p>Навігація виведена з job-кластерів — кожен пункт є входом у конкретний job, а не копією конкурентів.</p>
+
+  <!-- GLOBAL NAV -->
+  <div id="nav-global">
+    <h3 style="margin:24px 0 6px;">Глобальна навігація — 4 пункти</h3>
+    <p>Видно на кожному екрані. Кожен пункт — вхід у job-кластер.</p>
+    <div class="table-wrap" style="margin-top:12px;">
+      <table class="nav-table">
+        <thead>
+          <tr><th>#</th><th>Пункт</th><th>Job</th><th>Що людина хоче зробити</th><th>Чому тут</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="nav-item-id">N1</td>
+            <td>Landing Page</td>
+            <td><span class="job-tag job-tag-confirmed" style="margin:0;">RJ-1</span></td>
+            <td>«Шукаю готовий лендінг за стилем»</td>
+            <td style="color:#9090a0;font-size:12px;">Скорочує RJ-1 на 1 крок — не треба відкривати каталог і потім фільтрувати. Nav масштабується: Dashboard → додасться сюди</td>
+          </tr>
+          <tr>
+            <td class="nav-item-id">N2</td>
+            <td>Website</td>
+            <td><span class="job-tag job-tag-confirmed" style="margin:0;">RJ-1</span></td>
+            <td>«Шукаю готовий сайт за стилем»</td>
+            <td style="color:#9090a0;font-size:12px;">Те саме для вебсайтів. Єдина відмінність — тип ресурсу</td>
+          </tr>
+          <tr>
+            <td class="nav-item-id">N3</td>
+            <td>Збережене ♥</td>
+            <td><span class="job-tag job-tag-confirmed" style="margin:0;">RJ-3</span></td>
+            <td>«Повертаюсь до відкладеного»</td>
+            <td style="color:#9090a0;font-size:12px;">Підтверджена щоденна поведінка · Інтерв'ю #1. Якщо захований — ритуал зламається</td>
+          </tr>
+          <tr>
+            <td class="nav-item-id">N4</td>
+            <td>Акаунт / Підписка</td>
+            <td><span class="job-tag job-tag-confirmed" style="margin:0;">RJ-4</span>&nbsp;<span class="job-tag job-tag-confirmed" style="margin:0;">EJ-2</span></td>
+            <td>«Керую доступом до завантаження»</td>
+            <td style="color:#9090a0;font-size:12px;">Підписка повинна бути видна — антипатерн UI8: CTA підписки захована (benchmark, 33/40)</td>
+          </tr>
+          <tr class="nav-logo-row">
+            <td class="nav-item-id">—</td>
+            <td>Логотип</td>
+            <td><span class="job-tag job-tag-confirmed" style="margin:0;">RJ-5</span></td>
+            <td>«Хочу побачити все нове»</td>
+            <td style="color:#9090a0;font-size:12px;">Для Куратора, який приходить щодня — логотип = «додому» без передфільтра категорії</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAP DEPTH -->
+  <div id="nav-depth">
+    <h3 style="margin:32px 0 6px;">Глибина тапів до main job</h3>
+    <p>Лічимо переходи між екранами. Дії всередині екрана (фільтр, hover) — не тап.</p>
+
+    <div class="tap-flow">
+      <div class="tap-scenario">
+        <div class="tap-title ok">Куратор · має підписку (primary, validated)</div>
+        <div class="tap-steps">
+          <div class="tap-step">
+            <div class="tap-label"><span style="font-size:10px;color:var(--muted);">СТАРТ</span><div class="tl-line"></div></div>
+            <div class="tap-content"><div class="tap-screen">A1 · Каталог</div><div class="tap-note">точка входу — перший екран</div></div>
+          </div>
+          <div class="tap-step">
+            <div class="tap-label"><span class="tl-num">ТАП 1</span><div class="tl-line"></div></div>
+            <div class="tap-content"><div class="tap-screen">B1 · Сторінка проекту</div><div class="tap-note">клік на картку в каталозі</div></div>
+          </div>
+          <div class="tap-step">
+            <div class="tap-label"><span class="tl-num">ТАП 2</span></div>
+            <div class="tap-content"><div class="tap-screen">D1 · Гейт → файл</div><div class="tap-note">клік «Завантажити» → підписка активна → файл одразу</div><div class="tap-result">✓ файл отримано</div></div>
+          </div>
+        </div>
+        <div class="tap-summary-row"><div class="tap-count">2</div><div>тапи від каталогу до файлу ✅ в межах 3</div></div>
+      </div>
+
+      <div class="tap-scenario">
+        <div class="tap-title warn">Перший раз · без підписки (D2 purchase flow)</div>
+        <div class="tap-steps">
+          <div class="tap-step">
+            <div class="tap-label"><span style="font-size:10px;color:var(--muted);">СТАРТ</span><div class="tl-line"></div></div>
+            <div class="tap-content"><div class="tap-screen">A1 · Каталог</div></div>
+          </div>
+          <div class="tap-step">
+            <div class="tap-label"><span class="tl-num">ТАП 1</span><div class="tl-line"></div></div>
+            <div class="tap-content"><div class="tap-screen">B1 · Сторінка проекту</div></div>
+          </div>
+          <div class="tap-step">
+            <div class="tap-label"><span class="tl-num">ТАП 2</span><div class="tl-line"></div></div>
+            <div class="tap-content"><div class="tap-screen">D1 · Гейт</div><div class="tap-note">підписки немає → пропозиція підписатись</div></div>
+          </div>
+          <div class="tap-step">
+            <div class="tap-label"><span class="tl-num" style="color:var(--yellow);">ТАП 3</span></div>
+            <div class="tap-content"><div class="tap-screen">D2 · Вибір плану</div><div class="tap-note">→ Stripe (зовнішній checkout)</div><div class="tap-result warn-result">⚠ 3 тапи до оплати</div></div>
+          </div>
+        </div>
+        <div class="tap-summary-row"><div class="tap-count warn">3</div><div>тапи до екрана оплати ✅ межа не перевищена</div></div>
+      </div>
+
+      <div class="tap-scenario">
+        <div class="tap-title ok">Збереження (RJ-3) · найшвидший flow</div>
+        <div class="tap-steps">
+          <div class="tap-step">
+            <div class="tap-label"><span style="font-size:10px;color:var(--muted);">СТАРТ</span><div class="tl-line"></div></div>
+            <div class="tap-content"><div class="tap-screen">A1 · Каталог</div></div>
+          </div>
+          <div class="tap-step">
+            <div class="tap-label"><span class="tl-num">ТАП 1</span></div>
+            <div class="tap-content"><div class="tap-screen">Іконка ♥ на картці</div><div class="tap-note">дія на A1, без переходу на новий екран</div><div class="tap-result">✓ збережено</div></div>
+          </div>
+        </div>
+        <div class="tap-summary-row"><div class="tap-count">1</div><div>тап — найшвидший flow ✅</div></div>
+      </div>
+    </div>
+
+    <div class="gap-box" style="margin-top:16px;">
+      <p><strong>Висновок:</strong> глибина ≤ 3 для всіх primary-flows. Реструктуризація не потрібна. Це забезпечується двома архітектурними рішеннями: каталог = точка входу (не окремий Home) і реєстрація не блокує перегляд.</p>
+    </div>
+  </div>
+
+  <!-- TIERS -->
+  <div id="nav-tiers">
+    <h3 style="margin:32px 0 6px;">Рівні навігації</h3>
+    <div class="tier-grid">
+      <div class="tier-card tier-global">
+        <div class="tier-label">Глобальна — завжди</div>
+        <div class="tier-item"><span class="tier-item-label">Логотип → всі категорії</span><span class="tier-item-job">RJ-5</span></div>
+        <div class="tier-item"><span class="tier-item-label">Landing Page</span><span class="tier-item-job">RJ-1</span></div>
+        <div class="tier-item"><span class="tier-item-label">Website</span><span class="tier-item-job">RJ-1</span></div>
+        <div class="tier-item"><span class="tier-item-label">Збережене ♥</span><span class="tier-item-job">RJ-3</span></div>
+        <div class="tier-item"><span class="tier-item-label">Акаунт / Підписка</span><span class="tier-item-job">RJ-4 EJ-2</span></div>
+      </div>
+      <div class="tier-card tier-context">
+        <div class="tier-label">Контекстна — в потоці</div>
+        <div class="tier-group">На A1 (Каталог)</div>
+        <div class="tier-item"><span class="tier-item-label">Фільтр стилю / настрою</span><span class="tier-item-job">RJ-1 ★</span></div>
+        <div class="tier-item"><span class="tier-item-label">Фільтр інструменту</span><span class="tier-item-job">RJ-1</span></div>
+        <div class="tier-item"><span class="tier-item-label">Сортування Нові / Популярні</span><span class="tier-item-job">RJ-5</span></div>
+        <div class="tier-item"><span class="tier-item-label">Іконка ♥ «Зберегти» (hover)</span><span class="tier-item-job">RJ-3</span></div>
+        <div class="tier-group">На B1 (Проект)</div>
+        <div class="tier-item"><span class="tier-item-label">Breadcrumb / ← назад</span><span class="tier-item-job">RJ-1</span></div>
+        <div class="tier-item"><span class="tier-item-label">Кнопка «Завантажити»</span><span class="tier-item-job">RJ-4</span></div>
+        <div class="tier-item"><span class="tier-item-label">D1 Гейт (overlay)</span><span class="tier-item-job">RJ-4</span></div>
+      </div>
+      <div class="tier-card tier-deep">
+        <div class="tier-label">Глибока — рідко</div>
+        <div class="tier-item"><span class="tier-item-label">Зміна плану підписки</span><span class="tier-item-job">EJ-2</span></div>
+        <div class="tier-item"><span class="tier-item-label">Скасування підписки</span><span class="tier-item-job">EJ-2</span></div>
+        <div class="tier-item"><span class="tier-item-label">Вихід з акаунту</span><span class="tier-item-job">—</span></div>
+        <div class="tier-item"><span class="tier-item-label">Зміна email / пароля</span><span class="tier-item-job">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW -->
+  <div id="nav-flow">
+    <h3 style="margin:32px 0 10px;">Потік primary-персони</h3>
+    <div class="flow-diagram">                ┌──────────────────────────────────────┐
+                │  ГЛОБАЛЬНА НАВ (завжди)              │
+                │  Logo · LP · Website · ♥ · Акаунт   │
+                └───────────────┬──────────────────────┘
+                                │
+                   ┌────────────▼────────────┐
+       ┌───────────│     A1  КАТАЛОГ          │───────────┐
+       │           │     [RJ-1, RJ-5]         │           │
+       │           │  ┄ фільтри (контекст) ┄  │           │
+       │           └────────────┬─────────────┘           │
+       │                        │ тап 1                   │
+       │           ┌────────────▼─────────────┐           │
+       │           │     B1  ПРОЕКТ            │           │
+       │           │     [RJ-2, EJ-1]          │           │
+       │           │  ← breadcrumb (контекст)  │           │
+       │           └────────────┬─────────────┘           │
+       │                        │ тап 2                   │
+       │           ┌────────────▼─────────────┐           │
+       │           │     D1  ГЕЙТ (overlay)    │           │
+       │           │  підписка? YES ──► файл ✓ │           │
+       │           │            NO ───┐         │           │
+       │           └───────────────── │ ────────┘           │
+       │                              │ тап 3              │
+       │                 ┌────────────▼──────────┐         │
+       │                 │    D2  ПІДПИСКА        │         │
+       │                 │    [RJ-4, EJ-2]        │         │
+       │                 └───────────────────────┘         │
+       │ тап 1                                   тап 1     │
+       ▼                                                    ▼
+ C1  ЗБЕРЕЖЕНЕ                                   E3  АКАУНТ
+ [RJ-3]                                          [EJ-2]</div>
   </div>
 </div>
 
