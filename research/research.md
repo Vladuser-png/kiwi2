@@ -65,6 +65,63 @@ Envato (підписка-ліміт), UI8 (разова + підписка), Dri
 
 ---
 
+## Мова конкурентів
+
+> Зібрано наживо через прямий доступ і пошук по сторінках UI8, Dribbble, Awwwards — липень 2026.
+> `ui8.net` блокує пряме зчитування сторінки (403), `dribbble.com` віддає порожній HTML (SPA без серверного рендеру) — тому UI8 і Dribbble зібрані через пошукові знімки (короткі назви + однорядкові описи, як їх індексує пошук), Awwwards — напряму зі сторінки каталогу.
+
+### UI8 — назви товарів + однорядковий опис
+
+| Назва | Однорядковий опис (як подає UI8) |
+|---|---|
+| Super — Landing Page Design Template | лендінг для агентства чи стартапу |
+| Astra — SaaS Landing Page Template | «3 Themes SaaS Landing Page Template» |
+| Whiter — Landing Page HTML Templates | «for various types of Saas Products, Digital Service, Software, Startups, Apps, eCommerce, Agency and many other related services» |
+| Material Design Landing Page | «newest Google design language» |
+| Digicraft — Digital Marketing Landing Page Template | бандл Landing Page Kit + Framer Template |
+| Selora — SAAS & Startup Landing Page Template | Landing Page Kit + Framer Template |
+| Enigma — Landing Page Framer Template | «modern and responsive design» |
+| Landy — Landing Page Design UI Kit | «unique, clean & modern» |
+| Landing Page Template & UI Kit for SaaS HR Management | «100+ blocks» |
+| Fint — Modern Finance Landing Page Template | — |
+
+### Dribbble — назви шотів і категорійних тегів
+
+| Назва / тег | Що це |
+|---|---|
+| Landing Page Website Photography Service (Paperpillar) | назва шоту = назва клієнтської послуги |
+| Travel Landing Page / Photography Landing Page / Best Landing Page | теги-категорії для перегляду (за індустрією, не за стилем) |
+| «Excited» — landing page для складного технічного продукту | редакційний добірковий опис (Dribbble Select) |
+| «six2eight» — персоналізований skincare-лендінг | те саме |
+
+### Awwwards — назви сайтів + мітки нагород
+
+| Назва | Мітка |
+|---|---|
+| IZANAMI | Developer Award · Site Of The Day |
+| Hiroto Sato | Developer Award · Site Of The Day |
+| CoffeeTech® | Developer Award · Site Of The Day |
+| RISK | Developer Award · Site Of The Day |
+| House of Honey | Developer Award · Site Of The Day |
+| Longbow | Site Of The Day |
+| Frontify home page | Honorable Mention |
+| Wickside Landing Page | Honorable Mention |
+| The Land Institute | Honorable Mention |
+| Nisa — AI Chatbot Landing Page | Honorable Mention |
+| Surge I 3D Landing Page | Honorable Mention |
+| WOW-page \| For Startup | Developer Award · Site Of The Day |
+
+### Що спільного у мови всіх трьох
+
+1. **Категорія/індустрія замість стилю.** UI8 і Dribbble організовують і називають роботи через сферу застосування («SaaS», «Finance», «Photography», «Travel»), не через настрій чи характер дизайну. Це дослівно той розрив, що описує personas.md §2.2: дизайнер шукає «нудний»/«мінімалістичний», а конкуренти пропонують лише категорію.
+2. **Порожні позитивні прикметники.** «modern», «unique, clean & modern», «responsive» — слова, які підійдуть буквально будь-якому продукту і нічого не повідомляють про те, що людина реально побачить.
+3. **Аудиторія-стек замість конкретики.** UI8: «for various types of Saas Products, Digital Service, Software, Startups, Apps, eCommerce, Agency and many other related services» — спроба сподобатись усім одразу замість сказати, кому це підходить найкраще.
+4. **Цінність = статус, не зміст.** Awwwards повністю замінює опис бейджем нагороди («Site Of The Day», «Honorable Mention»). Назва сайту та ранг — це весь текст картки, нічого про те, що на сайті є.
+
+Ці чотири патерни — точка відштовхування для голосу Kiwi (`voice.md` §Принципи).
+
+---
+
 ## IA — Виявлені прогалини в даних
 
 > Виявлено під час побудови IA (sitemap + flows + матриця трасування). Червень 2026.

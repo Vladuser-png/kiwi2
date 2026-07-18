@@ -53,6 +53,20 @@ Kiwi cuts designer search time by offering a curated, tool-agnostic library of p
 - **Out of scope on purpose:** RJ-3 (E1/E2 form error, C1 empty state) — already flagged in `_screens.md` as deferred, not a gap. S1–S4 (orphan screens) — sitemap.md recommends deleting/backlog, so no wireframes exist for them.
 - Audit + fixed defects log → [`wireframes/_critique.md`](./wireframes/_critique.md).
 
+## Voice
+
+[`voice.md`](./voice.md) — source of truth for product language. 4 principles, each traced to a specific quote in `research/personas.md` / `research/jtbd.md` / `research/visual-conversion-analysis.md` — no principle without a source:
+
+1. **Style language, not category language** — describe mood and character, don't sort everything by industry
+2. **Show the file, not the cover** — say what the person will actually see, don't sell an impression
+3. **Praise the product, not the person** — credit the file for what's in it, not the author's status or likes
+4. **The verb matches what the person is actually doing** — "download," not "buy," once a subscription already covers it
+
+- **Dictionary:** one concept, one word — Проєкт/Проєкти, Завантажити (not "buy"), Оплата (not "Купівля"), Спробувати ще (not "Try again"), address is always «ти». Interface language is Ukrainian; English is reserved for designer jargon the persona actually uses (editorial, bold, tool/category names).
+- **Forbidden:** AI-cliché/apologetic tone, motivational/ad copy, exclamation marks or emoji in system messages, the word «успішно» ("successfully").
+
+All 15 `wireframes/*.html` files were rewritten against these rules and audited meticulously (0 defects on the latest pass). Full microcopy inventory with defect tags → [`wireframes/microcopy.md`](./wireframes/microcopy.md).
+
 ## Links
 - Full brief → [`CLAUDE.md`](./CLAUDE.md)
 - Research → [`research/research.md`](./research/research.md)

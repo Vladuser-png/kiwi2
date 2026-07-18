@@ -665,6 +665,30 @@
     <a href="#gap-risks" class="nav-sub">→ Ризики реалізації (2)</a>
     <a href="#gap-producer" class="nav-sub">→ Producer flows (0 екранів)</a>
   </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Вайрфрейми</div>
+    <a href="#wireframe-audit" class="nav-item"><span class="ico">🖼</span>Аудит вайрфреймів</a>
+    <a href="#wf-audit-color" class="nav-sub">→ Проліз кольору (15)</a>
+    <a href="#wf-audit-type" class="nav-sub">→ Проліз типографіки (3)</a>
+    <a href="#wf-audit-clean" class="nav-sub">→ Чисті категорії (5)</a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Голос</div>
+    <a href="#competitor-language" class="nav-item"><span class="ico">💬</span>Мова конкурентів</a>
+    <a href="#cl-ui8" class="nav-sub">→ UI8</a>
+    <a href="#cl-dribbble" class="nav-sub">→ Dribbble</a>
+    <a href="#cl-awwwards" class="nav-sub">→ Awwwards</a>
+    <a href="#voice" class="nav-item"><span class="ico">🗣</span>Голос продукту</a>
+    <a href="#voice-principles" class="nav-sub">→ 4 принципи</a>
+    <a href="#voice-dictionary" class="nav-sub">→ Словник</a>
+    <a href="#voice-forbidden" class="nav-sub">→ Заборонене</a>
+  </div>
 </nav>
 
 <!-- ═══ MAIN ═══ -->
@@ -2749,6 +2773,353 @@ flowchart TD
         <span style="color:var(--muted);">Додати GROUP F і GROUP G до sitemap.md до початку проектування цих flows.</span>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ═══ 14 · WIREFRAME AUDIT ═══ -->
+<div class="section" id="wireframe-audit">
+  <div class="section-label">14 · Аудит вайрфреймів</div>
+  <h2>Аудит wireframes/*.html — дефекти й виправлення</h2>
+  <p>Прискіплива перевірка всіх 15 файлів <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">wireframes/*.html</code> проти <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">_conventions.md</code>, <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">sitemap.md</code> і <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">flows.md</code> за 6 класами дефектів. Обидва знайдені дефекти вже виправлено. Джерело: <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">wireframes/_critique.md</code>, липень 2026.</p>
+
+  <div class="critique-counters">
+    <div class="crit-counter" style="border-color:rgba(74,222,128,.3);">
+      <div class="crit-counter-num" style="color:var(--green);">15</div>
+      <div class="crit-counter-lbl">Файлів перевірено</div>
+    </div>
+    <div class="crit-counter" style="border-color:rgba(124,110,247,.3);">
+      <div class="crit-counter-num" style="color:var(--accent);">6</div>
+      <div class="crit-counter-lbl">Класів дефектів</div>
+    </div>
+    <div class="crit-counter" style="border-color:rgba(248,113,113,.2);background:rgba(248,113,113,.04);">
+      <div class="crit-counter-num" style="color:var(--red);">2</div>
+      <div class="crit-counter-lbl">Знайдено дефектів</div>
+    </div>
+    <div class="crit-counter" style="border-color:rgba(74,222,128,.2);background:rgba(74,222,128,.04);">
+      <div class="crit-counter-num" style="color:var(--green);">2</div>
+      <div class="crit-counter-lbl">Виправлено</div>
+    </div>
+    <div class="crit-counter">
+      <div class="crit-counter-num" style="color:var(--muted);">0</div>
+      <div class="crit-counter-lbl">Глухих кутів</div>
+    </div>
+    <div class="crit-counter">
+      <div class="crit-counter-num" style="color:var(--muted);">0</div>
+      <div class="crit-counter-lbl">Відсутніх станів</div>
+    </div>
+  </div>
+
+  <!-- 1 · ПРОЛІЗ КОЛЬОРУ -->
+  <div class="critique-class" id="wf-audit-color">
+    <div class="critique-class-title" style="color:var(--green);">
+      01 · Проліз вигляду — колір
+      <span class="ct-sub">усі 15 файлів · виправлено</span>
+    </div>
+    <div class="table-wrap">
+      <table class="critique-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Екран(и)</th>
+            <th>Що не так</th>
+            <th>Як виправлено</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>WF1</td>
+            <td>Усі 15 файлів<br><span style="font-size:10px;color:var(--muted);">listings·project·saved·download-gate·subscribe(×3)·purchase(×2)·signup·signin·account</span></td>
+            <td>Посилання всередині <code style="font-size:11px;color:var(--muted);">&lt;main&gt;</code> (картки, breadcrumb, CTA, форми) не мали кольору в CSS → рендерились дефолтним синім браузера замість сірої шкали. <code style="font-size:11px;color:var(--muted);">header nav a</code> і <code style="font-size:11px;color:var(--muted);">.wf-nav-tree a</code> вже мали <code style="font-size:11px;color:var(--muted);">color:#222</code>, решта — ні. Порушення _conventions.md §1.</td>
+            <td>Додано <code style="font-size:11px;color:var(--green);">a { color: #222; }</code> в базовий блок стилю, спільний для всіх 15 файлів</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 2 · ПРОЛІЗ ТИПОГРАФІКИ -->
+  <div class="critique-class" id="wf-audit-type">
+    <div class="critique-class-title" style="color:var(--green);">
+      02 · Проліз вигляду — типографіка
+      <span class="ct-sub">3 файли · виправлено</span>
+    </div>
+    <div class="table-wrap">
+      <table class="critique-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Екран</th>
+            <th>Що не так</th>
+            <th>Як виправлено</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>WF2</td>
+            <td>subscribe.html (D2)</td>
+            <td><code style="font-size:11px;color:var(--muted);">.plan-price { font-weight: 700 }</code> на звичайному &lt;p&gt; — типографічна вага як дизайн-рішення, заборонено §6 («лишаємо на потім»)</td>
+            <td>Прибрано <code style="font-size:11px;color:var(--green);">font-weight: 700</code>, margin лишився</td>
+          </tr>
+          <tr>
+            <td>WF3</td>
+            <td>purchase.html (D3)</td>
+            <td>Те саме — <code style="font-size:11px;color:var(--muted);">.purchase-price { font-weight: 700 }</code></td>
+            <td>Прибрано <code style="font-size:11px;color:var(--green);">font-weight: 700</code></td>
+          </tr>
+          <tr>
+            <td>WF4</td>
+            <td>account.html (E3)</td>
+            <td>Те саме — <code style="font-size:11px;color:var(--muted);">.account-status { font-weight: 700 }</code></td>
+            <td>Прибрано <code style="font-size:11px;color:var(--green);">font-weight: 700</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:10px;">Не займали 3 випадки <code style="font-size:11px;">font-weight:700</code> у <code style="font-size:11px;">.wf-nav-tree</code> (заголовок дерева, груповий лейбл, <code style="font-size:11px;">aria-current</code>) — explicitly дозволено §8 («жирним/підкресленням, без кольору» для поточної сторінки).</p>
+  </div>
+
+  <!-- 3 · ЧИСТІ КАТЕГОРІЇ -->
+  <div class="critique-class" id="wf-audit-clean">
+    <div class="critique-class-title" style="color:var(--muted);">
+      03 · Перевірено — дефектів не знайдено
+      <span class="ct-sub">5 з 6 класів дефектів чисті</span>
+    </div>
+    <div class="defect-grid">
+      <div class="defect-card" style="border-left-color:var(--green)">
+        <div class="dc-name">Заглушки</div>
+        <div class="dc-problem">Жодного lorem ipsum чи generic «Заголовок 1» — увесь текст predметний, з полів sitemap.md.</div>
+      </div>
+      <div class="defect-card" style="border-left-color:var(--green)">
+        <div class="dc-name">Немає станів (у скоупі)</div>
+        <div class="dc-problem">Усі ✓-клітинки з _screens.md §Матриця станів і §Розширення (D3/E3) закриті рівно одним файлом кожна, 1:1.</div>
+      </div>
+      <div class="defect-card" style="border-left-color:var(--green)">
+        <div class="dc-name">Глухий кут</div>
+        <div class="dc-problem">У кожного стану є вихід — перевірено скриптом по всіх 15 файлах, жодної сторінки без посилання в &lt;main&gt;.</div>
+      </div>
+      <div class="defect-card" style="border-left-color:var(--green)">
+        <div class="dc-name">Зона без головної дії</div>
+        <div class="dc-problem">Кожна секція має явну дію або свідомо пасивна (прев'ю екранів на B1 — лише перегляд за RJ-2).</div>
+      </div>
+      <div class="defect-card" style="border-left-color:var(--green)">
+        <div class="dc-name">Екран не з карти</div>
+        <div class="dc-problem">Усі 15 файлів трасуються на sitemap.md: 7 екранів Ядра MVP + D3 + E3. Нічого поза картою.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gap-box">
+    <strong>Свідомо не займали (не дефект, вже задокументовано):</strong><br>
+    <span style="color:var(--text);">flows.md §RJ-3 містить <code style="font-size:12px;">ERR[/"Помилка — перевір email або пароль"/]</code> для E1/E2 і неявний порожній стан для C1, яких немає серед файлів. Це вже зафіксовано в _screens.md §«Що з цим робити далі» як свідомо відкладене до реалізації RJ-3. Під час аудиту користувачу було явно поставлено питання про розширення скоупу — рішення: лишити відкладеним, той самий підхід, що й із D3/E3 раніше.</span>
+  </div>
+</div>
+
+<!-- ═══ 15 · МОВА КОНКУРЕНТІВ ═══ -->
+<div class="section" id="competitor-language">
+  <div class="section-label">15 · Мова конкурентів</div>
+  <h2>Як пишуть UI8, Dribbble, Awwwards</h2>
+  <p>Зібрано наживо через прямий доступ і пошук по сторінках — липень 2026. <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">ui8.net</code> блокує пряме зчитування (403), <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">dribbble.com</code> віддає порожній HTML (SPA без серверного рендеру) — UI8 і Dribbble зібрані через пошукові знімки, Awwwards — напряму зі сторінки каталогу. Повна таблиця — <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">research/research.md</code> §Мова конкурентів.</p>
+
+  <h3 id="cl-ui8" style="margin:28px 0 4px;">UI8 — назви товарів + однорядковий опис</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Назва</th><th>Однорядковий опис (як подає UI8)</th></tr></thead>
+      <tbody>
+        <tr><td>Super — Landing Page Design Template</td><td>лендінг для агентства чи стартапу</td></tr>
+        <tr><td>Astra — SaaS Landing Page Template</td><td>«3 Themes SaaS Landing Page Template»</td></tr>
+        <tr><td>Whiter — Landing Page HTML Templates</td><td>«for various types of Saas Products, Digital Service, Software, Startups, Apps, eCommerce, Agency and many other related services»</td></tr>
+        <tr><td>Material Design Landing Page</td><td>«newest Google design language»</td></tr>
+        <tr><td>Digicraft — Digital Marketing Landing Page Template</td><td>бандл Landing Page Kit + Framer Template</td></tr>
+        <tr><td>Selora — SAAS &amp; Startup Landing Page Template</td><td>Landing Page Kit + Framer Template</td></tr>
+        <tr><td>Enigma — Landing Page Framer Template</td><td>«modern and responsive design»</td></tr>
+        <tr><td>Landy — Landing Page Design UI Kit</td><td>«unique, clean &amp; modern»</td></tr>
+        <tr><td>Landing Page Template &amp; UI Kit for SaaS HR Management</td><td>«100+ blocks»</td></tr>
+        <tr><td>Fint — Modern Finance Landing Page Template</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="cl-dribbble" style="margin:28px 0 4px;">Dribbble — назви шотів і категорійних тегів</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Назва / тег</th><th>Що це</th></tr></thead>
+      <tbody>
+        <tr><td>Landing Page Website Photography Service (Paperpillar)</td><td>назва шоту = назва клієнтської послуги</td></tr>
+        <tr><td>Travel Landing Page / Photography Landing Page / Best Landing Page</td><td>теги-категорії для перегляду (за індустрією, не за стилем)</td></tr>
+        <tr><td>«Excited» — landing page для складного технічного продукту</td><td>редакційний добірковий опис (Dribbble Select)</td></tr>
+        <tr><td>«six2eight» — персоналізований skincare-лендінг</td><td>те саме</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="cl-awwwards" style="margin:28px 0 4px;">Awwwards — назви сайтів + мітки нагород</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Назва</th><th>Мітка</th></tr></thead>
+      <tbody>
+        <tr><td>IZANAMI</td><td>Developer Award · Site Of The Day</td></tr>
+        <tr><td>Hiroto Sato</td><td>Developer Award · Site Of The Day</td></tr>
+        <tr><td>CoffeeTech®</td><td>Developer Award · Site Of The Day</td></tr>
+        <tr><td>RISK</td><td>Developer Award · Site Of The Day</td></tr>
+        <tr><td>House of Honey</td><td>Developer Award · Site Of The Day</td></tr>
+        <tr><td>Longbow</td><td>Site Of The Day</td></tr>
+        <tr><td>Frontify home page</td><td>Honorable Mention</td></tr>
+        <tr><td>Wickside Landing Page</td><td>Honorable Mention</td></tr>
+        <tr><td>The Land Institute</td><td>Honorable Mention</td></tr>
+        <tr><td>Nisa — AI Chatbot Landing Page</td><td>Honorable Mention</td></tr>
+        <tr><td>Surge I 3D Landing Page</td><td>Honorable Mention</td></tr>
+        <tr><td>WOW-page | For Startup</td><td>Developer Award · Site Of The Day</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin:28px 0 4px;">Що спільного у мови всіх трьох</h3>
+  <div class="takeaways">
+    <div class="takeaway">
+      <div class="t-num">01</div>
+      <h3>Категорія замість стилю</h3>
+      <p>UI8 і Dribbble називають і сортують роботи через сферу застосування («SaaS», «Finance», «Photography», «Travel»), не через настрій. Той самий розрив, що описує personas.md §2.2.</p>
+    </div>
+    <div class="takeaway">
+      <div class="t-num">02</div>
+      <h3>Порожні позитивні прикметники</h3>
+      <p>«modern», «unique, clean &amp; modern», «responsive» — підійдуть буквально будь-якому продукту, нічого не повідомляють про те, що людина реально побачить.</p>
+    </div>
+    <div class="takeaway">
+      <div class="t-num">03</div>
+      <h3>Аудиторія-стек замість конкретики</h3>
+      <p>UI8: «for various types of Saas Products, Digital Service, Software, Startups, Apps, eCommerce, Agency and many other related services» — спроба сподобатись усім одразу.</p>
+    </div>
+    <div class="takeaway">
+      <div class="t-num">04</div>
+      <h3>Цінність = статус, не зміст</h3>
+      <p>Awwwards замінює опис бейджем нагороди («Site Of The Day», «Honorable Mention»). Назва й ранг — увесь текст картки, нічого про сам сайт.</p>
+    </div>
+  </div>
+
+  <div class="gap-box">
+    <strong>Точка відштовхування для голосу Kiwi:</strong><br>
+    <span style="color:var(--text);">Ці чотири патерни — те, чого Kiwi свідомо уникає. Деталі — розділ 16 «Голос продукту» нижче.</span>
+  </div>
+</div>
+
+<!-- ═══ 16 · ГОЛОС ПРОДУКТУ ═══ -->
+<div class="section" id="voice">
+  <div class="section-label">16 · Голос продукту</div>
+  <h2>voice.md — принципи, словник, заборонене</h2>
+  <p>Кожен принцип виведено з конкретного рядка джерела (`research/personas.md`, `research/jtbd.md`, `research/research.md`, `research/visual-conversion-analysis.md`, `CLAUDE.md`), не з інтуїції. Контекст: головна персона (Куратор, ✅ валідована) приходить по конкретику, не по рекламу — чіткість важливіша за дотепність.</p>
+
+  <h3 id="voice-principles" style="margin:32px 0 4px;">4 принципи</h3>
+
+  <div class="entity-card">
+    <div class="entity-header">
+      <span class="entity-num">01</span>
+      <span class="entity-name">Мова стилю, не мова категорій</span>
+    </div>
+    <div class="entity-desc">Kiwi говорить про настрій і характер дизайну, а не сортує все по індустріях.</div>
+    <div class="trust-row">
+      <div class="trust-good"><div class="trust-label">Приклад</div>тег на картці — «нудний (навмисно спокійний)»; фільтр — «мінімалістичний · editorial · монохромний · максималістичний»</div>
+      <div class="trust-bad"><div class="trust-label">Антиприклад</div>«Сучасний адаптивний лендінг для SaaS, стартапів, агентств та e-commerce»</div>
+    </div>
+    <div class="entity-relations"><strong>Джерело:</strong> RJ-1 (jtbd.md) — «Не міг знайти нудний стиль — за запитами їх просто не було»; personas.md §2.2 — «дизайнер думає стилем/настроєм... каталог конкурентів організований категоріями»; конкурентний доказ — розділ 15 вище (UI8/Dribbble).</div>
+  </div>
+
+  <div class="entity-card">
+    <div class="entity-header">
+      <span class="entity-num">02</span>
+      <span class="entity-name">Показуємо файл, не обкладинку</span>
+    </div>
+    <div class="entity-desc">Kiwi каже, що людина реально побачить у файлі, а не продає враження від однієї картинки.</div>
+    <div class="trust-row">
+      <div class="trust-good"><div class="trust-label">Приклад</div>секція «Екрани з файлу» з конкретними назвами — «Головна», «Тарифи», «Контакти»</div>
+      <div class="trust-bad"><div class="trust-label">Антиприклад</div>«Ідеальний лендінг, що вразить будь-якого клієнта» — без жодного посилання на вміст файлу</div>
+    </div>
+    <div class="entity-relations"><strong>Джерело:</strong> RJ-2 (jtbd.md) — «я хочу побачити реальний вміст файлу до того як приймати рішення»; personas.md §3.2, реальна цитата Інтерв'ю #1 — «обкладинка виглядає добре, але при детальному розгляді дизайн посередній». _screens.md фіксує «екрани з файлу (2–5 реальних)» як must-have.</div>
+  </div>
+
+  <div class="entity-card">
+    <div class="entity-header">
+      <span class="entity-num">03</span>
+      <span class="entity-name">Кажемо про якість продукту, не статус людини</span>
+    </div>
+    <div class="entity-desc">Kiwi хвалить файл за те, що в ньому є, а не за те, хто його зробив чи скільки в нього лайків.</div>
+    <div class="trust-row">
+      <div class="trust-good"><div class="trust-label">Приклад</div>метадані картки — «Landing Page · Figma · Studio Nordkit» — факти без рангу</div>
+      <div class="trust-bad"><div class="trust-label">Антиприклад</div>«PRO-автор» або «🏆 Обране редакцією тижня!» біля імені автора</div>
+    </div>
+    <div class="entity-relations"><strong>Джерело:</strong> visual-conversion-analysis.md — «Kiwi продає файл, покупцю байдуже, чи автор PRO... увага піде на соціальний статус замість якості контенту»; jtbd.md «функції на виліт» — «PRO-badge авторів — антипатерн»; конкурентний доказ — Awwwards (розділ 15).</div>
+  </div>
+
+  <div class="entity-card">
+    <div class="entity-header">
+      <span class="entity-num">04</span>
+      <span class="entity-name">Дієслово відповідає тому, що людина реально робить</span>
+    </div>
+    <div class="entity-desc">Коли підписка вже покриває доступ, Kiwi каже «завантажити», не «купити» чи «оплатити» — гроші не мають зʼявлятись у мові там, де рішення вже безкоштовне.</div>
+    <div class="trust-row">
+      <div class="trust-good"><div class="trust-label">Приклад</div>«Підписка активна — файл завантажується» / «Файл завантажено» — жодного слова про гроші</div>
+      <div class="trust-bad"><div class="trust-label">Антиприклад</div>«Купити зараз» на кнопці для людини з активною підпискою</div>
+    </div>
+    <div class="entity-relations"><strong>Джерело:</strong> RJ-4 (jtbd.md) — «отримати файл одразу без додаткових кроків... не думати про гроші в момент натхнення»; EJ-2 — «щоб не відчувати що плачу за повітря». Самоперевірка: у D3 слово «Купівля» випадково зʼявляється поруч зі словом «оплата», яким названо той самий процес всюди інде (wireframes/microcopy.md).</div>
+  </div>
+
+  <h3 id="voice-dictionary" style="margin:32px 0 4px;">Словник — одне поняття, одне слово</h3>
+  <p style="font-size:13px;color:var(--muted);">Розбіжності — з <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">wireframes/microcopy.md</code> §«Знайдено — потребує рішення»; нового пошуку не робили, лише рішення по кожній.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Поняття</th><th>Термін</th><th>Чому саме він</th></tr></thead>
+      <tbody>
+        <tr><td>Головна сутність каталогу</td><td><strong>Проєкт / Проєкти</strong><br><span style="color:var(--muted);font-size:11px;">не «оголошення», не «пропозиція», не «варіант»</span></td><td>Так каже сама персона: «проекти на майбутнє» (Інтерв'ю #1). Уже послідовно на всіх 15 екранах — закріплюємо термін</td></tr>
+        <tr><td>Отримати файл за активної підписки</td><td><strong>Завантажити / Завантажується / Завантажено</strong></td><td>RJ-4: «не думати про гроші в момент натхнення» — у слові немає жодного натяку на гроші</td></tr>
+        <tr><td>Отримати файл за разовий платіж</td><td><strong>Оплата / Оплатити</strong><br><span style="color:var(--muted);font-size:11px;">не «Купівля»</span></td><td>Уже домінує в потоці: «Разова оплата», «Оформлення оплати», «Оплата успішна/відхилена», «Помилка оплати» — 5 місць проти одного «Купівля»</td></tr>
+        <tr><td>Повторити дію після помилки</td><td><strong>Спробувати ще</strong><br><span style="color:var(--muted);font-size:11px;">не «Try again»</span></td><td>Українською (див. правило мови нижче); термін уже є в потоці оплати — переносимо на A1</td></tr>
+        <tr><td>Стиль «тихий, неяскравий»</td><td><strong>нудний (спокійний)</strong><br><span style="color:var(--muted);font-size:11px;">не «нудний (навмисно спокійний)»</span></td><td>Дослівно слова персони: «Не міг знайти нудний стиль» — без жодних уточнень</td></tr>
+        <tr><td>Повернення на попередній екран</td><td><strong>← [назва цілі]</strong>, без слова «Назад»</td><td>RJ-4 «не переривати творчий потік»; стрілка вже показує напрям, «Назад» його дублює</td></tr>
+        <tr><td>Звертання до людини</td><td><strong>ти</strong>, однаково на всіх екранах</td><td>Інтерв'ю #1 — мова колеги-практика: «Я щодня моніторю», «Якщо є підписка — одразу скачую»</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="bench-cards" style="margin-top:16px;">
+    <div class="bench-card">
+      <div class="bench-head"><strong style="font-size:13px;">Мова інтерфейсу</strong></div>
+      <p style="font-size:12px;color:var(--muted);">Уся системна мова — українською. Дозволено лише дизайнерський жаргон, яким персона реально користується: <em>editorial</em>, <em>bold</em> (personas.md §2.2 — «мінімалістичний, нудний, bold, editorial»), назви інструментів (Figma, Sketch, Adobe XD) і категорій (Landing Page, Website).</p>
+    </div>
+    <div class="bench-card danger">
+      <div class="bench-head"><strong style="font-size:13px;">Не дозволено</strong></div>
+      <p style="font-size:12px;color:var(--muted);">Переклад кнопок/повідомлень/підписів англійською — саме це зламалось у microcopy.md (знахідка №1): «Loading…», «Try again», «Network error» замість українських аналогів решти екранів. Прикордонний випадок: «Email» (E1/E2) за цим правилом мало б стати «Пошта» — жодне джерело не підтверджує англійську тут.</p>
+    </div>
+  </div>
+
+  <h3 id="voice-forbidden" style="margin:32px 0 4px;">Заборонене</h3>
+  <p style="font-size:13px;color:var(--muted);">Перші три — перевірені в microcopy.md, жодного випадку в 15 файлах; закріплюємо заборону наперед. Четвертий — реальна знахідка.</p>
+  <div class="defect-grid">
+    <div class="defect-card" style="border-left:3px solid var(--yellow)">
+      <div class="dc-name">1 · AI-кліше й награний тон</div>
+      <div class="dc-problem">Заборонено: «Ой, щось пішло не так», «Ласкаво просимо», «Вітаємо!» — фрази, що вибачаються чи радіють замість факту.<br><br><strong>Було б:</strong> «Ой, схоже щось пішло не так»</div>
+      <div class="dc-solution dcs-fix"><div class="dc-solution-label">Треба (реальний рядок, D2)</div>«Помилка оплати — перевір картку»</div>
+    </div>
+    <div class="defect-card" style="border-left:3px solid var(--yellow)">
+      <div class="dc-name">2 · Мотиваційний, рекламний тон</div>
+      <div class="dc-problem">Заборонено: обіцянки й самореклама замість опису того, що людина реально отримає.<br><br><strong>Було б:</strong> «Знайди швидко ідеальне рішення для свого проєкту!»</div>
+      <div class="dc-solution dcs-fix"><div class="dc-solution-label">Треба (реальний рядок, A1)</div>«Пошук за стилем чи ключовим словом»</div>
+    </div>
+    <div class="defect-card" style="border-left:3px solid var(--yellow)">
+      <div class="dc-name">3 · Оклики та емодзі в системних повідомленнях</div>
+      <div class="dc-problem">Заборонено: знак оклику чи емодзі в будь-якому повідомленні стану.<br><br><strong>Було б:</strong> «Файл завантажено! 🎉»</div>
+      <div class="dc-solution dcs-fix"><div class="dc-solution-label">Треба (реальний рядок, D1)</div>«Файл завантажено · Лендінг SaaS-платформи для аналітики»</div>
+    </div>
+    <div class="defect-card" style="border-left:3px solid var(--red)">
+      <div class="dc-name">4 · Слово «успішно»</div>
+      <div class="dc-problem">Заборонено: «успішно» як прислівник-коментар до дії системи.<br><br><strong>Було (реальний рядок, потребує виправлення):</strong> «Оплата успішна» (subscribe-loading.html, purchase-loading.html)</div>
+      <div class="dc-solution dcs-fix"><div class="dc-solution-label">Треба</div>«Оплата пройшла» — або без прислівника, як уже в D1: «Файл завантажено»</div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--muted);margin-top:10px;">Чому «успішно» — заборонено: це мова системи про саму себе, не мова про те, що людина отримала. Персона хоче конкретики про файл і стиль (personas.md §2.5 — «Жодних згадок про ціну, UX, швидкість — лише якість контенту»), не підтвердження, що бекенд відпрацював без збоїв.</p>
+
+  <div class="gap-box">
+    <strong>Це принципи, не готові тексти.</strong><br>
+    <span style="color:var(--text);">Наступний крок — звірити з ними кожен рядок з <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">wireframes/microcopy.md</code> і вирішити, які невідповідності виправляти першими. Джерело правди — <code style="font-family:var(--mono);font-size:12px;color:var(--accent)">voice.md</code>.</span>
   </div>
 </div>
 
